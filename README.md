@@ -35,50 +35,21 @@ Released under the [MIT](LICENSE.md) license
   * Library `$(SolutionDir)glwnd\lib\$(Platform)\$(Configuration)`
 
 * Usage
-	* Take a look at the [example\example.cpp](example\example.cpp)
+	* Take a look at the [examples](example)
 
 ## Demo
 
-```cpp
-#include <gl/glew.h>
+>[example/example.simple.h](example/example.simple.h)
+>
+>![](screenshots/example.simple.png)
 
-#include <glwnd.h>
-#pragma comment(lib, "glwnd.lib")
+>[example/example.events.h](example/example.events.h)
+>
+>![](screenshots/example.events.png)
 
-class GLWindowExample : public GLWindow
-{
-public:
-  GLWindowExample() : GLWindow() {};
-  virtual ~GLWindowExample() {};
-
-  virtual void on_display()
-  {
-    glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    {
-      glVertex3f(0.F, 0.5F, 0.F);
-      glVertex3f(-0.5F, 0.2F, 0.F);
-      glVertex3f(-0.5F, -0.2F, 0.F);
-      glVertex3f(0.F, -0.5F, 0.F);
-      glVertex3f(0.F, 0.5F, 0.F);
-      glVertex3f(0.5F, 0.2F, 0.F);
-      glVertex3f(0.5F, -0.2F, 0.F);
-      glVertex3f(0.F, -0.5F, 0.F);
-    }
-    glEnd();
-  }
-};
-
-int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
-{
-  GLWindowExample win;
-  win.run();
-
-  return EXIT_SUCCESS;
-}
-```
-
-![](screenshots/example.png)
+>[example/example.shader.h](example/example.shader.h)
+>
+>![](screenshots/example.shader.png)
 
 ## Contact
 Feel free to contact via [Twitter](https://twitter.com/vic4key) / [Gmail](mailto:vic4key@gmail.com) / [Blog](https://blog.vic.onl/) / [Website](https://vic.onl/)
