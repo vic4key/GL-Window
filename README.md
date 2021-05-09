@@ -31,8 +31,8 @@ Released under the [MIT](LICENSE.md) license
 ## Installation
 
 * MS Visual C++ Configuration
-  * Include `$(SolutionDir)glwnd\include`
-  * Library `$(SolutionDir)glwnd\lib\$(Platform)\$(Configuration)`
+  * Include `path\to\glwnd\include`
+  * Library `path\to\glwnd\lib\$(Platform)\$(Configuration)`
 
 * Usage
 	* Take a look at the [examples](example)
