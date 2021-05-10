@@ -13,14 +13,14 @@ public:
     glColor3f(0.0, 1.0, 0.0);
     glBegin(GL_POLYGON);
     {
-      glVertex3f(0.F, 0.5F, 0.F);
-      glVertex3f(-0.5F, 0.2F, 0.F);
-      glVertex3f(-0.5F, -0.2F, 0.F);
-      glVertex3f(0.F, -0.5F, 0.F);
-      glVertex3f(0.F, 0.5F, 0.F);
-      glVertex3f(0.5F, 0.2F, 0.F);
-      glVertex3f(0.5F, -0.2F, 0.F);
-      glVertex3f(0.F, -0.5F, 0.F);
+      glVertex3f(+0.0F, +0.5F, +0.0F);
+      glVertex3f(-0.5F, +0.2F, +0.0F);
+      glVertex3f(-0.5F, -0.2F, +0.0F);
+      glVertex3f(+0.0F, -0.5F, +0.0F);
+      glVertex3f(+0.0F, +0.5F, +0.0F);
+      glVertex3f(+0.5F, +0.2F, +0.0F);
+      glVertex3f(+0.5F, -0.2F, +0.0F);
+      glVertex3f(+0.0F, -0.5F, +0.0F);
     }
     glEnd();
   }

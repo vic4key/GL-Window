@@ -165,6 +165,7 @@
     <ClInclude Include="include\glwnd\geometry.h" />
     <ClInclude Include="include\glwnd\glwnd.h" />
     <ClInclude Include="include\glwnd\utils.h" />
+    <ClInclude Include="include\glwnd\vbo.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -176,6 +177,7 @@
     </ClCompile>
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\utils.cpp" />
+    <ClCompile Include="src\vbo.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

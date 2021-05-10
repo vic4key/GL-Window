@@ -30,6 +30,9 @@
     <ClInclude Include="include\glwnd\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\vbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -39,6 +42,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\utils.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\vbo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
