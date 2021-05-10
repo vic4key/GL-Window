@@ -1,6 +1,6 @@
 # What is GL Window ?
 
-**GL Window** a.k.a **GLWND** is a GL wrapper libraryto  helps you quickly creating an Modern Open GL application that based on Open GL & GLFW & GLEW library.
+**GL Window** a.k.a **GLWND** is a GL wrapper library to helps you quickly creating an Modern Open GL application that based on Open GL & GLFW & GLEW library.
 
 ## Information
 
