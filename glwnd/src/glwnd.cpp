@@ -4,7 +4,8 @@
  * @brief  GL Window
  */
 
-#include "glwnd.h"
+#include "glwnd/glwnd.h"
+#include "glwnd/utils.h"
 
 #include <GL/glew.h>
 #include <GL/wglew.h>
@@ -17,8 +18,6 @@
 
 #include <Windows.h>
 #include <cassert>
-
-#include "utils.h"
 
 /**
  * CGLWindow - Implementation

@@ -162,9 +162,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="framework.h" />
-    <ClInclude Include="include\geometry.h" />
-    <ClInclude Include="include\glwnd.h" />
-    <ClInclude Include="include\utils.h" />
+    <ClInclude Include="include\glwnd\geometry.h" />
+    <ClInclude Include="include\glwnd\glwnd.h" />
+    <ClInclude Include="include\glwnd\utils.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>

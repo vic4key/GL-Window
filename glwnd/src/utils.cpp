@@ -6,7 +6,7 @@
  * @brief  Utility
  */
 
-#include "Utils.h"
+#include "glwnd/utils.h"
 
 #include <Windows.h>
 

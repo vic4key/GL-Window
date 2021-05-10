@@ -10,19 +10,7 @@ public:
 
   virtual void on_display()
   {
-    glColor3f(0.0, 1.0, 0.0);
-    glBegin(GL_POLYGON);
-    {
-      glVertex3f(0.F, 0.5F, 0.F);
-      glVertex3f(-0.5F, 0.2F, 0.F);
-      glVertex3f(-0.5F, -0.2F, 0.F);
-      glVertex3f(0.F, -0.5F, 0.F);
-      glVertex3f(0.F, 0.5F, 0.F);
-      glVertex3f(0.5F, 0.2F, 0.F);
-      glVertex3f(0.5F, -0.2F, 0.F);
-      glVertex3f(0.F, -0.5F, 0.F);
-    }
-    glEnd();
+    LOG("drawing");
   }
 
   virtual void on_resize(int width, int height)
@@ -52,7 +40,7 @@ public:
 
   virtual void on_keyboard_key(int key, int code, int action, int mods)
   {
-    LOG("%d %d %d %d", key, code, action, mods);
+    LOG("%c %d %d %d", char(key), code, action, mods);
   }
 
   virtual void on_keyboard_char(unsigned int code)

@@ -30,11 +30,11 @@ public:
       "     fragColor = vec4(vertexColor, 1.0f);\n"
       "}\n";
 
-    unsigned int vertex_shader = glCreateShader(GL_VERTEX_SHADER);
+    GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
     glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
     glCompileShader(vertex_shader);
 
-    unsigned int fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
+    GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
     glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
     glCompileShader(fragment_shader);
 
@@ -56,9 +56,8 @@ public:
     glGenVertexArrays(1, &m_vao);
     glBindVertexArray(m_vao);
 
-    unsigned int vbo;
-    glGenBuffers(1, &vbo);
-    glBindBuffer(GL_ARRAY_BUFFER, vbo);
+    glGenBuffers(1, &m_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
@@ -66,6 +65,15 @@ public:
 
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
     glEnableVertexAttribArray(1);
+  }
+
+  virtual void final()
+  {
+    glBindVertexArray(0);
+    glDeleteVertexArrays(1, &m_vao);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glDeleteBuffers(1, &m_vbo);
   }
 
   virtual void on_display()
@@ -76,6 +84,7 @@ public:
   }
 
 private:
-  unsigned m_vao;
-  unsigned int m_shader_program;
+  GLuint m_vbo;
+  GLuint m_vao;
+  GLuint m_shader_program;
 };

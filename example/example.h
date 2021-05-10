@@ -2,8 +2,8 @@
 
 #include "resource.h"
 
-#include <glwnd.h>
-#include <utils.h>
+#include <glwnd/glwnd.h>
+#include <glwnd/utils.h>
 #pragma comment(lib, "glwnd.lib")
 
 #include <GL/glew.h>

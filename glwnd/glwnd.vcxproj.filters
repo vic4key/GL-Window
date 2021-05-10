@@ -21,13 +21,13 @@
     <ClInclude Include="pch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\geometry.h">
+    <ClInclude Include="include\glwnd\geometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\glwnd.h">
+    <ClInclude Include="include\glwnd\glwnd.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\utils.h">
+    <ClInclude Include="include\glwnd\utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

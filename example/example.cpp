@@ -8,9 +8,9 @@
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-  GLWindowExampleSimple gl;
+  // GLWindowExampleSimple gl;
   // GLWindowExampleEvents gl;
-  // GLWindowExampleShader gl;
+  GLWindowExampleShader gl;
   gl.run();
 
   return EXIT_SUCCESS;
