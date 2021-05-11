@@ -16,34 +16,25 @@ public:
 
   virtual void initial()
   {
-    // DO NOTHING
+    // your code here
   }
 
   virtual void final()
   {
-    // DO NOTHING
+    // your code here
   }
 
   virtual void on_display()
   {
-    glColor3f(1.0, 0.0, 0.0);
-    glBegin(GL_LINES);
-    {
-      glVertex2f(-0.05F, +0.0F);
-      glVertex2f(+0.05F, +0.0F);
-      glVertex2f(+0.00F, -0.05F);
-      glVertex2f(+0.00F, +0.05F);
-    }
-    glEnd();
-    glFlush();
+    // your code here
   }
 };
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-  // GLWindowExample gl;
-  GLWindowExampleImage gl;
+  GLWindowExample gl;
   // GLWindowExampleVBO gl;
+  // GLWindowExampleImage gl;
   // GLWindowExampleSimple gl;
   // GLWindowExampleEvents gl;
   // GLWindowExampleShader gl;
