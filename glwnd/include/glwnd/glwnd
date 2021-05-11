@@ -1,0 +1,11 @@
+#pragma once
+
+/**
+ * @file   glwnd
+ * @author Vic P.
+ * @brief  GL Window
+ */
+
+#include <glwnd/glwnd.h>
+
+#pragma comment(lib, "glwnd.lib")

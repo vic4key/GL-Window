@@ -2,6 +2,8 @@
 
 #include "example.h"
 
+#include <glwnd/utils.h>
+
 class GLWindowExampleEvents : public GLWindow
 {
 public:
