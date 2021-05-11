@@ -15,6 +15,8 @@ const color_t COLOR_BLACK = 0x000000;
 const color_t COLOR_WHITE = 0xFFFFFF;
 const color_t COLOR_GRAY  = 0x303030;
 
+struct GLFWwindow;
+
 class GLWindow
 {
 public:
@@ -41,6 +43,8 @@ public:
 
   const std::vector<std::string>& extensions() const;
   const std::vector<std::string>& arb_extensions() const;
+
+  GLFWwindow* ptr_window();
 
 private:
   class Impl;

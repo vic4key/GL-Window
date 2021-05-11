@@ -25,6 +25,8 @@
 
 class GLWindow::Impl
 {
+  friend GLWindow;
+
 public:
   Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg = RGB(0, 0, 0));
   virtual ~Impl();
@@ -43,9 +45,6 @@ public:
   void on_drag_drop(const std::vector<std::string>& paths);
 
   int run();
-
-  const std::vector<std::string>& extensions() const;
-  const std::vector<std::string>& arb_extensions() const;
 
 private:
   static void error(int code, const char* description);
@@ -67,8 +66,8 @@ private:
   int destroy();
 
 private:
+  GLWindow*   m_ptr_parent;
   GLFWwindow* m_ptr_window;
-  GLWindow* ptr_parent;
 
   std::string m_name;
   int m_width;
@@ -80,23 +79,13 @@ private:
 };
 
 GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg)
-  : m_ptr_window(nullptr), ptr_parent(ptr_parent)
+  : m_ptr_window(nullptr), m_ptr_parent(ptr_parent)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
 {
 }
 
 GLWindow::Impl::~Impl()
 {
-}
-
-const std::vector<std::string>& GLWindow::Impl::extensions() const
-{
-  return m_extensions;
-}
-
-const std::vector<std::string>& GLWindow::Impl::arb_extensions() const
-{
-  return m_arb_extensions;
 }
 
 void GLWindow::Impl::on_display()
@@ -114,7 +103,7 @@ void GLWindow::Impl::on_display()
   glPushMatrix();
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   {
-    ptr_parent->on_display();
+    m_ptr_parent->on_display();
   }
   glPopAttrib();
   glPopMatrix();
@@ -124,42 +113,42 @@ void GLWindow::Impl::on_display()
 
 void GLWindow::Impl::on_resize(int width, int height)
 {
-  ptr_parent->on_resize(width, height);
+  m_ptr_parent->on_resize(width, height);
 }
 
 void GLWindow::Impl::on_mouse_move(double x, double y)
 {
-  ptr_parent->on_mouse_move(x, y);
+  m_ptr_parent->on_mouse_move(x, y);
 }
 
 void GLWindow::Impl::on_mouse_enter_leave(bool entered, double x, double y)
 {
-  ptr_parent->on_mouse_enter_leave(entered, x, y);
+  m_ptr_parent->on_mouse_enter_leave(entered, x, y);
 }
 
 void GLWindow::Impl::on_mouse_click(int button, int action, int mods)
 {
-  ptr_parent->on_mouse_click(button, action, mods);
+  m_ptr_parent->on_mouse_click(button, action, mods);
 }
 
 void GLWindow::Impl::on_mouse_wheel(double delta_x, double delta_y)
 {
-  ptr_parent->on_mouse_wheel(delta_x, delta_y);
+  m_ptr_parent->on_mouse_wheel(delta_x, delta_y);
 }
 
 void GLWindow::Impl::on_keyboard_key(int key, int code, int action, int mods)
 {
-  ptr_parent->on_keyboard_key(key, code, action, mods);
+  m_ptr_parent->on_keyboard_key(key, code, action, mods);
 }
 
 void GLWindow::Impl::on_keyboard_char(unsigned int code)
 {
-  ptr_parent->on_keyboard_char(code);
+  m_ptr_parent->on_keyboard_char(code);
 }
 
 void GLWindow::Impl::on_drag_drop(const std::vector<std::string>& paths)
 {
-  ptr_parent->on_drag_drop(paths);
+  m_ptr_parent->on_drag_drop(paths);
 }
 
 void GLWindow::Impl::error(int code, const char* description)
@@ -423,7 +412,7 @@ int GLWindow::Impl::run()
 
   // Initialize before drawing
 
-  ptr_parent->initial();
+  m_ptr_parent->initial();
 
   while (glfwWindowShouldClose(m_ptr_window) == GLFW_FALSE)
   {
@@ -435,7 +424,7 @@ int GLWindow::Impl::run()
 
   // finalize after drawing
 
-  ptr_parent->final();
+  m_ptr_parent->final();
 
   // destroy the window then terminate the application
 
@@ -526,10 +515,15 @@ void GLWindow::run()
 
 const std::vector<std::string>& GLWindow::extensions() const
 {
-  return m_ptr_impl->extensions();
+  return m_ptr_impl->m_extensions;
 }
 
 const std::vector<std::string>& GLWindow::arb_extensions() const
 {
-  return m_ptr_impl->arb_extensions();
+  return m_ptr_impl->m_arb_extensions;
+}
+
+GLFWwindow* GLWindow::ptr_window()
+{
+  return m_ptr_impl->m_ptr_window;
 }
