@@ -25,7 +25,16 @@ public:
 
   virtual void on_display()
   {
-    // DO NOTHING
+    glColor3f(1.0, 0.0, 0.0);
+    glBegin(GL_LINES);
+    {
+      glVertex2f(-0.05F, +0.0F);
+      glVertex2f(+0.05F, +0.0F);
+      glVertex2f(+0.00F, -0.05F);
+      glVertex2f(+0.00F, +0.05F);
+    }
+    glEnd();
+    glFlush();
   }
 };
 
