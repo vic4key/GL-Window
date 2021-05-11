@@ -164,6 +164,8 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="include\glwnd\geometry.h" />
     <ClInclude Include="include\glwnd\glwnd.h" />
+    <ClInclude Include="include\glwnd\linmath.h" />
+    <ClInclude Include="include\glwnd\stb_image_write.h" />
     <ClInclude Include="include\glwnd\utils.h" />
     <ClInclude Include="include\glwnd\vbo.h" />
     <ClInclude Include="pch.h" />
