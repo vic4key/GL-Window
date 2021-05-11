@@ -2,9 +2,10 @@
 //
 
 #include "framework.h"
+#include "example.vbo.h"
+#include "example.image.h"
 #include "example.events.h"
 #include "example.simple.h"
-#include "example.vbo.h"
 #include "example.shader.h"
 
 class GLWindowExample : public GLWindow
@@ -40,7 +41,8 @@ public:
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-  GLWindowExample gl;
+  // GLWindowExample gl;
+  GLWindowExampleImage gl;
   // GLWindowExampleVBO gl;
   // GLWindowExampleSimple gl;
   // GLWindowExampleEvents gl;

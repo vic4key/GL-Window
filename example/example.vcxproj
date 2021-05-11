@@ -155,6 +155,7 @@
   <ItemGroup>
     <ClInclude Include="example.events.h" />
     <ClInclude Include="example.h" />
+    <ClInclude Include="example.image.h" />
     <ClInclude Include="example.shader.h" />
     <ClInclude Include="example.simple.h" />
     <ClInclude Include="example.vbo.h" />
