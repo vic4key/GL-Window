@@ -165,6 +165,7 @@
     <ClInclude Include="include\glwnd\geometry.h" />
     <ClInclude Include="include\glwnd\glwnd.h" />
     <ClInclude Include="include\glwnd\linmath.h" />
+    <ClInclude Include="include\glwnd\pbo.h" />
     <ClInclude Include="include\glwnd\stb_image_write.h" />
     <ClInclude Include="include\glwnd\utils.h" />
     <ClInclude Include="include\glwnd\vbo.h" />
@@ -178,6 +179,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="src\glwnd.cpp" />
+    <ClCompile Include="src\pbo.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vbo.cpp" />
   </ItemGroup>

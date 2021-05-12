@@ -42,6 +42,9 @@
     <ClInclude Include="example.image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="example.pbo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="example.cpp">
