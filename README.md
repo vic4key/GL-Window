@@ -16,6 +16,8 @@
   * Keyboard Events
   * Mouse Events
   * Drag & Drop Events
+  * Vertex Buffer Object (VBO)
+  * Pixel Buffer Object (PBO)
 * Etc
 
 
