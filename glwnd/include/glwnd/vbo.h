@@ -15,7 +15,6 @@ public:
   virtual ~VBO();
 
   void declare_data_format(GLuint offset, GLuint object_num_fields, GLenum object_field_type);
-
   void draw(GLenum mode);
 
 private:
