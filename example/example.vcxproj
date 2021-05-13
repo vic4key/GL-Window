@@ -156,6 +156,7 @@
     <ClInclude Include="example.events.h" />
     <ClInclude Include="example.h" />
     <ClInclude Include="example.image.h" />
+    <ClInclude Include="example.imgui.h" />
     <ClInclude Include="example.pbo.h" />
     <ClInclude Include="example.shader.h" />
     <ClInclude Include="example.simple.h" />

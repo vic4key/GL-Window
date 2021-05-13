@@ -13,6 +13,21 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="3rdparty">
+      <UniqueIdentifier>{03cb5091-641c-42c5-a3e9-c8568b33095c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\imgui-1.82">
+      <UniqueIdentifier>{719249ed-f2c9-4436-ad0a-3f06b265f5dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\imgui-1.82\backends">
+      <UniqueIdentifier>{1a3077af-d878-4aff-997e-6b0d07a5298e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\imgui-1.82\include">
+      <UniqueIdentifier>{384a1665-79b5-4700-80e8-5df98d642c34}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\imgui-1.82\src">
+      <UniqueIdentifier>{66f7a13b-f2ac-4446-9e00-dfe80501732d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -42,6 +57,24 @@
     <ClInclude Include="include\glwnd\pbo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="3rdparty\imgui-1.82\imstb_truetype.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui-1.82\imstb_rectpack.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui-1.82\imstb_textedit.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui-1.82\imgui_internal.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui-1.82\imgui.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="3rdparty\imgui-1.82\imconfig.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -58,6 +91,27 @@
     </ClCompile>
     <ClCompile Include="src\pbo.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_opengl3.cpp">
+      <Filter>3rdparty\imgui-1.82\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_glfw.cpp">
+      <Filter>3rdparty\imgui-1.82\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\imgui.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\imgui_demo.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\imgui_draw.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\imgui_tables.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\imgui-1.82\imgui_widgets.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

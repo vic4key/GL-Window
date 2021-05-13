@@ -16,6 +16,9 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "glfw3.lib")
 
+#include "backends/imgui_impl_glfw.h"
+#include "backends/imgui_impl_opengl3.h"
+
 #include <Windows.h>
 #include <cassert>
 
@@ -62,7 +65,11 @@ private:
 
   static void project(int width, int height);
 
+  void imgui_create();
+  void imgui_destroy();
+
   int create();
+  int display();
   int destroy();
 
 private:
@@ -76,11 +83,15 @@ private:
 
   std::vector<std::string> m_extensions;
   std::vector<std::string> m_arb_extensions;
+
+  bool m_imgui_enabled;
+  imgui_cfg m_imgui_cfg;
 };
 
 GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg)
   : m_ptr_window(nullptr), m_ptr_parent(ptr_parent)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
+  , m_imgui_enabled(false)
 {
 }
 
@@ -90,25 +101,7 @@ GLWindow::Impl::~Impl()
 
 void GLWindow::Impl::on_display()
 {
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
-
-  auto r = GetRValue(m_bg) / 255.F;
-  auto g = GetGValue(m_bg) / 255.F;
-  auto b = GetBValue(m_bg) / 255.F;
-
-  glClearColor(r, g, b, 1.F);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  glPushMatrix();
-  glPushAttrib(GL_ALL_ATTRIB_BITS);
-  {
-    m_ptr_parent->on_display();
-  }
-  glPopAttrib();
-  glPopMatrix();
-
-  glFlush();
+  m_ptr_parent->on_display();
 }
 
 void GLWindow::Impl::on_resize(int width, int height)
@@ -165,9 +158,9 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
 
   ptr_parent->on_resize(width, height);
 
-  ptr_parent->on_display();
+  ptr_parent->display();
 
-  glfwPollEvents(); //  TODO: Vic. Recheck.
+  glfwPollEvents(); // TODO: Vic. Recheck.
   glfwSwapBuffers(ptr_window);
 }
 
@@ -383,7 +376,7 @@ int GLWindow::Impl::create()
   const auto s = wglGetExtensionsStringARB(wglGetCurrentDC());
   m_arb_extensions = Utils::split_string_t<std::string>(s, " ");
 
-  // setup window view port
+  // setup window view-port
 
   project(m_width, m_height);
 
@@ -392,31 +385,44 @@ int GLWindow::Impl::create()
 
 int GLWindow::Impl::destroy()
 {
+  // destroy the window and clean-up resources
+
   if (m_ptr_window == nullptr)
   {
     glfwDestroyWindow(m_ptr_window);
     glfwTerminate();
   }
 
-  // terminate process // TODO: Vic. Recheck.
-
   return 0;
 }
 
 int GLWindow::Impl::run()
 {
+  // create context for drawing
+
   if (this->create() != 0)
   {
     return __LINE__;
   }
 
-  // Initialize before drawing
+  // setup context for the imgui framework
+
+  if (m_imgui_enabled)
+  {
+    this->imgui_create();
+  }
+
+  // initialize before drawing
 
   m_ptr_parent->initial();
 
   while (glfwWindowShouldClose(m_ptr_window) == GLFW_FALSE)
   {
-    this->on_display();
+    // display drawing content
+
+    this->display();
+
+    // polling events & swapping buffer
 
     glfwPollEvents();
     glfwSwapBuffers(m_ptr_window);
@@ -426,7 +432,14 @@ int GLWindow::Impl::run()
 
   m_ptr_parent->final();
 
-  // destroy the window then terminate the application
+  // destroy the imgui framework
+
+  if (m_imgui_enabled)
+  {
+    this->imgui_destroy();
+  }
+
+  // destroy the context and clean-up the resources of drawing
 
   if (this->destroy() != 0)
   {
@@ -434,6 +447,100 @@ int GLWindow::Impl::run()
   }
 
   return 0;
+}
+
+void GLWindow::Impl::imgui_create()
+{
+  IMGUI_CHECKVERSION();
+
+  ImGui::CreateContext();
+  ImGuiIO& io = ImGui::GetIO(); (void)io;
+
+  // io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard; // Enable Keyboard Controls
+  // io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;  // Enable Gamepad Controls
+
+  // setup style for the imgui framework
+
+  switch (m_imgui_cfg.style)
+  {
+  case imgui_cfg::styles::IMGUI_DARK:
+    ImGui::StyleColorsDark();
+    break;
+
+  case imgui_cfg::styles::IMGUI_LIGHT:
+    ImGui::StyleColorsLight();
+    break;
+
+  default:
+    ImGui::StyleColorsClassic();
+    break;
+  }
+
+  // setup platform/renderer back-end for the imgui framework
+
+  const char* glsl_version = "#version 130";
+  ImGui_ImplGlfw_InitForOpenGL(m_ptr_window, true);
+  ImGui_ImplOpenGL3_Init(glsl_version);
+
+  if (!m_imgui_cfg.font_path.empty() && m_imgui_cfg.font_size > 0.F)
+  {
+    io.Fonts->AddFontFromFileTTF(m_imgui_cfg.font_path.c_str(), m_imgui_cfg.font_size);
+  }
+  else
+  {
+    io.Fonts->AddFontDefault();
+  }
+}
+
+int GLWindow::Impl::display()
+{
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
+
+  auto r = GetRValue(m_bg) / 255.F;
+  auto g = GetGValue(m_bg) / 255.F;
+  auto b = GetBValue(m_bg) / 255.F;
+
+  glClearColor(r, g, b, 1.F);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  glPushMatrix();
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
+  {
+    // create a new imgui frame
+
+    if (m_imgui_enabled)
+    {
+      ImGui_ImplOpenGL3_NewFrame();
+      ImGui_ImplGlfw_NewFrame();
+      ImGui::NewFrame();
+    }
+
+    // display drawing content
+
+    this->on_display();
+
+    // render on the created imgui frame
+
+    if (m_imgui_enabled)
+    {
+      ImGui::Render();
+      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+  }
+  glPopAttrib();
+  glPopMatrix();
+
+  glFlush();
+
+  return 0;
+}
+
+void GLWindow::Impl::imgui_destroy()
+{
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
 }
 
 /**
@@ -448,6 +555,41 @@ GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg)
 GLWindow::~GLWindow()
 {
   delete m_ptr_impl;
+}
+
+void GLWindow::run()
+{
+  if (m_ptr_impl->run() != 0)
+  {
+    throw "Initialize GL Failed";
+  }
+}
+
+GLFWwindow* GLWindow::ptr_window()
+{
+  return m_ptr_impl->m_ptr_window;
+}
+
+const std::vector<std::string>& GLWindow::extensions() const
+{
+  return m_ptr_impl->m_extensions;
+}
+
+const std::vector<std::string>& GLWindow::arb_extensions() const
+{
+  return m_ptr_impl->m_arb_extensions;
+}
+
+void GLWindow::enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg)
+{
+  m_ptr_impl->m_imgui_enabled = state;
+
+  if (ptr_imgui_cfg != nullptr)
+  {
+    m_ptr_impl->m_imgui_cfg.style = ptr_imgui_cfg->style;
+    m_ptr_impl->m_imgui_cfg.font_path = ptr_imgui_cfg->font_path;
+    m_ptr_impl->m_imgui_cfg.font_size = ptr_imgui_cfg->font_size;
+  }
 }
 
 void GLWindow::initial()
@@ -503,27 +645,4 @@ void GLWindow::on_keyboard_char(unsigned int code)
 void GLWindow::on_drag_drop(const std::vector<std::string>& paths)
 {
   // OVERRIDABLE
-}
-
-void GLWindow::run()
-{
-  if (m_ptr_impl->run() != 0)
-  {
-    throw "Initialize GL Failed";
-  }
-}
-
-const std::vector<std::string>& GLWindow::extensions() const
-{
-  return m_ptr_impl->m_extensions;
-}
-
-const std::vector<std::string>& GLWindow::arb_extensions() const
-{
-  return m_ptr_impl->m_arb_extensions;
-}
-
-GLFWwindow* GLWindow::ptr_window()
-{
-  return m_ptr_impl->m_ptr_window;
 }

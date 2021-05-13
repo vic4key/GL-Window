@@ -8,6 +8,7 @@
 #include "example.events.h"
 #include "example.simple.h"
 #include "example.shader.h"
+#include "example.imgui.h"
 
 class GLWindowExample : public GLWindow
 {
@@ -40,6 +41,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
   // GLWindowExampleSimple gl;
   // GLWindowExampleEvents gl;
   // GLWindowExampleShader gl;
+  // GLWindowIMGUI gl;
   gl.run();
 
   return EXIT_SUCCESS;

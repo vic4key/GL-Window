@@ -40,13 +40,30 @@ public:
   virtual void on_drag_drop(const std::vector<std::string>& paths);
 
   void run();
+  GLFWwindow* ptr_window();
 
   const std::vector<std::string>& extensions() const;
   const std::vector<std::string>& arb_extensions() const;
 
-  GLFWwindow* ptr_window();
+  struct imgui_cfg
+  {
+    enum class styles
+    {
+      IMGUI_DARK,
+      IMGUI_CLASSIC,
+      IMGUI_LIGHT,
+    } style = styles::IMGUI_CLASSIC;
+    std::string font_path = "";
+    float font_size = 0.F;
+  };
+
+  void enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg = nullptr);
 
 private:
   class Impl;
   Impl* m_ptr_impl;
 };
+
+#define glwnd_3rd_stringize_ex(s) #s
+#define glwnd_3rd_stringize(s) glwnd_3rd_stringize_ex(s)
+#define glwnd_3rd_include(s)   glwnd_3rd_stringize(../3rdparty/s)
