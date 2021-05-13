@@ -17,7 +17,6 @@ public:
   virtual ~PBO();
 
   bool setup(GLvoid* ptr_pixel_data, int width, int height, int channel, GLint image_format, GLint display_format);
-
   bool TexImage2D();
 
 private:
@@ -25,14 +24,12 @@ private:
   bool pack(std::function<void(const void* ptr)> fn);
 
 private:
-  GLuint m_id = 0;
-
+  bool m_ready;
+  GLuint m_id;
   GLint m_display_format;
   GLvoid* m_ptr_pixel_data;
   int m_width;
   int m_height;
   int m_channel;
   GLint m_format;
-
-  bool m_ready;
 };
