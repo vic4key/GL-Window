@@ -36,7 +36,11 @@ static GLenum glwndCheckError(const char* file, int line)
     ss << error << " | " << file << " (" << line << ")" << std::endl;
   }
 
-  MessageBoxA(GetActiveWindow(), ss.str().c_str(), "ERROR", MB_OK);
+  int response = MessageBoxA(GetActiveWindow(), ss.str().c_str(), "ERROR", MB_OKCANCEL | MB_ICONERROR);
+  if (response == IDCANCEL)
+  {
+    TerminateProcess(GetCurrentProcess(), 0);
+  }
 
   return error;
 }
@@ -104,5 +108,9 @@ static void APIENTRY glDebugOutput(
   }
   ss << std::endl;
 
-  MessageBoxA(GetActiveWindow(), ss.str().c_str(), "DEBUG", MB_OK | MB_ICONERROR);
+  int response = MessageBoxA(GetActiveWindow(), ss.str().c_str(), "DEBUG", MB_OKCANCEL | MB_ICONERROR);
+  if (response == IDCANCEL)
+  {
+    TerminateProcess(GetCurrentProcess(), 0);
+  }
 }
