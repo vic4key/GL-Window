@@ -191,6 +191,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\debug.inl" />
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\pbo.cpp" />
     <ClCompile Include="src\utils.cpp" />

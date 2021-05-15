@@ -45,6 +45,8 @@ public:
   const std::vector<std::string>& extensions() const;
   const std::vector<std::string>& arb_extensions() const;
 
+  void enable_debug(bool state);
+
   struct imgui_cfg
   {
     enum class styles

@@ -7,6 +7,8 @@
 #include "glwnd/glwnd.h"
 #include "glwnd/utils.h"
 
+#include "debug.inl"
+
 #include <GL/glew.h>
 #include <GL/wglew.h>
 #include <GLFW/glfw3.h>
@@ -84,6 +86,8 @@ private:
   std::vector<std::string> m_extensions;
   std::vector<std::string> m_arb_extensions;
 
+  bool m_debug_enabled;
+
   bool m_imgui_enabled;
   imgui_cfg m_imgui_cfg;
 };
@@ -91,7 +95,7 @@ private:
 GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg)
   : m_ptr_window(nullptr), m_ptr_parent(ptr_parent)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
-  , m_imgui_enabled(false)
+  , m_debug_enabled(false), m_imgui_enabled(false)
 {
 }
 
@@ -151,10 +155,13 @@ void GLWindow::Impl::error(int code, const char* description)
 
 void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
 {
-  project(width, height);
-
   auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
   assert(ptr_parent != nullptr);
+
+  ptr_parent->m_width  = width;
+  ptr_parent->m_height = height;
+
+  project(width, height);
 
   ptr_parent->on_resize(width, height);
 
@@ -303,6 +310,13 @@ int GLWindow::Impl::create()
   // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+  // enable debugging error
+
+  if (m_debug_enabled)
+  {
+    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, GL_TRUE);
+  }
+
   // create a hidden window and re-sizable
 
   glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
@@ -354,6 +368,21 @@ int GLWindow::Impl::create()
   {
     Utils::log("GLFW -> glewInit");;
     return __LINE__;
+  }
+
+  // enable debugging error context if allows for debug context
+
+  if (m_debug_enabled)
+  {
+    int flags = 0;
+    glGetIntegerv(GL_CONTEXT_FLAGS, &flags);
+    if (flags & GL_CONTEXT_FLAG_DEBUG_BIT)
+    {
+      glEnable(GL_DEBUG_OUTPUT);
+      glEnable(GL_DEBUG_OUTPUT_SYNCHRONOUS);
+      glDebugMessageCallback(glDebugOutput, nullptr);
+      glDebugMessageControl(GL_DONT_CARE, GL_DONT_CARE, GL_DONT_CARE, 0, nullptr, GL_TRUE);
+    }
   }
 
   // logging several OpenGL information
@@ -578,6 +607,11 @@ const std::vector<std::string>& GLWindow::extensions() const
 const std::vector<std::string>& GLWindow::arb_extensions() const
 {
   return m_ptr_impl->m_arb_extensions;
+}
+
+void GLWindow::enable_debug(bool state)
+{
+  m_ptr_impl->m_debug_enabled = state;
 }
 
 void GLWindow::enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg)
