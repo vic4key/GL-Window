@@ -97,7 +97,7 @@ void TextRender::draw(
   const int w = m_ptr_parent->width();
   const int h = m_ptr_parent->height();
 
-  glPushClientAttrib(GL_ALL_ATTRIB_BITS);
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
   gltBeginDraw();
   {
     gltColor(color.r, color.g, color.b, color.a);
@@ -105,7 +105,7 @@ void TextRender::draw(
     gltDrawText2DAligned(m_ptr_text, w * x, h * y, scale, glta(ha), glta(va));
   }
   gltEndDraw();
-  glPopClientAttrib();
+  glPopAttrib();
 }
 
 }; // glwnd
