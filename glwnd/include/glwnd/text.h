@@ -33,7 +33,7 @@ public:
 	TextRender();
 	virtual ~TextRender();
 
-	bool setup(GLWindow* ptr_parent);
+	bool setup(GLWindow* ptr_parent, const std::string& font_family = "", float font_size = NULL);
 
 	void draw(
 		const std::string& text,

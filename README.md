@@ -18,7 +18,8 @@
   * Drag & Drop Events
  * Vertex Buffer Object (VBO)
  * Pixel Buffer Object (PBO)
- * Integrated Dear ImGui
+ * Integrated Dear ImGUI
+ * Text Rendering
  * Debugging Error
 * Etc
 
@@ -62,6 +63,10 @@ Released under the [MIT](LICENSE.md) license
 >[example/example.image.h](example/example.image.h)
 >
 >![](screenshots/example.image.png)
+
+>[example/example.text.h](example/example.text.h)
+
+>![](screenshots/example.text.png)
 
 >Etc
 

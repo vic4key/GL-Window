@@ -9,6 +9,7 @@
 #include "example.simple.h"
 #include "example.shader.h"
 #include "example.imgui.h"
+#include "example.text.h"
 
 class GLWindowExample : public GLWindow
 {
@@ -37,6 +38,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
   GLWindowExample gl;
   // GLWindowExampleVBO gl;
   // GLWindowExamplePBO gl;
+  // GLWindowExampleText gl;
   // GLWindowExampleImage gl;
   // GLWindowExampleSimple gl;
   // GLWindowExampleEvents gl;

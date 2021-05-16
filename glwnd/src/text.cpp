@@ -25,8 +25,10 @@ TextRender::~TextRender()
   gltDeleteText(m_ptr_text);
 }
 
-bool TextRender::setup(GLWindow* ptr_parent)
+bool TextRender::setup(GLWindow* ptr_parent, const std::string& font_family, float font_size)
 {
+  // TODO: Vic. font_family + font_size not yet implemented. 
+
   m_ptr_parent = ptr_parent;
   if (m_ptr_parent == nullptr)
   {
