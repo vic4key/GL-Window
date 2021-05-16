@@ -14,7 +14,7 @@ public:
     cfg.font_path = "C:\\Windows\\Fonts\\georgia.ttf";
     cfg.font_size = 16.F;
     this->enable_imgui(true, &cfg);
-  };
+  }
 
   virtual ~GLWindowIMGUI() {};
 

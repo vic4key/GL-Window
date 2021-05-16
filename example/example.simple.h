@@ -5,8 +5,8 @@
 class GLWindowExampleSimple : public GLWindow
 {
 public:
-  GLWindowExampleSimple() : GLWindow() {};
-  virtual ~GLWindowExampleSimple() {};
+  GLWindowExampleSimple() : GLWindow() {}
+  virtual ~GLWindowExampleSimple() {}
 
   virtual void on_display()
   {

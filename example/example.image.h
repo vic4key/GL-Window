@@ -7,8 +7,8 @@
 class GLWindowExampleImage : public GLWindow
 {
 public:
-  GLWindowExampleImage() : GLWindow() {};
-  virtual ~GLWindowExampleImage() {};
+  GLWindowExampleImage() : GLWindow() {}
+  virtual ~GLWindowExampleImage() {}
 
   virtual void initial()
   {

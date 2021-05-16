@@ -8,8 +8,8 @@
 class GLWindowExamplePBO : public GLWindow
 {
 public:
-  GLWindowExamplePBO() : GLWindow() {};
-  virtual ~GLWindowExamplePBO() {};
+  GLWindowExamplePBO() : GLWindow() {}
+  virtual ~GLWindowExamplePBO() {}
 
   virtual void initial()
   {

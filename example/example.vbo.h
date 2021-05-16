@@ -7,8 +7,8 @@
 class GLWindowExampleVBO : public GLWindow
 {
 public:
-  GLWindowExampleVBO() : GLWindow() {};
-  virtual ~GLWindowExampleVBO() {};
+  GLWindowExampleVBO() : GLWindow() {}
+  virtual ~GLWindowExampleVBO() {}
 
   virtual void on_display()
   {

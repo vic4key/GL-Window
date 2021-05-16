@@ -5,8 +5,8 @@
 class GLWindowExampleShader : public GLWindow
 {
 public:
-  GLWindowExampleShader() : GLWindow(), m_vbo(0), m_vao(0), m_shader_program(-1) {};
-  virtual ~GLWindowExampleShader() {};
+  GLWindowExampleShader() : GLWindow(), m_vbo(0), m_vao(0), m_shader_program(-1) {}
+  virtual ~GLWindowExampleShader() {}
 
   virtual void initial()
   {
