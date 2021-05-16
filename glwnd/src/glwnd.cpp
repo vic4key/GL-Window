@@ -172,9 +172,9 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   ptr_parent->m_width  = width;
   ptr_parent->m_height = height;
 
-  project(width, height);
+  project(ptr_parent->m_width, ptr_parent->m_height);
 
-  ptr_parent->on_resize(width, height);
+  ptr_parent->on_resize(ptr_parent->m_width, ptr_parent->m_height);
 
   ptr_parent->display();
 
