@@ -21,16 +21,6 @@ public:
 
   virtual void on_display()
   {
-    glColor3f(0.F, 1.F, 0.F);
-    glBegin(GL_LINES);
-    {
-      glVertex2f(-0.1F, +0.0F);
-      glVertex2f(+0.1F, +0.0F);
-      glVertex2f(+0.0F, -0.1F);
-      glVertex2f(+0.0F, +0.1F);
-    }
-    glEnd();
-
     m_text_render.draw(
       "hello world",
       0.F, 0.F,
