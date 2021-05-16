@@ -74,23 +74,23 @@
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(ProjectDir)lib\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty;$(ProjectDir)3rdparty\stb;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IntDir>$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(ProjectDir)lib\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty;$(ProjectDir)3rdparty\stb;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(ProjectDir)lib\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty;$(ProjectDir)3rdparty\stb;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(ProjectDir)lib\$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)include;$(ProjectDir)3rdparty;$(ProjectDir)3rdparty\stb;$(ProjectDir)3rdparty\imgui-1.82;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -172,7 +172,8 @@
     <ClInclude Include="include\glwnd\glwnd.h" />
     <ClInclude Include="include\glwnd\linmath.h" />
     <ClInclude Include="include\glwnd\pbo.h" />
-    <ClInclude Include="include\glwnd\stb_image_write.h" />
+    <ClInclude Include="include\glwnd\text.h" />
+    <ClInclude Include="include\glwnd\types.h" />
     <ClInclude Include="include\glwnd\utils.h" />
     <ClInclude Include="include\glwnd\vbo.h" />
     <ClInclude Include="pch.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="src\debug.inl" />
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\pbo.cpp" />
+    <ClCompile Include="src\text.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vbo.cpp" />
   </ItemGroup>

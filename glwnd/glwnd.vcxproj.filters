@@ -51,9 +51,6 @@
     <ClInclude Include="include\glwnd\linmath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\glwnd\stb_image_write.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\glwnd\pbo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -74,6 +71,12 @@
     </ClInclude>
     <ClInclude Include="3rdparty\imgui-1.82\imconfig.h">
       <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glwnd\text.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glwnd\types.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -114,6 +117,9 @@
       <Filter>3rdparty\imgui-1.82\src</Filter>
     </ClCompile>
     <ClCompile Include="src\debug.inl">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\text.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

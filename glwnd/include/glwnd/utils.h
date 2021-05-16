@@ -9,7 +9,9 @@
 #include <string>
 #include <vector>
 
-namespace Utils
+#include "types.h"
+
+namespace glwnd
 {
 
 template <class std_string_t>
@@ -43,8 +45,16 @@ std::vector<std_string_t> split_string_t(const std_string_t& str, const std_stri
   return l;
 }
 
+template <typename T>
+T conv_range(T l1, T h1, T l2, T h2, T v)
+{
+  return T(l2 + double(v - l1) * double(h2 - l2) / double(h1 - l1));
+}
+
+void read_file(const std::string& file_path, std::vector<unsigned char>& data);
+
 std::string log(const std::string format, ...);
 
-}; // utils
+}; // glwnd
 
-#define LOG(...) Utils::log(__FUNCTION__ " " __VA_ARGS__)
+#define LOG(...) glwnd::log(__FUNCTION__ " " __VA_ARGS__)

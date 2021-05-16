@@ -6,6 +6,7 @@
 
 #include "glwnd/glwnd.h"
 #include "glwnd/utils.h"
+#include "glwnd/text.h"
 
 #include "debug.inl"
 
@@ -23,6 +24,7 @@
 
 #include <Windows.h>
 #include <cassert>
+#include <chrono>
 
 /**
  * CGLWindow - Implementation
@@ -67,6 +69,8 @@ private:
 
   static void project(int width, int height);
 
+  void display_fps();
+
   void imgui_create();
   void imgui_destroy();
 
@@ -83,19 +87,23 @@ private:
   int m_height;
   COLORREF m_bg;
 
+  int m_fps;
+  TextRender m_text_render_fps;
+
   std::vector<std::string> m_extensions;
   std::vector<std::string> m_arb_extensions;
 
   bool m_debug_enabled;
+  bool m_fps_enabled;
 
   bool m_imgui_enabled;
   imgui_cfg m_imgui_cfg;
 };
 
 GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg)
-  : m_ptr_window(nullptr), m_ptr_parent(ptr_parent)
+  : m_ptr_window(nullptr), m_ptr_parent(ptr_parent), m_fps(0)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
-  , m_debug_enabled(false), m_imgui_enabled(false)
+  , m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
 {
 }
 
@@ -150,7 +158,7 @@ void GLWindow::Impl::on_drag_drop(const std::vector<std::string>& paths)
 
 void GLWindow::Impl::error(int code, const char* description)
 {
-  Utils::log("GLFW -> %d, %s", code, description);
+  glwnd::log("GLFW -> %d, %s", code, description);
 }
 
 void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
@@ -299,7 +307,7 @@ int GLWindow::Impl::create()
 
   if (!glfwInit())
   {
-    Utils::log("GLFW -> glfwInit");
+    glwnd::log("GLFW -> glfwInit");
     return __LINE__;
   }
 
@@ -325,7 +333,7 @@ int GLWindow::Impl::create()
   m_ptr_window = glfwCreateWindow(m_width, m_height, m_name.c_str(), nullptr, nullptr);
   if (m_ptr_window == nullptr)
   {
-    Utils::log("GLFW -> glfwCreateWindow");
+    glwnd::log("GLFW -> glfwCreateWindow");
     return __LINE__;
   }
 
@@ -366,7 +374,7 @@ int GLWindow::Impl::create()
   auto ret = glewInit();
   if (ret != GLEW_OK)
   {
-    Utils::log("GLFW -> glewInit");;
+    glwnd::log("GLFW -> glewInit");;
     return __LINE__;
   }
 
@@ -388,10 +396,10 @@ int GLWindow::Impl::create()
   // logging several OpenGL information
 
   auto renderer = glGetString(GL_RENDERER);
-  Utils::log("Renderer: %s", renderer);
+  glwnd::log("Renderer: %s", renderer);
 
   auto version = glGetString(GL_VERSION);
-  Utils::log("OpenGL Version: %s", version);
+  glwnd::log("OpenGL Version: %s", version);
 
   int n = 0;
   glGetIntegerv(GL_NUM_EXTENSIONS, &n);
@@ -403,11 +411,15 @@ int GLWindow::Impl::create()
   }
 
   const auto s = wglGetExtensionsStringARB(wglGetCurrentDC());
-  m_arb_extensions = Utils::split_string_t<std::string>(s, " ");
+  m_arb_extensions = glwnd::split_string_t<std::string>(s, " ");
 
   // setup window view-port
 
   project(m_width, m_height);
+
+  // set text render for fps
+
+  m_text_render_fps.setup(m_ptr_parent);
 
   return 0;
 }
@@ -521,10 +533,41 @@ void GLWindow::Impl::imgui_create()
   }
 }
 
+void GLWindow::Impl::display_fps()
+{
+  static int fps = 0;
+  fps += 1;
+
+  static auto beg_time = std::chrono::high_resolution_clock::now();
+  auto end_time = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double, std::milli> delta_time = end_time - beg_time;
+
+  if (delta_time.count() > 1000.0) // 1000ms
+  {
+    m_fps = fps;
+    fps = 0;
+    beg_time = std::chrono::high_resolution_clock::now();
+  }
+
+  static char fps_text[MAXBYTE] = { 0 };
+  sprintf_s(fps_text, "FPS : %d\0", m_fps);
+
+  m_text_render_fps.draw(
+    fps_text,
+    -0.99F, +0.99F,
+    glwnd::glcolor_t<float>(0.F, 1.F, 0.F),
+    TextRender::eTextAlignment::ALIGN_LEFT,
+    TextRender::eTextAlignment::ALIGN_TOP
+  );
+}
+
 int GLWindow::Impl::display()
 {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   auto r = GetRValue(m_bg) / 255.F;
   auto g = GetGValue(m_bg) / 255.F;
@@ -532,6 +575,13 @@ int GLWindow::Impl::display()
 
   glClearColor(r, g, b, 1.F);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+  // display fps if enabled
+
+  if (m_fps_enabled)
+  {
+    display_fps();
+  }
 
   glPushMatrix();
   glPushAttrib(GL_ALL_ATTRIB_BITS);
@@ -599,6 +649,16 @@ GLFWwindow* GLWindow::ptr_window()
   return m_ptr_impl->m_ptr_window;
 }
 
+int GLWindow::width() const
+{
+  return m_ptr_impl->m_width;
+}
+
+int GLWindow::height() const
+{
+  return m_ptr_impl->m_height;
+}
+
 const std::vector<std::string>& GLWindow::extensions() const
 {
   return m_ptr_impl->m_extensions;
@@ -607,6 +667,11 @@ const std::vector<std::string>& GLWindow::extensions() const
 const std::vector<std::string>& GLWindow::arb_extensions() const
 {
   return m_ptr_impl->m_arb_extensions;
+}
+
+void GLWindow::enable_fps(bool state)
+{
+  m_ptr_impl->m_fps_enabled = state;
 }
 
 void GLWindow::enable_debug(bool state)

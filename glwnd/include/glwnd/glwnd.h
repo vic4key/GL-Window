@@ -42,10 +42,14 @@ public:
   void run();
   GLFWwindow* ptr_window();
 
+  int width()  const;
+  int height() const;
+
   const std::vector<std::string>& extensions() const;
   const std::vector<std::string>& arb_extensions() const;
 
-  void enable_debug(bool state);
+  void enable_fps(bool state = true);
+  void enable_debug(bool state = true);
 
   struct imgui_cfg
   {
