@@ -10,6 +10,9 @@
 
 #include <vector>
 
+namespace glwnd
+{
+
 class VBO
 {
 public:
@@ -34,3 +37,5 @@ private:
   GLsizei m_group_size;
   std::vector<GLuint> m_used_client_states;
 };
+
+}; // glwnd

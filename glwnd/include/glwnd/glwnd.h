@@ -9,13 +9,16 @@
 #include <string>
 #include <vector>
 
-typedef unsigned long color_t;
-
-const color_t COLOR_BLACK = 0x000000;
-const color_t COLOR_WHITE = 0xFFFFFF;
-const color_t COLOR_GRAY  = 0x303030;
+#include "types.h"
 
 struct GLFWwindow;
+
+namespace glwnd
+{
+
+const color_t COLOR_BLACK = 0x00000000;
+const color_t COLOR_WHITE = 0x00FFFFFF;
+const color_t COLOR_GRAY  = 0x00303030;
 
 class GLWindow
 {
@@ -73,3 +76,5 @@ private:
 #define glwnd_3rd_stringize_ex(s) #s
 #define glwnd_3rd_stringize(s) glwnd_3rd_stringize_ex(s)
 #define glwnd_3rd_include(s)   glwnd_3rd_stringize(../3rdparty/s)
+
+}; // glwnd

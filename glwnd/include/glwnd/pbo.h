@@ -10,6 +10,9 @@
 
 #include <functional>
 
+namespace glwnd
+{
+
 class PBO
 {
 public:
@@ -33,3 +36,5 @@ private:
   int m_channel;
   GLint m_format;
 };
+
+}; // glwnd

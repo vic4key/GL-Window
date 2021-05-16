@@ -16,7 +16,7 @@
 #define DEG2RAD(angle) ((angle) * M_PI / 180.0)
 #define RAD2DEG(angle) ((angle) * 180.0 / M_PI)
 
-namespace Geo
+namespace glwnd
 {
 
 template <typename T>
@@ -600,4 +600,4 @@ private:
   T m_bottom;
 };
 
-}; // Geo
+}; // glwnd

@@ -9,6 +9,9 @@
 #include <cstring>
 #include <cassert>
 
+namespace glwnd
+{
+
 PBO::PBO()
   : m_ready(false)
   , m_display_format(0)
@@ -131,3 +134,5 @@ bool PBO::pack(std::function<void(const void* ptr)> fn)
 
   return true;
 }
+
+}; // glwnd

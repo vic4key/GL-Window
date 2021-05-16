@@ -8,6 +8,9 @@
 
 #pragma warning(disable : 4312)
 
+namespace glwnd
+{
+
 static auto gl_sizeof_type= [](GLenum type) -> GLuint
 {
   GLuint result = 0;
@@ -147,3 +150,5 @@ void VBO::declare_normal_format(GLuint offset, GLuint num_elements, GLenum eleme
     *ptr_next_offset = offset + num_elements * gl_sizeof_type(element_type);
   }
 }
+
+}; // glwnd

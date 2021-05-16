@@ -11,6 +11,9 @@
 #define GLT_IMPLEMENTATION
 #include "gltext/gltext.h"
 
+namespace glwnd
+{
+
 static bool g_gltext_initialized = false;
 
 TextRender::TextRender() : m_ptr_parent(nullptr), m_ptr_text(nullptr)
@@ -104,3 +107,5 @@ void TextRender::draw(
   gltEndDraw();
   glPopClientAttrib();
 }
+
+}; // glwnd

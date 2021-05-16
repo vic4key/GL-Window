@@ -30,12 +30,15 @@
  * CGLWindow - Implementation
  */
 
+namespace glwnd
+{
+
 class GLWindow::Impl
 {
   friend GLWindow;
 
 public:
-  Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg = RGB(0, 0, 0));
+  Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, color_t bg);
   virtual ~Impl();
 
   void on_display();
@@ -85,7 +88,7 @@ private:
   std::string m_name;
   int m_width;
   int m_height;
-  COLORREF m_bg;
+  color_t m_bg;
 
   int m_fps;
   TextRender m_text_render_fps;
@@ -100,7 +103,7 @@ private:
   imgui_cfg m_imgui_cfg;
 };
 
-GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, COLORREF bg)
+GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, color_t bg)
   : m_ptr_window(nullptr), m_ptr_parent(ptr_parent), m_fps(0)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
@@ -569,9 +572,9 @@ int GLWindow::Impl::display()
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  auto r = GetRValue(m_bg) / 255.F;
-  auto g = GetGValue(m_bg) / 255.F;
-  auto b = GetBValue(m_bg) / 255.F;
+  auto r = m_bg.r / 255.F;
+  auto g = m_bg.g / 255.F;
+  auto b = m_bg.b / 255.F;
 
   glClearColor(r, g, b, 1.F);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -745,3 +748,5 @@ void GLWindow::on_drag_drop(const std::vector<std::string>& paths)
 {
   // OVERRIDABLE
 }
+
+}; // glwnd

@@ -11,8 +11,12 @@
 
 #include "types.h"
 
-class  GLWindow;
 struct GLTtext;
+
+namespace glwnd
+{
+
+class  GLWindow;
 
 class TextRender
 {
@@ -45,3 +49,5 @@ private:
 	GLWindow* m_ptr_parent;
 	GLTtext*  m_ptr_text;
 };
+
+}; // glwnd
