@@ -314,10 +314,12 @@ int GLWindow::Impl::create()
     return __LINE__;
   }
 
-  // setup OpenGL attributes that run-time using in the application
+  // configure OpenGL like require a minimum version, forward compatible, etc
+  // for run-time using in the application
+  // https://www.glfw.org/docs/latest/window_guide.html#window_hints
 
-  // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-  // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+  // glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+  // glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
   // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
