@@ -11,6 +11,8 @@
 #include "example.imgui.h"
 #include "example.text.h"
 
+#include <memory>
+
 class GLWindowExample : public GLWindow
 {
 public:
@@ -35,16 +37,17 @@ public:
 
 int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLine, int nCmdShow)
 {
-  GLWindowExample gl;
-  // GLWindowExampleVBO gl;
-  // GLWindowExamplePBO gl;
-  // GLWindowExampleText gl;
-  // GLWindowExampleImage gl;
-  // GLWindowExampleSimple gl;
-  // GLWindowExampleEvents gl;
-  // GLWindowExampleShader gl;
-  // GLWindowIMGUI gl;
-  gl.run();
+  std::unique_ptr<GLWindow> gl;
+  gl.reset(new GLWindowExample);
+  // gl.reset(new GLWindowExampleVBO);
+  // gl.reset(new GLWindowExamplePBO);
+  // gl.reset(new GLWindowExampleText);
+  // gl.reset(new GLWindowExampleImage);
+  // gl.reset(new GLWindowExampleSimple);
+  // gl.reset(new GLWindowExampleEvents);
+  // gl.reset(new GLWindowExampleShader);
+  // gl.reset(new GLWindowIMGUI);
+  gl->run();
 
   return EXIT_SUCCESS;
 }
