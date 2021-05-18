@@ -16,9 +16,9 @@ struct GLFWwindow;
 namespace glwnd
 {
 
-const color_t COLOR_BLACK = 0x00000000;
-const color_t COLOR_WHITE = 0x00FFFFFF;
-const color_t COLOR_GRAY  = 0x00303030;
+const color_t COLOR_BLACK = 0xFF000000;
+const color_t COLOR_WHITE = 0xFFFFFFFF;
+const color_t COLOR_GRAY  = 0xFF303030;
 
 class GLWindow
 {
@@ -42,18 +42,13 @@ public:
 
   virtual void on_drag_drop(const std::vector<std::string>& paths);
 
+public:
   void run();
-  GLFWwindow* ptr_window();
-
-  int width()  const;
-  int height() const;
-
-  const std::vector<std::string>& extensions() const;
-  const std::vector<std::string>& arb_extensions() const;
-
+  void clear(color_t* pbg = nullptr);
   void enable_fps(bool state = true);
   void enable_debug(bool state = true);
 
+public:
   struct imgui_cfg
   {
     enum class styles
@@ -67,6 +62,15 @@ public:
   };
 
   void enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg = nullptr);
+
+public:
+  GLFWwindow* ptr_window();
+
+  int width()  const;
+  int height() const;
+
+  const std::vector<std::string>& extensions() const;
+  const std::vector<std::string>& arb_extensions() const;
 
 private:
   class Impl;

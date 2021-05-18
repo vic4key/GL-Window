@@ -54,7 +54,9 @@ public:
 
   void on_drag_drop(const std::vector<std::string>& paths);
 
-  int run();
+public:
+  int  run();
+  void clear(color_t* pbg = nullptr);
 
 private:
   static void error(int code, const char* description);
@@ -72,14 +74,15 @@ private:
 
   static void project(int width, int height);
 
-  void display_fps();
+private:
+  int create();
+  int display();
+  int destroy();
 
   void imgui_create();
   void imgui_destroy();
 
-  int create();
-  int display();
-  int destroy();
+  void display_fps();
 
 private:
   GLWindow*   m_ptr_parent;
@@ -400,6 +403,9 @@ int GLWindow::Impl::create()
 
   // logging several OpenGL information
 
+  auto vendor = glGetString(GL_VENDOR);
+  glwnd::log("Vendor: %s", vendor);
+
   auto renderer = glGetString(GL_RENDERER);
   glwnd::log("Renderer: %s", renderer);
 
@@ -438,6 +444,57 @@ int GLWindow::Impl::destroy()
     glfwDestroyWindow(m_ptr_window);
     glfwTerminate();
   }
+
+  return 0;
+}
+
+int GLWindow::Impl::display()
+{
+  glEnable(GL_DEPTH_TEST);
+  glDepthFunc(GL_LESS);
+
+  glEnable(GL_BLEND);
+  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+  // clear background
+
+  this->clear();
+
+  // display fps if enabled
+
+  if (m_fps_enabled)
+  {
+    display_fps();
+  }
+
+  glPushMatrix();
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
+  {
+    // create a new imgui frame
+
+    if (m_imgui_enabled)
+    {
+      ImGui_ImplOpenGL3_NewFrame();
+      ImGui_ImplGlfw_NewFrame();
+      ImGui::NewFrame();
+    }
+
+    // display drawing content
+
+    this->on_display();
+
+    // render on the created imgui frame
+
+    if (m_imgui_enabled)
+    {
+      ImGui::Render();
+      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+    }
+  }
+  glPopAttrib();
+  glPopMatrix();
+
+  glFlush();
 
   return 0;
 }
@@ -495,6 +552,18 @@ int GLWindow::Impl::run()
   return 0;
 }
 
+void GLWindow::Impl::clear(color_t* pbg)
+{
+  auto bg = pbg != nullptr ? *pbg : m_bg;
+  auto r = bg.r / 255.F;
+  auto g = bg.g / 255.F;
+  auto b = bg.b / 255.F;
+  auto a = bg.a / 255.F;
+
+  glClearColor(r, g, b, a);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
 void GLWindow::Impl::imgui_create()
 {
   IMGUI_CHECKVERSION();
@@ -538,6 +607,13 @@ void GLWindow::Impl::imgui_create()
   }
 }
 
+void GLWindow::Impl::imgui_destroy()
+{
+  ImGui_ImplOpenGL3_Shutdown();
+  ImGui_ImplGlfw_Shutdown();
+  ImGui::DestroyContext();
+}
+
 void GLWindow::Impl::display_fps()
 {
   static int fps = 0;
@@ -566,67 +642,6 @@ void GLWindow::Impl::display_fps()
   );
 }
 
-int GLWindow::Impl::display()
-{
-  glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
-
-  glEnable(GL_BLEND);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-  auto r = m_bg.r / 255.F;
-  auto g = m_bg.g / 255.F;
-  auto b = m_bg.b / 255.F;
-
-  glClearColor(r, g, b, 1.F);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-  // display fps if enabled
-
-  if (m_fps_enabled)
-  {
-    display_fps();
-  }
-
-  glPushMatrix();
-  glPushAttrib(GL_ALL_ATTRIB_BITS);
-  {
-    // create a new imgui frame
-
-    if (m_imgui_enabled)
-    {
-      ImGui_ImplOpenGL3_NewFrame();
-      ImGui_ImplGlfw_NewFrame();
-      ImGui::NewFrame();
-    }
-
-    // display drawing content
-
-    this->on_display();
-
-    // render on the created imgui frame
-
-    if (m_imgui_enabled)
-    {
-      ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    }
-  }
-  glPopAttrib();
-  glPopMatrix();
-
-  glFlush();
-
-  return 0;
-}
-
-void GLWindow::Impl::imgui_destroy()
-{
-  ImGui_ImplOpenGL3_Shutdown();
-  ImGui_ImplGlfw_Shutdown();
-  ImGui::DestroyContext();
-}
-
 /**
  * CGLWindow
  */
@@ -639,14 +654,6 @@ GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg)
 GLWindow::~GLWindow()
 {
   delete m_ptr_impl;
-}
-
-void GLWindow::run()
-{
-  if (m_ptr_impl->run() != 0)
-  {
-    throw "Initialize GL Failed";
-  }
 }
 
 GLFWwindow* GLWindow::ptr_window()
@@ -672,6 +679,19 @@ const std::vector<std::string>& GLWindow::extensions() const
 const std::vector<std::string>& GLWindow::arb_extensions() const
 {
   return m_ptr_impl->m_arb_extensions;
+}
+
+void GLWindow::run()
+{
+  if (m_ptr_impl->run() != 0)
+  {
+    throw "Initialize GL Failed";
+  }
+}
+
+void GLWindow::clear(color_t* pbg)
+{
+  m_ptr_impl->clear(pbg);
 }
 
 void GLWindow::enable_fps(bool state)
