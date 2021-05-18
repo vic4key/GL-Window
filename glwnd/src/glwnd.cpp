@@ -554,13 +554,8 @@ int GLWindow::Impl::run()
 
 void GLWindow::Impl::clear(color_t* pbg)
 {
-  auto bg = pbg != nullptr ? *pbg : m_bg;
-  auto r = bg.r / 255.F;
-  auto g = bg.g / 255.F;
-  auto b = bg.b / 255.F;
-  auto a = bg.a / 255.F;
-
-  glClearColor(r, g, b, a);
+  glcolor_t<GLclampf> bg(pbg != nullptr ? *pbg : m_bg);
+  glClearColor(bg.r, bg.g, bg.b, bg.a);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
