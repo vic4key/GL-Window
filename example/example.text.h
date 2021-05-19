@@ -15,10 +15,6 @@ public:
     m_text_render.setup(this, "C:\\Windows\\Fonts\\cour.ttf", 72);
   }
 
-  virtual void final()
-  {
-  }
-
   virtual void on_display()
   {
     m_text_render.draw(
