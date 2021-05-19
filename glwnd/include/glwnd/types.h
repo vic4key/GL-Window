@@ -24,21 +24,22 @@ struct color_t
     };
   };
 
-  color_t(dword_t _rgba) : rgba(_rgba) {};
+  color_t(dword_t color) : rgba(color) {};
+
   color_t(byte_t _r, byte_t _g, byte_t _b, byte_t _a = 0xFF) : r(_r), g(_g), b(_b), a(_a) {};
 
-  color_t& operator=(dword_t _rgba)
+  color_t& operator=(dword_t color)
   {
-    rgba = _rgba;
+    rgba = color;
   }
 
-  color_t& operator=(const color_t& _rgba)
+  color_t& operator=(const color_t& color)
   {
-    rgba = _rgba.rgba;
+    rgba = color.rgba;
   }
 };
 
-template <typename T>
+template <typename T = float>
 struct glcolor_t
 {
   T r;
@@ -48,12 +49,34 @@ struct glcolor_t
 
   glcolor_t(T _r, T _g, T _b, T _a = T(1)) : r(_r), g(_g), b(_b), a(_a) {};
 
+  glcolor_t(const dword_t& color)
+  {
+    (*this) = glcolor_t(color_t(color));
+  }
+
   glcolor_t(const color_t& color)
+  {
+    (*this) = color;
+  }
+
+  glcolor_t(const glcolor_t& color)
+  {
+    (*this) = color;
+  }
+
+  glcolor_t& operator=(const dword_t& color)
+  {
+    (*this) = color_t(color);
+    return (*this);
+  }
+
+  glcolor_t& operator=(const color_t& color)
   {
     r = color.r / T(0xFF);
     g = color.g / T(0xFF);
     b = color.b / T(0xFF);
     a = color.a / T(0xFF);
+    return (*this);
   }
 
   glcolor_t& operator=(const glcolor_t& color)
@@ -62,6 +85,7 @@ struct glcolor_t
     g = color.g;
     b = color.b;
     a = color.a;
+    return (*this);
   }
 };
 
