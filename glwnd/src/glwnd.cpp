@@ -76,8 +76,10 @@ private:
 
 private:
   int create();
-  int display();
   int destroy();
+  int initial();
+  int final();
+  int display();
 
   void imgui_create();
   void imgui_destroy();
@@ -289,6 +291,8 @@ void GLWindow::Impl::project(int width, int height)
   width  = width  == 0 ? 1 : width;
   height = height == 0 ? 1 : height;
 
+  glViewport(0, 0, width, height);
+
   GLfloat aspect = GLfloat(width) / GLfloat(height);
 
   if (width >= height)
@@ -301,8 +305,7 @@ void GLWindow::Impl::project(int width, int height)
   }
 
   glMatrixMode(GL_MODELVIEW);
-
-  glViewport(0, 0, width, height);
+  glLoadIdentity();
 }
 
 int GLWindow::Impl::create()
@@ -448,7 +451,8 @@ int GLWindow::Impl::destroy()
   return 0;
 }
 
-int GLWindow::Impl::display()
+
+int GLWindow::Impl::initial()
 {
   glEnable(GL_DEPTH_TEST);
   glDepthFunc(GL_LESS);
@@ -456,9 +460,25 @@ int GLWindow::Impl::display()
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-  // clear background
+  glShadeModel(GL_SMOOTH);
+  glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
 
-  this->clear();
+  this->clear(); // set default background color
+
+  m_ptr_parent->initial();
+
+  return 0;
+}
+
+int GLWindow::Impl::final()
+{
+  m_ptr_parent->final();
+  return 0;
+}
+
+int GLWindow::Impl::display()
+{
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
   // display fps if enabled
 
@@ -517,7 +537,7 @@ int GLWindow::Impl::run()
 
   // initialize before drawing
 
-  m_ptr_parent->initial();
+  this->initial();
 
   while (glfwWindowShouldClose(m_ptr_window) == GLFW_FALSE)
   {
@@ -533,7 +553,7 @@ int GLWindow::Impl::run()
 
   // finalize after drawing
 
-  m_ptr_parent->final();
+  this->final();
 
   // destroy the imgui framework
 
@@ -550,13 +570,6 @@ int GLWindow::Impl::run()
   }
 
   return 0;
-}
-
-void GLWindow::Impl::clear(color_t* pbg)
-{
-  glcolor_t<GLclampf> bg(pbg != nullptr ? *pbg : m_bg);
-  glClearColor(bg.r, bg.g, bg.b, bg.a);
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void GLWindow::Impl::imgui_create()
@@ -635,6 +648,13 @@ void GLWindow::Impl::display_fps()
     TextRender::eTextAlignment::ALIGN_LEFT,
     TextRender::eTextAlignment::ALIGN_TOP
   );
+}
+
+void GLWindow::Impl::clear(color_t* pbg)
+{
+  glcolor_t<GLclampf> bg(pbg != nullptr ? *pbg : m_bg);
+  glClearColor(bg.r, bg.g, bg.b, bg.a);
+  glClearDepth(1.F);
 }
 
 /**
