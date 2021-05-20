@@ -472,12 +472,24 @@ public:
   }
 };
 
-// RectT - The rectangle template (Window Coordinate System)
+// rect_t - The rectangle template (window coordinate system)
+//
+//  .-----> Y
+//  |
+//  |
+//  v
+//  X
 
 template <typename T>
 class rect_t
 {
 public:
+  enum flip_t
+  {
+    vertical,
+    horizontal,
+  };
+
   rect_t()
   {
     set(T(0), T(0), T(0), T(0));
@@ -539,6 +551,8 @@ public:
     m_right = T(r);
     m_top = T(t);
     m_bottom = T(b);
+    m_fliped[flip_t::vertical] = false;
+    m_fliped[flip_t::vertical] = false;
   }
 
   void set(const T width, const T height)
@@ -553,7 +567,9 @@ public:
 
   point_2d_t<T> origin()
   {
-    return point_2d_t<T>(m_left, m_top);
+    return point_2d_t<T>(
+      m_fliped[flip_t::horizontal] ? m_right  : m_left,
+      m_fliped[flip_t::vertical]   ? m_bottom : m_top);
   }
 
   point_2d_t<T> center()
@@ -592,11 +608,22 @@ public:
     return rect_t(m_left + dx, m_top - dy, m_right - dx, m_bottom + dy);
   }
 
-  void flip()
+  void flip(flip_t v)
   {
-    m_top += m_bottom;
-    m_bottom = m_top - m_bottom;
-    m_top -= m_bottom;
+    if (v == flip_t::horizontal)
+    {
+      m_left += m_right;
+      m_right = m_left - m_right;
+      m_left -= m_right;
+      m_fliped[v] = !m_fliped[v];
+    }
+    else if (v == flip_t::vertical)
+    {
+      m_top += m_bottom;
+      m_bottom = m_top - m_bottom;
+      m_top -= m_bottom;
+      m_fliped[v] = !m_fliped[v];
+    }
   }
 
   // operator RECT() const // cast to RECT
@@ -638,6 +665,7 @@ private:
   T m_top;
   T m_right;
   T m_bottom;
+  bool m_fliped[2]; // refer to flip_t
 };
 
 }; // glwnd
