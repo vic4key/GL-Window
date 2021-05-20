@@ -127,17 +127,17 @@ public:
     set_ex(D, X, Y, Z, W);
   }
 
-  const T& x() const
+  T x()
   {
     return m_v[0];
   }
 
-  const T& y() const
+  T y()
   {
     return m_v[1];
   }
 
-  const T& z() const
+  T z()
   {
     return m_v[2];
   }
@@ -491,6 +491,46 @@ public:
   rect_t(const T width, const T height)
   {
     set(width, height);
+  }
+
+  T left()
+  {
+    return m_left;
+  }
+
+  void left(const T v)
+  {
+    m_left = v;
+  }
+
+  T right()
+  {
+    return m_right;
+  }
+
+  void right(const T v)
+  {
+    m_right = v;
+  }
+
+  T top()
+  {
+    return m_top;
+  }
+
+  void top(const T v)
+  {
+    m_top = v;
+  }
+
+  T bottom()
+  {
+    return m_bottom;
+  }
+
+  void bottom(const T v)
+  {
+    m_bottom = v;
   }
 
   void set(const T l, const T t, const T r, const T b)
