@@ -72,7 +72,7 @@ private:
 
   static void drag_drop(GLFWwindow* ptr_window, int cout, const char** pptr_paths);
 
-  static void project(int width, int height);
+  static void project(GLViewPort* ptr_viewport, int width, int height);
 
 private:
   int create();
@@ -87,8 +87,9 @@ private:
   void display_fps();
 
 private:
-  GLWindow*   m_ptr_parent;
   GLFWwindow* m_ptr_window;
+  GLWindow*   m_ptr_parent;
+  GLViewPort* m_ptr_viewport;
 
   std::string m_name;
   int m_width;
@@ -109,14 +110,16 @@ private:
 };
 
 GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, color_t bg)
-  : m_ptr_window(nullptr), m_ptr_parent(ptr_parent), m_fps(0)
+  : m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_ptr_parent(ptr_parent)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
-  , m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
+  , m_fps(0), m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
 {
+  m_ptr_viewport = new GLViewPort(m_ptr_parent);
 }
 
 GLWindow::Impl::~Impl()
 {
+  delete m_ptr_viewport;
 }
 
 void GLWindow::Impl::on_display()
@@ -177,7 +180,7 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   ptr_parent->m_width  = width;
   ptr_parent->m_height = height;
 
-  project(ptr_parent->m_width, ptr_parent->m_height);
+  project(ptr_parent->m_ptr_viewport, ptr_parent->m_width, ptr_parent->m_height);
 
   ptr_parent->on_resize(ptr_parent->m_width, ptr_parent->m_height);
 
@@ -283,26 +286,47 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
   ptr_parent->on_drag_drop(paths);
 }
 
-void GLWindow::Impl::project(int width, int height)
+void GLWindow::Impl::project(GLViewPort* ptr_viewport, int width, int height)
 {
+  assert(ptr_viewport != nullptr);
+  auto& coordinate = ptr_viewport->coordinate();
+  auto& clip = coordinate.clip;
+  auto& ndc = coordinate.ndc;
+
+  // change the current context matrix to projection
+
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
+  // setup the clip coordinate (clip coordinate on screen in pixel)
+
   width  = width  == 0 ? 1 : width;
   height = height == 0 ? 1 : height;
+  clip.set(0, 0, width, height);
+  clip.flip(rect_t<GLint>::flip_t::vertical); // window coordinate -> gl clip coordinate
 
-  glViewport(0, 0, width, height);
+  glViewport(0, 0, clip.width(), clip.height());
 
-  GLfloat aspect = GLfloat(width) / GLfloat(height);
+  // setup the ndc coordinate (normalized device coordinate)
 
-  if (width >= height)
+  const GLdouble aspect = GLdouble(clip.width()) / GLdouble(clip.height());
+
+  ndc.set(-1.0, +1.0, +1.0, -1.0);
+
+  if (clip.width() >= clip.height())
   {
-    gluOrtho2D(-1.0 * aspect, +1.0 * aspect, -1.0, +1.0);
+    ndc.left(ndc.left() * aspect);
+    ndc.right(ndc.right() * aspect);
   }
   else
   {
-    gluOrtho2D(-1.0, +1.0, -1.0 / aspect, +1.0 / aspect);
+    ndc.top(ndc.top() / aspect);
+    ndc.bottom(ndc.bottom() / aspect);
   }
+
+  gluOrtho2D(ndc.left(), ndc.right(), ndc.bottom(), ndc.top());
+
+  // change the current context matrix to model-view
 
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
@@ -429,7 +453,7 @@ int GLWindow::Impl::create()
 
   // setup window view-port
 
-  project(m_width, m_height);
+  project(m_ptr_viewport, m_width, m_height);
 
   // set text render for fps
 
@@ -671,19 +695,14 @@ GLWindow::~GLWindow()
   delete m_ptr_impl;
 }
 
-GLFWwindow* GLWindow::ptr_window()
+GLFWwindow& GLWindow::window()
 {
-  return m_ptr_impl->m_ptr_window;
+  return *(m_ptr_impl->m_ptr_window);
 }
 
-int GLWindow::width() const
+GLViewPort& GLWindow::viewport()
 {
-  return m_ptr_impl->m_width;
-}
-
-int GLWindow::height() const
-{
-  return m_ptr_impl->m_height;
+  return *(m_ptr_impl->m_ptr_viewport);
 }
 
 const std::vector<std::string>& GLWindow::extensions() const

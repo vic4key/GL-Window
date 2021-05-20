@@ -176,6 +176,7 @@
     <ClInclude Include="include\glwnd\types.h" />
     <ClInclude Include="include\glwnd\utils.h" />
     <ClInclude Include="include\glwnd\vbo.h" />
+    <ClInclude Include="include\glwnd\viewport.h" />
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
@@ -198,6 +199,7 @@
     <ClCompile Include="src\text.cpp" />
     <ClCompile Include="src\utils.cpp" />
     <ClCompile Include="src\vbo.cpp" />
+    <ClCompile Include="src\viewport.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="include\glwnd\glwnd" />

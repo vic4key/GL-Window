@@ -10,6 +10,7 @@
 #include <vector>
 
 #include "types.h"
+#include "viewport.h"
 
 struct GLFWwindow;
 
@@ -64,10 +65,8 @@ public:
   void enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg = nullptr);
 
 public:
-  GLFWwindow* ptr_window();
-
-  int width()  const;
-  int height() const;
+  GLFWwindow& window();
+  GLViewPort& viewport();
 
   const std::vector<std::string>& extensions() const;
   const std::vector<std::string>& arb_extensions() const;

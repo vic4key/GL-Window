@@ -78,6 +78,9 @@
     <ClInclude Include="include\glwnd\types.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\viewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -120,6 +123,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\text.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
