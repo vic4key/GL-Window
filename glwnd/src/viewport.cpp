@@ -38,7 +38,7 @@ void GLViewPort::setup(int width, int height)
   width  = width  == 0 ? 1 : width;
   height = height == 0 ? 1 : height;
   clip.set(0, 0, width, height);
-  clip.flip(rect_t<GLint>::flip_t::vertical); // window coordinate -> gl clip coordinate
+  clip.flip(r4i::flip_t::vertical); // window coordinate -> gl clip coordinate
 
   glViewport(0, 0, clip.width(), clip.height());
 

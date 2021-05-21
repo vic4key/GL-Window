@@ -19,8 +19,8 @@ class GLViewPort
 public:
   struct coordinate_t
   {
-    rect_t<GLint> clip;
-    rect_t<GLdouble> ndc;
+    r4i clip;
+    r4d ndc;
   };
 
   GLViewPort(GLWindow& parent);
