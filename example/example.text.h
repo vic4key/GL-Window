@@ -18,8 +18,7 @@ public:
   virtual void on_display()
   {
     m_text_render.draw(
-      "hello world",
-      0.F, 0.F,
+      "hello world", 0.F, 0.F,
       glwnd::glcolor_t<float>(0.F, 1.F, 0.F),
       TextRender::eTextAlignment::ALIGN_CENTER,
       TextRender::eTextAlignment::ALIGN_CENTER,
