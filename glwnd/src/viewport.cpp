@@ -10,7 +10,7 @@
 namespace glwnd
 {
 
-GLViewPort::GLViewPort(GLWindow* ptr_parent) : m_ptr_parent(ptr_parent)
+GLViewPort::GLViewPort(GLWindow& parent) : m_parent(parent)
 {
 }
 

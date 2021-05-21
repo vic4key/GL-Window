@@ -112,7 +112,7 @@ GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, i
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_fps(0), m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
 {
-  m_ptr_viewport = new GLViewPort(m_ptr_parent);
+  m_ptr_viewport = new GLViewPort(*m_ptr_parent);
 }
 
 GLWindow::Impl::~Impl()

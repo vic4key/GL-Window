@@ -23,7 +23,7 @@ public:
     rect_t<GLdouble> ndc;
   };
 
-  GLViewPort(GLWindow* ptr_parent);
+  GLViewPort(GLWindow& parent);
   virtual ~GLViewPort();
 
   coordinate_t& coordinate();
@@ -31,7 +31,7 @@ public:
   void setup(int width, int height);
 
 private:
-  GLWindow* m_ptr_parent;
+  GLWindow& m_parent;
   coordinate_t m_coordinate;
 };
 
