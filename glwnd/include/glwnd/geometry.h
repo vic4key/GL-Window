@@ -247,6 +247,10 @@ public:
   }
 };
 
+typedef point_2d_t<int> p2i;
+typedef point_2d_t<float> p2f;
+typedef point_2d_t<double> p2d;
+
 // point_3d_t - The 3D point template
 
 template <typename T>
@@ -271,6 +275,10 @@ public:
   }
 };
 
+typedef point_3d_t<int> p3i;
+typedef point_3d_t<float> p3f;
+typedef point_3d_t<double> p3d;
+
 // point_4d_t - The 4D point template
 
 template <typename T>
@@ -294,6 +302,10 @@ public:
     *this += v;
   }
 };
+
+typedef point_4d_t<int> p4i;
+typedef point_4d_t<float> p4f;
+typedef point_4d_t<double> p4d;
 
 // vector_t - The vector template
 
@@ -419,6 +431,10 @@ public:
   }
 };
 
+typedef vector_2d_t<int> v2i;
+typedef vector_2d_t<float> v2f;
+typedef vector_2d_t<double> v2d;
+
 // vector_3d_t - The 3D vector template
 
 template <typename T>
@@ -447,6 +463,10 @@ public:
   }
 };
 
+typedef vector_3d_t<int> v3i;
+typedef vector_3d_t<float> v3f;
+typedef vector_3d_t<double> v3d;
+
 // vector_4d_t - The 4D vector template
 
 template <typename T>
@@ -471,6 +491,10 @@ public:
     return result;
   }
 };
+
+typedef vector_4d_t<int> v4i;
+typedef vector_4d_t<float> v4f;
+typedef vector_4d_t<double> v4d;
 
 // rect_t - The rectangle template (window coordinate system)
 //
@@ -667,5 +691,9 @@ private:
   T m_bottom;
   bool m_fliped[2]; // refer to flip_t
 };
+
+typedef rect_t<int> r4i;
+typedef rect_t<float> r4f;
+typedef rect_t<double> r4d;
 
 }; // glwnd
