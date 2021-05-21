@@ -172,34 +172,34 @@ void GLWindow::Impl::error(int code, const char* description)
 
 void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
-  ptr_parent->m_width  = width;
-  ptr_parent->m_height = height;
+  ptr_parent_impl->m_width  = width;
+  ptr_parent_impl->m_height = height;
 
-  ptr_parent->m_ptr_viewport->setup(ptr_parent->m_width, ptr_parent->m_height);
+  ptr_parent_impl->m_ptr_viewport->setup(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
 
-  ptr_parent->on_resize(ptr_parent->m_width, ptr_parent->m_height);
+  ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
 
-  ptr_parent->display();
+  ptr_parent_impl->display();
 
-  glfwPollEvents(); // TODO: Vic. Recheck.
+  glfwPollEvents();
   glfwSwapBuffers(ptr_window);
 }
 
 void GLWindow::Impl::mouse_move(GLFWwindow* ptr_window, double x, double y)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
-  ptr_parent->on_mouse_move(x, y);
+  ptr_parent_impl->on_mouse_move(x, y);
 }
 
 void GLWindow::Impl::mouse_enter_leave(GLFWwindow* ptr_window, int entered)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
   double x = 0, y = 0;
   glfwGetCursorPos(ptr_window, &x, &y);
@@ -227,31 +227,31 @@ void GLWindow::Impl::mouse_enter_leave(GLFWwindow* ptr_window, int entered)
     y = height;
   }
 
-  ptr_parent->on_mouse_enter_leave(entered != 0, x, y);
+  ptr_parent_impl->on_mouse_enter_leave(entered != 0, x, y);
 }
 
 void GLWindow::Impl::mouse_click(GLFWwindow* ptr_window, int button, int action, int mods)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
-  ptr_parent->on_mouse_click(button, action, mods);
+  ptr_parent_impl->on_mouse_click(button, action, mods);
 }
 
 void GLWindow::Impl::mouse_wheel(GLFWwindow* ptr_window, double delta_x, double delta_y)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
-  ptr_parent->on_mouse_wheel(delta_x, delta_y);
+  ptr_parent_impl->on_mouse_wheel(delta_x, delta_y);
 }
 
 void GLWindow::Impl::keyboard_key(GLFWwindow* ptr_window, int key, int code, int action, int mods)
 {
-  auto pParent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(pParent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
-  pParent->on_keyboard_key(key, code, action, mods);
+  ptr_parent_impl->on_keyboard_key(key, code, action, mods);
 
   if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
   {
@@ -262,16 +262,16 @@ void GLWindow::Impl::keyboard_key(GLFWwindow* ptr_window, int key, int code, int
 
 void GLWindow::Impl::keyboard_char(GLFWwindow* ptr_window, unsigned int code)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
-  ptr_parent->on_keyboard_char(code);
+  ptr_parent_impl->on_keyboard_char(code);
 }
 
 void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** pptr_paths)
 {
-  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent != nullptr);
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
 
   std::vector<std::string> paths;
   paths.reserve(count);
@@ -281,7 +281,7 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
     paths.push_back(pptr_paths[i]);
   }
 
-  ptr_parent->on_drag_drop(paths);
+  ptr_parent_impl->on_drag_drop(paths);
 }
 
 int GLWindow::Impl::create()
