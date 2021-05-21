@@ -16,8 +16,6 @@ class GLWindow;
 
 class GLViewPort
 {
-  friend GLWindow;
-
 public:
   struct coordinate_t
   {
@@ -29,6 +27,8 @@ public:
   virtual ~GLViewPort();
 
   coordinate_t& coordinate();
+
+  void setup(int width, int height);
 
 private:
   GLWindow* m_ptr_parent;

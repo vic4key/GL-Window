@@ -72,8 +72,6 @@ private:
 
   static void drag_drop(GLFWwindow* ptr_window, int cout, const char** pptr_paths);
 
-  static void project(GLViewPort* ptr_viewport, int width, int height);
-
 private:
   int create();
   int destroy();
@@ -180,7 +178,7 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   ptr_parent->m_width  = width;
   ptr_parent->m_height = height;
 
-  project(ptr_parent->m_ptr_viewport, ptr_parent->m_width, ptr_parent->m_height);
+  ptr_parent->m_ptr_viewport->setup(ptr_parent->m_width, ptr_parent->m_height);
 
   ptr_parent->on_resize(ptr_parent->m_width, ptr_parent->m_height);
 
@@ -192,10 +190,10 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
 
 void GLWindow::Impl::mouse_move(GLFWwindow* ptr_window, double x, double y)
 {
-  auto pParent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(pParent != nullptr);
+  auto ptr_parent = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent != nullptr);
 
-  pParent->on_mouse_move(x, y);
+  ptr_parent->on_mouse_move(x, y);
 }
 
 void GLWindow::Impl::mouse_enter_leave(GLFWwindow* ptr_window, int entered)
@@ -284,52 +282,6 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
   }
 
   ptr_parent->on_drag_drop(paths);
-}
-
-void GLWindow::Impl::project(GLViewPort* ptr_viewport, int width, int height)
-{
-  assert(ptr_viewport != nullptr);
-  auto& coordinate = ptr_viewport->coordinate();
-  auto& clip = coordinate.clip;
-  auto& ndc = coordinate.ndc;
-
-  // change the current context matrix to projection
-
-  glMatrixMode(GL_PROJECTION);
-  glLoadIdentity();
-
-  // setup the clip coordinate (clip coordinate on screen in pixel)
-
-  width  = width  == 0 ? 1 : width;
-  height = height == 0 ? 1 : height;
-  clip.set(0, 0, width, height);
-  clip.flip(rect_t<GLint>::flip_t::vertical); // window coordinate -> gl clip coordinate
-
-  glViewport(0, 0, clip.width(), clip.height());
-
-  // setup the ndc coordinate (normalized device coordinate)
-
-  const GLdouble aspect = GLdouble(clip.width()) / GLdouble(clip.height());
-
-  ndc.set(-1.0, +1.0, +1.0, -1.0);
-
-  if (clip.width() >= clip.height())
-  {
-    ndc.left(ndc.left() * aspect);
-    ndc.right(ndc.right() * aspect);
-  }
-  else
-  {
-    ndc.top(ndc.top() / aspect);
-    ndc.bottom(ndc.bottom() / aspect);
-  }
-
-  gluOrtho2D(ndc.left(), ndc.right(), ndc.bottom(), ndc.top());
-
-  // change the current context matrix to model-view
-
-  glMatrixMode(GL_MODELVIEW);
-  glLoadIdentity();
 }
 
 int GLWindow::Impl::create()
@@ -453,7 +405,7 @@ int GLWindow::Impl::create()
 
   // setup window view-port
 
-  project(m_ptr_viewport, m_width, m_height);
+  m_ptr_viewport->setup(m_width, m_height);
 
   // set text render for fps
 
