@@ -25,30 +25,30 @@ GLViewPort::coordinate_t& GLViewPort::coordinate()
 
 void GLViewPort::setup(int width, int height)
 {
-  auto& clip = m_coordinate.clip;
-  auto& ndc  = m_coordinate.ndc;
+  auto& win = m_coordinate.win;
+  auto& ndc = m_coordinate.ndc;
 
   // change the current context matrix to projection
 
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
-  // setup the clip coordinate (clip coordinate on screen in pixel)
+  // setup the win coordinate (window coordinate on screen in pixel)
 
   width  = width  == 0 ? 1 : width;
   height = height == 0 ? 1 : height;
-  clip.set(0, 0, width, height);
-  clip.flip(r4i::flip_t::vertical); // window coordinate -> gl clip coordinate
+  win.set(0, 0, width, height);
+  win.flip(r4i::flip_t::vertical); // win coordinate -> ndc coordinate
 
-  glViewport(0, 0, clip.width(), clip.height());
+  glViewport(0, 0, win.width(), win.height());
 
   // setup the ndc coordinate (normalized device coordinate)
 
-  const GLdouble aspect = GLdouble(clip.width()) / GLdouble(clip.height());
+  const GLdouble aspect = GLdouble(win.width()) / GLdouble(win.height());
 
   ndc.set(-1.0, +1.0, +1.0, -1.0);
 
-  if (clip.width() >= clip.height())
+  if (win.width() >= win.height())
   {
     ndc.left(ndc.left() * aspect);
     ndc.right(ndc.right() * aspect);

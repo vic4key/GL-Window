@@ -96,9 +96,9 @@ void TextRender::draw(
     return result;
   };
 
-  auto& clip = m_ptr_parent->viewport().coordinate().clip;
-  int w = clip.width();
-  int h = clip.height();
+  auto& win = m_ptr_parent->viewport().coordinate().win;
+  int w = win.width();
+  int h = win.height();
 
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   gltBeginDraw();

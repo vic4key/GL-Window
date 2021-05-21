@@ -19,7 +19,7 @@ class GLViewPort
 public:
   struct coordinate_t
   {
-    r4i clip;
+    r4i win;
     r4d ndc;
   };
 
