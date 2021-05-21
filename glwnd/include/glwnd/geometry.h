@@ -127,22 +127,22 @@ public:
     set_ex(D, X, Y, Z, W);
   }
 
-  T x()
+  const T& x() const
   {
     return m_v[0];
   }
 
-  T y()
+  const T& y() const
   {
     return m_v[1];
   }
 
-  T z()
+  const T& z() const
   {
     return m_v[2];
   }
 
-  T* data()
+  const T* data() const
   {
     return reinterpret_cast<T*>(&m_v);
   }
@@ -529,7 +529,7 @@ public:
     set(width, height);
   }
 
-  T left()
+  const T& left() const
   {
     return m_left;
   }
@@ -539,7 +539,7 @@ public:
     m_left = v;
   }
 
-  T right()
+  const T& right() const
   {
     return m_right;
   }
@@ -549,7 +549,7 @@ public:
     m_right = v;
   }
 
-  T top()
+  const T& top() const
   {
     return m_top;
   }
@@ -559,7 +559,7 @@ public:
     m_top = v;
   }
 
-  T bottom()
+  const T& bottom() const
   {
     return m_bottom;
   }
