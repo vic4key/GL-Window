@@ -576,7 +576,7 @@ public:
     m_top = T(t);
     m_bottom = T(b);
     m_fliped[flip_t::vertical] = false;
-    m_fliped[flip_t::vertical] = false;
+    m_fliped[flip_t::horizontal] = false;
   }
 
   void set(const T width, const T height)
@@ -592,8 +592,8 @@ public:
   point_2d_t<T> origin()
   {
     return point_2d_t<T>(
-      m_fliped[flip_t::horizontal] ? m_right  : m_left,
-      m_fliped[flip_t::vertical]   ? m_bottom : m_top);
+      m_fliped[flip_t::horizontal] ? m_right : m_left,
+      m_fliped[flip_t::vertical] ? m_bottom : m_top);
   }
 
   point_2d_t<T> center()
