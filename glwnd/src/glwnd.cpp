@@ -38,7 +38,7 @@ class GLWindow::Impl
   friend GLWindow;
 
 public:
-  Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, color_t bg);
+  Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg);
   virtual ~Impl();
 
   void on_display();
@@ -85,8 +85,8 @@ private:
   void display_fps();
 
 private:
+  GLWindow& m_parent;
   GLFWwindow* m_ptr_window;
-  GLWindow*   m_ptr_parent;
   GLViewPort* m_ptr_viewport;
 
   std::string m_name;
@@ -107,12 +107,12 @@ private:
   imgui_cfg m_imgui_cfg;
 };
 
-GLWindow::Impl::Impl(GLWindow* ptr_parent, const std::string& name, int width, int height, color_t bg)
-  : m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_ptr_parent(ptr_parent)
+GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
+  : m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_parent(parent)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_fps(0), m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
 {
-  m_ptr_viewport = new GLViewPort(*m_ptr_parent);
+  m_ptr_viewport = new GLViewPort(m_parent);
 }
 
 GLWindow::Impl::~Impl()
@@ -122,47 +122,47 @@ GLWindow::Impl::~Impl()
 
 void GLWindow::Impl::on_display()
 {
-  m_ptr_parent->on_display();
+  m_parent.on_display();
 }
 
 void GLWindow::Impl::on_resize(int width, int height)
 {
-  m_ptr_parent->on_resize(width, height);
+  m_parent.on_resize(width, height);
 }
 
 void GLWindow::Impl::on_mouse_move(double x, double y)
 {
-  m_ptr_parent->on_mouse_move(x, y);
+  m_parent.on_mouse_move(x, y);
 }
 
 void GLWindow::Impl::on_mouse_enter_leave(bool entered, double x, double y)
 {
-  m_ptr_parent->on_mouse_enter_leave(entered, x, y);
+  m_parent.on_mouse_enter_leave(entered, x, y);
 }
 
 void GLWindow::Impl::on_mouse_click(int button, int action, int mods)
 {
-  m_ptr_parent->on_mouse_click(button, action, mods);
+  m_parent.on_mouse_click(button, action, mods);
 }
 
 void GLWindow::Impl::on_mouse_wheel(double delta_x, double delta_y)
 {
-  m_ptr_parent->on_mouse_wheel(delta_x, delta_y);
+  m_parent.on_mouse_wheel(delta_x, delta_y);
 }
 
 void GLWindow::Impl::on_keyboard_key(int key, int code, int action, int mods)
 {
-  m_ptr_parent->on_keyboard_key(key, code, action, mods);
+  m_parent.on_keyboard_key(key, code, action, mods);
 }
 
 void GLWindow::Impl::on_keyboard_char(unsigned int code)
 {
-  m_ptr_parent->on_keyboard_char(code);
+  m_parent.on_keyboard_char(code);
 }
 
 void GLWindow::Impl::on_drag_drop(const std::vector<std::string>& paths)
 {
-  m_ptr_parent->on_drag_drop(paths);
+  m_parent.on_drag_drop(paths);
 }
 
 void GLWindow::Impl::error(int code, const char* description)
@@ -409,7 +409,7 @@ int GLWindow::Impl::create()
 
   // set text render for fps
 
-  m_text_render_fps.setup(m_ptr_parent);
+  m_text_render_fps.setup(&m_parent);
 
   return 0;
 }
@@ -441,14 +441,14 @@ int GLWindow::Impl::initial()
 
   this->clear(); // set default background color
 
-  m_ptr_parent->initial();
+  m_parent.initial();
 
   return 0;
 }
 
 int GLWindow::Impl::final()
 {
-  m_ptr_parent->final();
+  m_parent.final();
   return 0;
 }
 
@@ -639,7 +639,7 @@ void GLWindow::Impl::clear(color_t* pbg)
 
 GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg)
 {
-  m_ptr_impl = new GLWindow::Impl(this, name, width, height, bg);
+  m_ptr_impl = new GLWindow::Impl(*this, name, width, height, bg);
 }
 
 GLWindow::~GLWindow()
