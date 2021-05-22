@@ -130,6 +130,8 @@ p2i GLViewPort::ndc_to_win(const p2d& point)
 
 void GLViewPort::display_coordiates()
 {
+  glPushAttrib(GL_ALL_ATTRIB_BITS);
+
   const auto auto_fn_draw_coordinate = [&](const r4i& rect, const glcolorf& color) -> void
   {
     int r = rect.right();
@@ -232,6 +234,8 @@ void GLViewPort::display_coordiates()
     glVertex2f(+0.F, +0.1F);
   }
   glEnd();
+
+  glPopAttrib();
 }
 
 }; // glwnd

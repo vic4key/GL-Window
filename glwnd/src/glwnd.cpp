@@ -467,6 +467,13 @@ int GLWindow::Impl::display()
     display_fps();
   }
 
+  // display drawing coordinates
+
+  if (m_coordiates_enabled)
+  {
+    m_ptr_viewport->display_coordiates();
+  }
+
   glPushMatrix();
   glPushAttrib(GL_ALL_ATTRIB_BITS);
   {
@@ -489,13 +496,6 @@ int GLWindow::Impl::display()
     {
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-    }
-
-    // display drawing coordinates
-
-    if (m_coordiates_enabled)
-    {
-      m_ptr_viewport->display_coordiates();
     }
   }
   glPopAttrib();
