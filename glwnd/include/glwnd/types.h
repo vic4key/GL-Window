@@ -39,7 +39,7 @@ struct color_t
   }
 };
 
-template <typename T = float>
+template <typename T>
 struct glcolor_t
 {
   T r;
@@ -88,5 +88,8 @@ struct glcolor_t
     return (*this);
   }
 };
+
+typedef glcolor_t<float>  glcolorf;
+typedef glcolor_t<double> glcolord;
 
 }; // glwnd
