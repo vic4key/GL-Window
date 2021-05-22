@@ -128,4 +128,110 @@ p2i GLViewPort::ndc_to_win(const p2d& point)
   return p2i(v.x(), v.y());
 }
 
+void GLViewPort::display_coordiates()
+{
+  const auto auto_fn_draw_coordinate = [&](const r4i& rect, const glcolorf& color) -> void
+  {
+    int r = rect.right();
+    int t = rect.top();
+    int l = rect.left();
+    int b = rect.bottom();
+
+    l += 1;
+    t -= 1;
+
+    p2d v;
+    p2i p;
+
+    glColor4f(color.r, color.g, color.b, color.a);
+    glBegin(GL_LINES);
+    {
+      // for X
+
+      // left bottom
+      p.set(l, b);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // right top
+      p.set(r, t);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // left top
+      p.set(l, t);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // right bottom
+      p.set(r, b);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // for +
+
+      // left bottom
+      p.set(l, b);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // right bottom
+      p.set(r, b);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // left top
+      p.set(l, t);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // right top
+      p.set(r, t);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // left bottom
+      p.set(l, b);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // left top
+      p.set(l, t);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // right bottom
+      p.set(r, b);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+
+      // right top
+      p.set(r, t);
+      v = this->win_to_ndc(p);
+      glVertex2d(v.x(), v.y());
+    }
+    glEnd();
+  };
+
+  // draw square/ndc coordinate
+
+  auto_fn_draw_coordinate(m_coordinate.squ, glcolorf(1., 0., 1.));
+
+  // draw window coordinate
+
+  auto_fn_draw_coordinate(m_coordinate.win, glcolorf(1., 0., 0.));
+
+  // draw center point of coordinates
+
+  glColor3f(0.F, 1.F, 0.F);
+  glBegin(GL_LINES);
+  {
+    glVertex2f(-0.1F, +0.0F);
+    glVertex2f(+0.1F, +0.0F);
+    glVertex2f(+0.F, -0.1F);
+    glVertex2f(+0.F, +0.1F);
+  }
+  glEnd();
+}
+
 }; // glwnd

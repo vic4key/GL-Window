@@ -102,6 +102,7 @@ private:
 
   bool m_debug_enabled;
   bool m_fps_enabled;
+  bool m_coordiates_enabled;
 
   bool m_imgui_enabled;
   imgui_cfg m_imgui_cfg;
@@ -110,7 +111,10 @@ private:
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
   : m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_parent(parent)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
-  , m_fps(0), m_debug_enabled(false), m_fps_enabled(false), m_imgui_enabled(false)
+  , m_fps_enabled(false), m_fps(0)
+  , m_debug_enabled(false)
+  , m_imgui_enabled(false)
+  , m_coordiates_enabled(false)
 {
   m_ptr_viewport = new GLViewPort(m_parent);
 }
@@ -486,6 +490,13 @@ int GLWindow::Impl::display()
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
+
+    // display drawing coordinates
+
+    if (m_coordiates_enabled)
+    {
+      m_ptr_viewport->display_coordiates();
+    }
   }
   glPopAttrib();
   glPopMatrix();
@@ -688,6 +699,11 @@ void GLWindow::enable_fps(bool state)
 void GLWindow::enable_debug(bool state)
 {
   m_ptr_impl->m_debug_enabled = state;
+}
+
+void glwnd::GLWindow::enable_coordiates(bool state)
+{
+  m_ptr_impl->m_coordiates_enabled = state;
 }
 
 void GLWindow::enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg)

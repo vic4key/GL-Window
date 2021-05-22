@@ -37,6 +37,8 @@ public:
   p3i ndc_to_win(const p3d& point);
   p2i ndc_to_win(const p2d& point);
 
+  void display_coordiates();
+
 private:
   GLWindow& m_parent;
   coordinate_t m_coordinate;

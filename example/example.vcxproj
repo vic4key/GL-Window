@@ -153,6 +153,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="example.coordiate.h" />
     <ClInclude Include="example.events.h" />
     <ClInclude Include="example.h" />
     <ClInclude Include="example.image.h" />
