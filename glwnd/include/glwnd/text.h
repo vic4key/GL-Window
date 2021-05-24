@@ -25,50 +25,9 @@ namespace glwnd
 
 class  GLWindow;
 
+static const int   INVALID_FONT_ID = -1;
 static const int   DEFAULT_FONT_SIZE = 14;
 static const char* DEFAULT_FONT_NAME = "C:\\Windows\\Fonts\\georgia.ttf"; // georgia.ttf cour.ttf
-
-/**
- * TextRender
- */
-
-class TextRender
-{
-public:
-	enum class eTextAlignment
-	{
-    ALIGN_TOP,
-    ALIGN_LEFT,
-    ALIGN_RIGHT,
-    ALIGN_BOTTOM,
-    ALIGN_CENTER,
-	};
-
-	TextRender();
-	virtual ~TextRender();
-
-	bool setup(GLWindow* ptr_parent, const std::string& name = DEFAULT_FONT_NAME, float size = DEFAULT_FONT_SIZE);
-
-	void draw(
-		const std::string& text,
-		float x,
-		float y,
-		glwnd::glcolor_t<float> color,
-		eTextAlignment ha = eTextAlignment::ALIGN_LEFT,
-		eTextAlignment va = eTextAlignment::ALIGN_TOP,
-		float scale = 1.F
-	);
-
-private:
-	GLWindow* m_ptr_parent;
-	GLTtext*  m_ptr_text;
-};
-
-/**
- * TextRender2D
- */
-
-static const int INVALID_FONT_ID = -1;
 
 class TextRender2D
 {

@@ -95,7 +95,7 @@ private:
   color_t m_bg;
 
   int m_fps;
-  TextRender m_text_render_fps;
+  TextRender2D m_text_render_fps;
 
   std::vector<std::string> m_extensions;
   std::vector<std::string> m_arb_extensions;
@@ -413,7 +413,7 @@ int GLWindow::Impl::create()
 
   // set text render for fps
 
-  m_text_render_fps.setup(&m_parent);
+  m_text_render_fps.initialize(&m_parent);
 
   return 0;
 }
@@ -628,13 +628,9 @@ void GLWindow::Impl::display_fps()
   static char fps_text[MAXBYTE] = { 0 };
   sprintf_s(fps_text, "FPS : %d\0", m_fps);
 
-  m_text_render_fps.draw(
-    fps_text,
-    -0.99F, +0.99F,
-    glwnd::glcolor_t<float>(0.F, 1.F, 0.F),
-    TextRender::eTextAlignment::ALIGN_LEFT,
-    TextRender::eTextAlignment::ALIGN_TOP
-  );
+  const int padding = 10;
+  const auto& win = m_ptr_viewport->coordinate().win;
+  m_text_render_fps.render_text(fps_text, p2i(padding, win.top() - 35 + padding));
 }
 
 void GLWindow::Impl::clear(color_t* pbg)
