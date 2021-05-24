@@ -1,7 +1,7 @@
 /**
  * @file   viewport.cpp
  * @author Vic P.
- * @brief  GL ViewPort
+ * @brief  GL View Port
  */
 
 #include "glwnd/viewport.h"
