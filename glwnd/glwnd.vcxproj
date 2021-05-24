@@ -161,6 +161,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="3rdparty\glfreetype\TextRenderer.hpp" />
     <ClInclude Include="3rdparty\imgui-1.82\imconfig.h" />
     <ClInclude Include="3rdparty\imgui-1.82\imgui.h" />
     <ClInclude Include="3rdparty\imgui-1.82\imgui_internal.h" />
@@ -180,6 +181,7 @@
     <ClInclude Include="pch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="3rdparty\glfreetype\TextRenderer.cpp" />
     <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_glfw.cpp" />
     <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_opengl3.cpp" />
     <ClCompile Include="3rdparty\imgui-1.82\imgui.cpp" />

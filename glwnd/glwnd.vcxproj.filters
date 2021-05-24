@@ -28,6 +28,15 @@
     <Filter Include="3rdparty\imgui-1.82\src">
       <UniqueIdentifier>{66f7a13b-f2ac-4446-9e00-dfe80501732d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdparty\glfreetype">
+      <UniqueIdentifier>{7f356896-0d7f-420d-8e52-3824a4c67fc0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\glfreetype\include">
+      <UniqueIdentifier>{95560201-52ec-44bf-87be-e2ea86b20e51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\glfreetype\src">
+      <UniqueIdentifier>{dca14b99-483b-4ae4-b644-2db74afa72fe}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -81,6 +90,9 @@
     <ClInclude Include="include\glwnd\viewport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="3rdparty\glfreetype\TextRenderer.hpp">
+      <Filter>3rdparty\glfreetype\include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -127,6 +139,9 @@
     </ClCompile>
     <ClCompile Include="src\viewport.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="3rdparty\glfreetype\TextRenderer.cpp">
+      <Filter>3rdparty\glfreetype\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
