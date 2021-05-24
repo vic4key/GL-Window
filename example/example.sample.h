@@ -22,4 +22,7 @@ public:
   {
     // your code here
   }
+
+private:
+  // your data here
 };
