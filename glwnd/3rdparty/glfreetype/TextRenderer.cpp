@@ -15,12 +15,18 @@
 #include <sstream>
 #include <vector>
 
-const int NUM_TEXTURES = 128;
+#pragma warning(push)
+#pragma warning(disable: 4018)
+#pragma warning(disable: 4244)
+#pragma warning(disable: 4267)
 
 // All ideas here ripped from a NEHE tutorial
 // http://nehe.gamedev.net/tutorial/freetype_fonts_in_opengl/24001/
 
-namespace glfreetype {
+namespace glfreetype
+{
+    const int NUM_TEXTURES = 128;
+
     // Gets the first power of 2 >= 
     // for the given int  
     inline int next_p2 (int a )
@@ -271,3 +277,5 @@ namespace glfreetype {
         pop_projection_matrix();
     }
 }
+
+#pragma warning(pop)
