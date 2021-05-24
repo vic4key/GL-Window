@@ -3,7 +3,7 @@
 /**
  * @file   viewport.h
  * @author Vic P.
- * @brief  GL ViewPort
+ * @brief  GL View Port
  */
 
 #include <gl/glew.h>
