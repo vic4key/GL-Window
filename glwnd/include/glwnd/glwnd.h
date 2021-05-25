@@ -21,6 +21,7 @@ const color_t COLOR_WHITE = 0xFFFFFFFF;
 const color_t COLOR_GRAY  = 0xFF303030;
 
 class GLViewPort;
+class GLPrimitive;
 
 class GLWindow
 {
@@ -70,6 +71,7 @@ public:
 public:
   GLFWwindow& window();
   GLViewPort& viewport();
+  GLPrimitive& renderer();
 
   const std::vector<std::string>& extensions() const;
   const std::vector<std::string>& arb_extensions() const;

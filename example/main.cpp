@@ -11,6 +11,7 @@
 #include "example.sample.h"
 #include "example.simple.h"
 #include "example.events.h"
+#include "example.primitive.h"
 
 #include <memory>
 
@@ -26,6 +27,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
   // gl.reset(new GLWindowExamplePBO);
   // gl.reset(new GLWindowIMGUI);
   // gl.reset(new GLWindowExampleText2D);
+  // gl.reset(new GLWindowExamplePrimitive);
   gl->run();
 
   return EXIT_SUCCESS;

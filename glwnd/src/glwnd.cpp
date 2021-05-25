@@ -8,6 +8,7 @@
 #include "glwnd/utils.h"
 #include "glwnd/text.h"
 #include "glwnd/viewport.h"
+#include "glwnd/primitive.h"
 
 #include "debug.inl"
 
@@ -89,6 +90,7 @@ private:
   GLWindow& m_parent;
   GLFWwindow* m_ptr_window;
   GLViewPort* m_ptr_viewport;
+  GLPrimitive* m_ptr_renderer;
 
   std::string m_name;
   int m_width;
@@ -110,7 +112,7 @@ private:
 };
 
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
-  : m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_parent(parent)
+  : m_parent(parent), m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_ptr_renderer(nullptr)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_fps_enabled(false), m_fps(0)
   , m_debug_enabled(false)
@@ -118,11 +120,13 @@ GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int h
   , m_coordiates_enabled(false)
 {
   m_ptr_viewport = new GLViewPort(m_parent);
+  m_ptr_renderer = new GLPrimitive(m_parent);
 }
 
 GLWindow::Impl::~Impl()
 {
   delete m_ptr_viewport;
+  delete m_ptr_renderer;
 }
 
 void GLWindow::Impl::on_display()
@@ -663,6 +667,11 @@ GLFWwindow& GLWindow::window()
 GLViewPort& GLWindow::viewport()
 {
   return *(m_ptr_impl->m_ptr_viewport);
+}
+
+GLPrimitive& glwnd::GLWindow::renderer()
+{
+  return *(m_ptr_impl->m_ptr_renderer);
 }
 
 const std::vector<std::string>& GLWindow::extensions() const
