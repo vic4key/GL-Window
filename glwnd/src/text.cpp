@@ -73,7 +73,7 @@ void TextRender2D::render_text(const std::string& text, const p2i& position, int
   glfreetype::print(*it->second, position.x(), position.y(), text);
 }
 
-void TextRender2D::render_text(const std::string& text, const p2d& position, int* ptr_font_id /*= nullptr*/)
+void TextRender2D::render_text(const std::string& text, const p2d& position, int* ptr_font_id)
 {
   assert(m_ptr_parent != nullptr);
   auto p = m_ptr_parent->viewport().ndc_to_win(position);

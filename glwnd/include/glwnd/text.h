@@ -3,14 +3,13 @@
 /**
  * @file   text.h
  * @author Vic P.
- * @brief  Text Render
+ * @brief  Text Render 2D
  */
 
 #include <GL/glew.h>
 #include <string>
 #include <map>
 
-#include "types.h"
 #include "geometry.h"
 
 struct GLTtext;
