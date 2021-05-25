@@ -7,6 +7,7 @@
 #include "glwnd/glwnd.h"
 #include "glwnd/utils.h"
 #include "glwnd/text.h"
+#include "glwnd/viewport.h"
 
 #include "debug.inl"
 

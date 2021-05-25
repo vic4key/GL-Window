@@ -10,7 +10,6 @@
 #include <vector>
 
 #include "types.h"
-#include "viewport.h"
 
 struct GLFWwindow;
 
@@ -20,6 +19,8 @@ namespace glwnd
 const color_t COLOR_BLACK = 0xFF000000;
 const color_t COLOR_WHITE = 0xFFFFFFFF;
 const color_t COLOR_GRAY  = 0xFF303030;
+
+class GLViewPort;
 
 class GLWindow
 {

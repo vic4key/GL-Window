@@ -6,6 +6,7 @@
 
 #include "glwnd/text.h"
 #include "glwnd/glwnd.h"
+#include "glwnd/viewport.h"
 
 #include "glfreetype/TextRenderer.hpp"
 
