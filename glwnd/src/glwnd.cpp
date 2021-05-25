@@ -19,8 +19,8 @@
 #pragma comment(lib, "glew32.lib")
 #pragma comment(lib, "glfw3.lib")
 
-#include "backends/imgui_impl_glfw.h"
-#include "backends/imgui_impl_opengl3.h"
+#include "imgui-1.82/backends/imgui_impl_glfw.h"
+#include "imgui-1.82/backends/imgui_impl_opengl3.h"
 
 #include <Windows.h>
 #include <cassert>
