@@ -6,7 +6,6 @@
  * @brief  GL View Port
  */
 
-#include <gl/glew.h>
 #include <glwnd/geometry.h>
 
 namespace glwnd

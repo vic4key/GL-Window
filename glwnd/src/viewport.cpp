@@ -8,6 +8,8 @@
 #include "glwnd/glwnd.h"
 #include <glwnd/utils.h>
 
+#include <gl/glew.h>
+
 namespace glwnd
 {
 
