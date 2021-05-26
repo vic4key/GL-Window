@@ -52,7 +52,13 @@ void GLPrimitive::circle(const p2d& center, double radius, bool fill, int nsegme
 
 void GLPrimitive::circle(const p2i& center, int radius, bool fill, int nsegments)
 {
-  assert(0);
+  assert(m_ptr_parent != nullptr);
+
+  auto c = m_ptr_parent->viewport().win_to_ndc(center);
+  auto p = m_ptr_parent->viewport().win_to_ndc(p2i(center.x() + radius, center.y()));
+  auto r = c.distance(p); // TODO: Vic. Temporary. For case viewport width == height, then r.x == r.y
+
+  this->circle(c, r, fill, nsegments);
 }
 
 void GLPrimitive::line(const p2d& p1, const p2d& p2)
@@ -67,7 +73,12 @@ void GLPrimitive::line(const p2d& p1, const p2d& p2)
 
 void GLPrimitive::line(const p2i& p1, const p2i& p2)
 {
-  assert(0);
+  assert(m_ptr_parent != nullptr);
+
+  auto p_1 = m_ptr_parent->viewport().win_to_ndc(p1);
+  auto p_2 = m_ptr_parent->viewport().win_to_ndc(p2);
+
+  this->line(p_1, p_2);
 }
 
 TextRender2D& GLPrimitive::text()
