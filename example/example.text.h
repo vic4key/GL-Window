@@ -23,6 +23,9 @@ public:
 
   virtual void on_display()
   {
+    glColor3f(1.F, 1.F, 1.F);
+    m_text_render_2d.render_text("this is a text renderer\nsupported multi-lines\nsupported multi-fonts\n...", p2d(-0.75, +0.75));
+
     glColor3f(0.F, 1.F, 0.F);
     m_text_render_2d.render_text("Courier New", p2d(0., 0.));
 
