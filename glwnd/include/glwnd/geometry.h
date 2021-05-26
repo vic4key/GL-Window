@@ -584,42 +584,42 @@ public:
     set(0, 0, width, height);
   }
 
-  bool zero()
+  bool zero() const
   {
     return (m_left == T(0) && m_right == T(0) && m_top == T(0) && m_bottom == T(0));
   }
 
-  point_2d_t<T> origin()
+  point_2d_t<T> origin() const
   {
     return point_2d_t<T>(
       m_fliped[flip_t::horizontal] ? m_right : m_left,
       m_fliped[flip_t::vertical] ? m_bottom : m_top);
   }
 
-  point_2d_t<T> center()
+  point_2d_t<T> center() const
   {
     const auto& p = this->origin();
     return point_2d_t<T>(p.x() + T(width() / 2), p.y() + T(height() / 2));
   }
 
-  T width()
+  T width() const
   {
     return T(abs(m_right - m_left));
   }
 
-  T height()
+  T height() const
   {
     return T(abs(m_bottom - m_top));
   }
 
-  T low()
+  T low() const
   {
     auto w  = this->width();
     auto h = this->height();
     return w < h ? w : h;
   }
 
-  T high()
+  T high() const
   {
     auto w = this->width();
     auto h = this->height();
