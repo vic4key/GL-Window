@@ -20,6 +20,7 @@
  * Pixel Buffer Object (PBO)
  * Integrated Dear ImGUI
  * Text Rendering
+ * Primitive Rendering
  * Debugging Error
 * Etc
 
@@ -65,8 +66,12 @@ Released under the [MIT](LICENSE.md) license
 >![](screenshots/example.image.png)
 
 >[example/example.text.h](example/example.text.h)
-
+>
 >![](screenshots/example.text.png)
+
+>[example/example.primitive.h](example/example.primitive.h)
+>
+>![](screenshots/example.primitive.png)
 
 >Etc
 

@@ -8,6 +8,8 @@
 
 #include "geometry.h"
 
+#include <gl/glew.h>
+
 namespace glwnd
 {
 
@@ -24,11 +26,24 @@ public:
 
 	void initialize(GLWindow* ptr_parent);
 
-	void circle(const p2d& center, double radius, bool fill = false, int nsegments = 100);
-	void circle(const p2i& center, int radius, bool fill = false, int nsegments = 100);
+  enum class circle_t : int
+  {
+    stipple = GL_LINES, // alias for stipple
+    solid = GL_LINE_LOOP,
+    fill = GL_POLYGON,
+  };
 
-	void line(const p2d& p1, const p2d& p2);
-	void line(const p2i& p1, const p2i& p2);
+	void circle(const p2d& center, double radius, circle_t type = circle_t::solid, int nsegments = 100);
+	void circle(const p2i& center, int radius, circle_t type = circle_t::solid, int nsegments = 100);
+
+  enum class line_t : int
+  {
+    stipple = GL_LINES, // alias for tipple
+    solid = GL_LINE_STRIP,
+  };
+
+	void line(const p2d& p1, const p2d& p2, line_t type = line_t::solid, int nsegments = 10);
+	void line(const p2i& p1, const p2i& p2, line_t type = line_t::solid, int nsegments = 10);
 
 	TextRender2D& text();
 

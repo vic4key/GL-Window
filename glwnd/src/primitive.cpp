@@ -32,12 +32,12 @@ void GLPrimitive::initialize(GLWindow* ptr_parent)
   m_ptr_text_render->initialize(m_ptr_parent);
 }
 
-void GLPrimitive::circle(const p2d& center, double radius, bool fill, int nsegments)
+void GLPrimitive::circle(const p2d& center, double radius, circle_t type, int nsegments)
 {
   double angle = 0.;
   const double step = 3.1415 * 2. / double(nsegments);
 
-  glBegin(fill ? GL_POLYGON : GL_LINE_LOOP);
+  glBegin(GLuint(type));
   {
     for (int i = 0; i < nsegments; i++)
     {
@@ -50,7 +50,7 @@ void GLPrimitive::circle(const p2d& center, double radius, bool fill, int nsegme
   glEnd();
 }
 
-void GLPrimitive::circle(const p2i& center, int radius, bool fill, int nsegments)
+void GLPrimitive::circle(const p2i& center, int radius, circle_t type, int nsegments)
 {
   assert(m_ptr_parent != nullptr);
 
@@ -58,27 +58,34 @@ void GLPrimitive::circle(const p2i& center, int radius, bool fill, int nsegments
   auto p = m_ptr_parent->viewport().win_to_ndc(p2i(center.x() + radius, center.y()));
   auto r = c.distance(p); // TODO: Vic. Temporary. For case viewport width == height, then r.x == r.y
 
-  this->circle(c, r, fill, nsegments);
+  this->circle(c, r, type, nsegments);
 }
 
-void GLPrimitive::line(const p2d& p1, const p2d& p2)
+void GLPrimitive::line(const p2d& p1, const p2d& p2, line_t type, int nsegments)
 {
   glBegin(GL_LINES);
   {
-    glVertex2d(p1.x(), p1.y());
-    glVertex2d(p2.x(), p2.y());
+    if (type == line_t::stipple)
+    {
+      // assert(0);
+    }
+    else if (type == line_t::solid)
+    {
+      glVertex2d(p1.x(), p1.y());
+      glVertex2d(p2.x(), p2.y());
+    }
   }
   glEnd();
 }
 
-void GLPrimitive::line(const p2i& p1, const p2i& p2)
+void GLPrimitive::line(const p2i& p1, const p2i& p2, line_t type, int nsegments)
 {
   assert(m_ptr_parent != nullptr);
 
   auto p_1 = m_ptr_parent->viewport().win_to_ndc(p1);
   auto p_2 = m_ptr_parent->viewport().win_to_ndc(p2);
 
-  this->line(p_1, p_2);
+  this->line(p_1, p_2, type, nsegments);
 }
 
 TextRender2D& GLPrimitive::text()
