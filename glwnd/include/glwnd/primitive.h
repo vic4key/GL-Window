@@ -38,8 +38,8 @@ public:
 
   enum class line_t : int
   {
-    stipple = GL_LINES, // alias for tipple
-    solid = GL_LINE_STRIP,
+    stipple, // alias for tipple
+    solid,
   };
 
 	void line(const p2d& p1, const p2d& p2, line_t type = line_t::solid, int nsegments = 10);
