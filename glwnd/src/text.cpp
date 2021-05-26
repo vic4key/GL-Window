@@ -29,6 +29,8 @@ TextRender2D::~TextRender2D()
 
 bool TextRender2D::initialize(GLWindow* ptr_parent, const std::string& name, const int size)
 {
+  assert(ptr_parent != nullptr);
+
   if (!m_fonts.empty())
   {
     return true;

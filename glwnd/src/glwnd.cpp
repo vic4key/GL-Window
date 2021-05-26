@@ -120,7 +120,7 @@ GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int h
   , m_coordiates_enabled(false)
 {
   m_ptr_viewport = new GLViewPort(m_parent);
-  m_ptr_renderer = new GLPrimitive(m_parent);
+  m_ptr_renderer = new GLPrimitive();
 }
 
 GLWindow::Impl::~Impl()
@@ -419,6 +419,10 @@ int GLWindow::Impl::create()
   // set text render for fps
 
   m_text_render_fps.initialize(&m_parent);
+
+  // setup render for primitive
+
+  m_ptr_renderer->initialize(&m_parent);
 
   return 0;
 }
