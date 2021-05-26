@@ -181,7 +181,7 @@ public:
 
     for (register int i = 0; i < D; i++)
     {
-      double v = absT(point.m_v[i] - m_v[i]);
+      double v = abs_t(point.m_v[i] - m_v[i]);
       result += v * v;
     }
 
@@ -598,7 +598,8 @@ public:
 
   point_2d_t<T> center()
   {
-    return point_2d_t<T>(m_left + T(width() / 2), m_top + T(height() / 2));
+    const auto& p = this->origin();
+    return point_2d_t<T>(p.x() + T(width() / 2), p.y() + T(height() / 2));
   }
 
   T width()
@@ -611,25 +612,18 @@ public:
     return T(abs(m_bottom - m_top));
   }
 
-  void translate(const T cx, const T cy)
+  T low()
   {
-    m_left += cx;
-    m_right += cx;
-    m_top += cy;
-    m_bottom += cy;
+    auto w  = this->width();
+    auto h = this->height();
+    return w < h ? w : h;
   }
 
-  void translate(const vector_2d_t<T>& vector)
+  T high()
   {
-    m_left += vector.x();
-    m_right += vector.x();
-    m_top += vector.y();
-    m_bottom += vector.y();
-  }
-
-  rect_t resize(const T dx, const T dy)
-  {
-    return rect_t(m_left + dx, m_top - dy, m_right - dx, m_bottom + dy);
+    auto w = this->width();
+    auto h = this->height();
+    return w > h ? w : h;
   }
 
   void flip(flip_t v)
@@ -650,36 +644,18 @@ public:
     }
   }
 
-  // operator RECT() const // cast to RECT
-  // {
-  //   RECT rect;
-
-  //   rect.left   = m_left;
-  //   rect.top    = m_top;
-  //   rect.right  = m_right;
-  //   rect.bottom = m_bottom;
-
-  //   return rect;
-  // }
-
   friend std::ostream& operator<<(std::ostream& os, const rect_t& v)
   {
-    os << "("
-      << v.m_left << ", "
-      << v.m_top << ", "
-      << v.m_right << ", "
-      << v.m_bottom << ")";
-
+    const auto& p = this->origin();
+    os << "(" << p.x() << ", " << p.y() << ", " << this->width()  << ", " << this->height() << ")";
     return os;
   }
 
   friend std::wostream& operator<<(std::wostream& os, const rect_t& v)
   {
-    os << L"("
-      << v.m_left << L", "
-      << v.m_top << L", "
-      << v.m_right << L", "
-      << v.m_bottom << L")";
+    const auto& p = this->origin();
+    os << L"(" << p.x() << L", " << p.y() << L", " << this->width() << L", " << this->height() << L")";
+    return os;
 
     return os;
   }
