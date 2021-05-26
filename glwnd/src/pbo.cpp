@@ -100,7 +100,7 @@ bool PBO::unpack()
   glBindBuffer(GL_PIXEL_UNPACK_BUFFER, 0);
 
   // clear the 2d texture image buffer
-  ::glTexImage2D(GL_TEXTURE_2D, 0, m_format, m_width, m_height, 0, m_display_format, GL_UNSIGNED_BYTE, nullptr);
+  // glTexImage2D(GL_TEXTURE_2D, 0, m_format, m_width, m_height, 0, m_display_format, GL_UNSIGNED_BYTE, nullptr);
 
   m_ready = true;
 
