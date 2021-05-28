@@ -33,13 +33,13 @@ public:
 
     // line
 
-    glLineWidth(5);
+    glLineWidth(1);
+    glColor3d(0., 1., 0.);
+    renderer().line(p2i(50, 50), p2i(win.width() - 50, 50), GLPrimitive::line_t::dashdot);
+
+    glLineWidth(3);
     glColor3d(1., 0., 1.);
     renderer().line(p2d(0., +0.5), p2d(0., -0.5), GLPrimitive::line_t::solid);
-
-    glLineWidth(7);
-    glColor3d(0., 1., 0.);
-    renderer().line(p2i(50, 50), p2i(win.width() - 50, 50), GLPrimitive::line_t::solid);
 
     // scatter
 

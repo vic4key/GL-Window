@@ -61,31 +61,40 @@ void GLPrimitive::circle(const p2i& center, int radius, circle_t type, int nsegm
   this->circle(c, r, type, nsegments);
 }
 
-void GLPrimitive::line(const p2d& p1, const p2d& p2, line_t type, int nsegments)
+void GLPrimitive::line(const p2d& p1, const p2d& p2, line_t type)
 {
-  glBegin(GL_LINES);
+  if (type == line_t::solid)
   {
-    if (type == line_t::stipple)
-    {
-      // assert(0);
-    }
-    else if (type == line_t::solid)
+    glBegin(GL_LINES);
     {
       glVertex2d(p1.x(), p1.y());
       glVertex2d(p2.x(), p2.y());
     }
+    glEnd();
   }
-  glEnd();
+  else
+  {
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
+    glEnable(GL_LINE_STIPPLE);
+    glLineStipple(type == line_t::dot ? 1 : 2, GLushort(type));
+    glBegin(GL_LINE_STRIP);
+    {
+      glVertex2d(p1.x(), p1.y());
+      glVertex2d(p2.x(), p2.y());
+    }
+    glEnd();
+    glPopAttrib();
+  }
 }
 
-void GLPrimitive::line(const p2i& p1, const p2i& p2, line_t type, int nsegments)
+void GLPrimitive::line(const p2i& p1, const p2i& p2, line_t type)
 {
   assert(m_ptr_parent != nullptr);
 
   auto p_1 = m_ptr_parent->viewport().win_to_ndc(p1);
   auto p_2 = m_ptr_parent->viewport().win_to_ndc(p2);
 
-  this->line(p_1, p_2, type, nsegments);
+  this->line(p_1, p_2, type);
 }
 
 void GLPrimitive::scatter(const std::initializer_list<p2d>& points)

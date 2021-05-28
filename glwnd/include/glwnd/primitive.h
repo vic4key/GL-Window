@@ -40,12 +40,14 @@ public:
 
   enum class line_t : int
   {
-    stipple, // alias for tipple
     solid,
+    dot = 0x0101,
+    dash = 0x00FF,
+    dashdot = 0x1C47,
   };
 
-	void line(const p2d& p1, const p2d& p2, line_t type = line_t::solid, int nsegments = 10);
-	void line(const p2i& p1, const p2i& p2, line_t type = line_t::solid, int nsegments = 10);
+	void line(const p2d& p1, const p2d& p2, line_t type = line_t::solid);
+	void line(const p2i& p1, const p2i& p2, line_t type = line_t::solid);
 
   void scatter(const std::initializer_list<p2d>& points);
   void scatter(const std::initializer_list<p2i>& points);
