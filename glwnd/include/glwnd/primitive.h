@@ -10,6 +10,8 @@
 
 #include <gl/glew.h>
 
+#include <initializer_list>
+
 namespace glwnd
 {
 
@@ -44,6 +46,9 @@ public:
 
 	void line(const p2d& p1, const p2d& p2, line_t type = line_t::solid, int nsegments = 10);
 	void line(const p2i& p1, const p2i& p2, line_t type = line_t::solid, int nsegments = 10);
+
+  void scatter(const std::initializer_list<p2d>& points);
+  void scatter(const std::initializer_list<p2i>& points);
 
 	TextRender2D& text();
 

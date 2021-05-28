@@ -88,6 +88,33 @@ void GLPrimitive::line(const p2i& p1, const p2i& p2, line_t type, int nsegments)
   this->line(p_1, p_2, type, nsegments);
 }
 
+void GLPrimitive::scatter(const std::initializer_list<p2d>& points)
+{
+  glBegin(GL_POINTS);
+  {
+    for (auto& point : points)
+    {
+      glVertex2d(point.x(), point.y());
+    }
+  }
+  glEnd();
+}
+
+void GLPrimitive::scatter(const std::initializer_list<p2i>& points)
+{
+  assert(m_ptr_parent != nullptr);
+
+  glBegin(GL_POINTS);
+  {
+    for (const auto& point : points)
+    {
+      auto p = m_ptr_parent->viewport().win_to_ndc(point);
+      glVertex2d(p.x(), p.y());
+    }
+  }
+  glEnd();
+}
+
 TextRender2D& GLPrimitive::text()
 {
   return *m_ptr_text_render;
