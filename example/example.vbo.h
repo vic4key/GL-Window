@@ -14,29 +14,30 @@ public:
   {
     // With VBO
 
-    float data[] =
+    GLfloat data[] =
     {
-      /*vertex*/ -1.0F, +1.0F, /*color*/ 1.0F, 0.0F, 0.0F,
-      /*vertex*/ -0.5F, +1.0F, /*color*/ 1.0F, 0.0F, 0.0F,
-      /*vertex*/ -1.0F, -1.0F, /*color*/ 1.0F, 0.0F, 0.0F,
+      /*position*/ -1.0F, +1.0F, /*color*/ 1.0F, 0.0F, 0.0F,
+      /*position*/ -0.5F, +1.0F, /*color*/ 1.0F, 0.0F, 0.0F,
+      /*position*/ -1.0F, -1.0F, /*color*/ 1.0F, 0.0F, 0.0F,
 
-      /*vertex*/ -1.0F, -1.0F, /*color*/ 0.0F, 1.0F, 0.0F,
-      /*vertex*/ -0.5F, +1.0F, /*color*/ 0.0F, 1.0F, 0.0F,
-      /*vertex*/ +0.5F, -1.0F, /*color*/ 0.0F, 1.0F, 0.0F,
+      /*position*/ -1.0F, -1.0F, /*color*/ 0.0F, 1.0F, 0.0F,
+      /*position*/ -0.5F, +1.0F, /*color*/ 0.0F, 1.0F, 0.0F,
+      /*position*/ +0.5F, -1.0F, /*color*/ 0.0F, 1.0F, 0.0F,
 
-      /*vertex*/ +0.5F, -1.0F, /*color*/ 0.0F, 0.0F, 1.0F,
-      /*vertex*/ -0.5F, +1.0F, /*color*/ 0.0F, 0.0F, 1.0F,
-      /*vertex*/ +1.0F, +1.0F, /*color*/ 0.0F, 0.0F, 1.0F,
+      /*position*/ +0.5F, -1.0F, /*color*/ 0.0F, 0.0F, 1.0F,
+      /*position*/ -0.5F, +1.0F, /*color*/ 0.0F, 0.0F, 1.0F,
+      /*position*/ +1.0F, +1.0F, /*color*/ 0.0F, 0.0F, 1.0F,
 
-      /*vertex*/ +1.0F, +1.0F, /*color*/ 1.0F, 0.0F, 1.0F,
-      /*vertex*/ +0.5F, -1.0F, /*color*/ 1.0F, 0.0F, 1.0F,
-      /*vertex*/ +1.0F, -1.0F, /*color*/ 1.0F, 0.0F, 1.0F,
+      /*position*/ +1.0F, +1.0F, /*color*/ 1.0F, 0.0F, 1.0F,
+      /*position*/ +0.5F, -1.0F, /*color*/ 1.0F, 0.0F, 1.0F,
+      /*position*/ +1.0F, -1.0F, /*color*/ 1.0F, 0.0F, 1.0F,
     };
 
-    GLuint next_offset = 0;
-    VBO vbo(data, sizeof(data), 5 * sizeof(float)); // 1 group (vertex 2f, color 3f) = 5f elements
-    vbo.declare_vertex_format(next_offset, 2, GL_FLOAT, &next_offset); // vertex -> 2f
-    vbo.declare_color_format (next_offset, 3, GL_FLOAT, &next_offset); // color  -> 3f
+    GLuint offset = 0;
+    GLuint vds_size = 5 * sizeof(GLfloat); // this vds has 2 attributes(position 2f + color 3f = 5f)
+    VBO vbo(data, sizeof(data), vds_size);
+    offset = vbo.declare_position_format(offset, 2, GL_FLOAT, vds_size); // position -> 2f
+    offset = vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);    // color    -> 3f
     vbo.draw(GL_TRIANGLES);
 
     // Without VBO

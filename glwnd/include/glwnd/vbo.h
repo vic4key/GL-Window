@@ -10,21 +10,32 @@
 
 #include <vector>
 
+/**
+ * Vertex Data Structure aka VDS - a data structure stored any/all of the following attributes:
+ *  - position
+ *  - color
+ *  - texture
+ *  - normal
+ *  - etc
+ */
+
 namespace glwnd
 {
 
 class VBO
 {
 public:
-  VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei group_size, GLenum usage = GL_STATIC_DRAW);
+  VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
   virtual ~VBO();
 
-  void declare_vertex_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset = nullptr);
-  void declare_color_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset = nullptr);
-  void declare_texture_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset = nullptr);
-  void declare_normal_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset = nullptr);
+  GLuint declare_position_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
+  GLuint declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
+  GLuint declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
+  GLuint declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
 
   void draw(GLenum mode);
+
+  GLuint get_num_elements() const;
 
 private:
   void bind();
@@ -33,8 +44,8 @@ private:
 private:
   bool    m_binded;
   GLuint  m_id;
-  GLuint  m_num_groups;
-  GLsizei m_group_size;
+  GLsizei m_vds_size;
+  GLuint  m_num_elements;
   std::vector<GLuint> m_used_client_states;
 };
 

@@ -50,11 +50,11 @@ static auto gl_sizeof_type= [](GLenum type) -> GLuint
   return result;
 };
 
-VBO::VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei group_size, GLenum usage)
-  : m_id(0), m_group_size(group_size), m_binded(false)
+VBO::VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
+  : m_id(0), m_vds_size(vds_size), m_binded(false)
 {
-  // calculate number of groups
-  m_num_groups = data_size / group_size;
+  // calculate number of elements in the data block
+  m_num_elements = data_size / vds_size;
 
   // allocate memory in GPU
   glGenBuffers(1, &m_id);
@@ -94,61 +94,54 @@ void VBO::enable_client_state(GLenum state)
 
 void VBO::draw(const GLenum mode)
 {
-  glDrawArrays(mode, 0, m_num_groups);
+  glDrawArrays(mode, 0, m_num_elements);
 }
 
-void VBO::declare_vertex_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset)
+GLuint VBO::get_num_elements() const
+{
+  return m_num_elements;
+}
+
+GLuint VBO::declare_position_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
   this->bind();
   this->enable_client_state(GL_VERTEX_ARRAY);
 
-  glVertexPointer(num_elements, element_type, m_group_size, reinterpret_cast<GLvoid*>(offset));
+  glVertexPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  if (ptr_next_offset != nullptr)
-  {
-    *ptr_next_offset = offset + num_elements * gl_sizeof_type(element_type);
-  }
+  return num * gl_sizeof_type(type);
 }
 
-void VBO::declare_color_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset)
+GLuint VBO::declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
   this->bind();
   this->enable_client_state(GL_COLOR_ARRAY);
 
-  glColorPointer(num_elements, element_type, m_group_size, reinterpret_cast<GLvoid*>(offset));
+  glColorPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  if (ptr_next_offset != nullptr)
-  {
-    *ptr_next_offset = offset + num_elements * gl_sizeof_type(element_type);
-  }
+  return num * gl_sizeof_type(type);
 }
 
-void VBO::declare_texture_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset)
+GLuint VBO::declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
   this->bind();
   this->enable_client_state(GL_TEXTURE_COORD_ARRAY);
 
   glClientActiveTexture(GL_TEXTURE0);
 
-  glTexCoordPointer(num_elements, element_type, m_group_size, reinterpret_cast<GLvoid*>(offset));
+  glTexCoordPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  if (ptr_next_offset != nullptr)
-  {
-    *ptr_next_offset = offset + num_elements * gl_sizeof_type(element_type);
-  }
+  return num * gl_sizeof_type(type);
 }
 
-void VBO::declare_normal_format(GLuint offset, GLuint num_elements, GLenum element_type, GLuint* ptr_next_offset)
+GLuint VBO::declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
   this->bind();
   this->enable_client_state(GL_NORMAL_ARRAY);
 
-  glNormalPointer(element_type, m_group_size, reinterpret_cast<GLvoid*>(offset));
+  glNormalPointer(type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  if (ptr_next_offset != nullptr)
-  {
-    *ptr_next_offset = offset + num_elements * gl_sizeof_type(element_type);
-  }
+  return num * gl_sizeof_type(type);
 }
 
 }; // glwnd
