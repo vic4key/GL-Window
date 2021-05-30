@@ -6,6 +6,8 @@
 
 #include "glwnd/vbo.h"
 
+#include <cassert>
+
 #pragma warning(disable : 4312)
 
 namespace glwnd
@@ -62,6 +64,11 @@ VBO::VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
 
   // send and store data to GPU
   glBufferData(GL_ARRAY_BUFFER, data_size, data_ptr, usage);
+
+  // verify the stored data size is the sane as the sent data size
+  GLsizei stored_data_size = 0;
+  glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
+  assert(data_size == stored_data_size);
 }
 
 VBO::~VBO()
