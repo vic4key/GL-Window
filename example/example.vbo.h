@@ -34,7 +34,7 @@ public:
     };
 
     GLuint offset = 0;
-    GLuint vds_size = 5 * sizeof(GLfloat); // this vds has 2 attributes(position 2f + color 3f = 5f)
+    GLuint vds_size = 5 * sizeof(GLfloat); // this vds has 2 attributes (position 2f + color 3f = 5f)
     VBO vbo(data, sizeof(data), vds_size);
     offset = vbo.declare_position_format(offset, 2, GL_FLOAT, vds_size); // position -> 2f
     offset = vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);    // color    -> 3f

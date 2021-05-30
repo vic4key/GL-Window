@@ -11,7 +11,7 @@
 #include <vector>
 
 /**
- * Vertex Data Structure aka VDS - a data structure stored any/all of the following attributes:
+ * VERTEX DATA STRUCTURE aka VDS - a data structure stored any/all of the following attributes:
  *  - position
  *  - color
  *  - texture
@@ -25,8 +25,21 @@ namespace glwnd
 class VBO
 {
 public:
+
+  // Note parameters for VDS data block
+  //  data_ptr - the pointer of VDS data block
+  //  data_ptr - the size of VDS data block
+  //  vds_size - the size of an element or that is total size of all attributes in a VDS
+  //  usage    - define that how the buffer object is going to be used
+
   VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
   virtual ~VBO();
+
+  // Note parameters for AN ATTRIBUTE in VDS
+  //  offset - the start offset
+  //  num    - the number of elements (eg. 2f, 3f, etc)
+  //  type   - the data type of an element (eg. 2f, 2d, 3f, 3d, etc)
+  //  stride - the distance in bytes between the offset of current and next element (eg. p[0]->p[1], c[0]->c[1], etc)
 
   GLuint declare_position_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
   GLuint declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
