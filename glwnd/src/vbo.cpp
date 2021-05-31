@@ -101,6 +101,7 @@ void VBO::enable_client_state(GLenum state)
 
 void VBO::draw(const GLenum mode)
 {
+  this->bind();
   glDrawArrays(mode, 0, m_num_elements);
 }
 
