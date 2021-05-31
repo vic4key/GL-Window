@@ -440,11 +440,15 @@ int GLWindow::Impl::destroy()
   return 0;
 }
 
-
 int GLWindow::Impl::initial()
 {
   glEnable(GL_DEPTH_TEST);
-  glDepthFunc(GL_LESS);
+  glDepthMask(GL_TRUE);
+  // glDepthFunc(GL_EQUAL);
+
+  glEnable(GL_STENCIL_TEST);
+  glStencilMask(0xFF);
+  // glStencilFunc(GL_EQUAL, 1, 0xFF);
 
   glEnable(GL_BLEND);
   glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -467,7 +471,7 @@ int GLWindow::Impl::final()
 
 int GLWindow::Impl::display()
 {
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
   // display fps if enabled
 
@@ -647,6 +651,7 @@ void GLWindow::Impl::clear(color_t* pbg)
   glcolor_t<GLclampf> bg(pbg != nullptr ? *pbg : m_bg);
   glClearColor(bg.r, bg.g, bg.b, bg.a);
   glClearDepth(1.F);
+  glClearStencil(0);
 }
 
 /**
