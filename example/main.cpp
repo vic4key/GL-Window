@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "example.vbo.h"
 #include "example.pbo.h"
+#include "example.vds.h"
 #include "example.text.h"
 #include "example.image.h"
 #include "example.imgui.h"
@@ -25,6 +26,7 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
   // gl.reset(new GLWindowExampleImage);
   // gl.reset(new GLWindowExampleVBO);
   // gl.reset(new GLWindowExamplePBO);
+  // gl.reset(new GLWindowExampleVDS);
   // gl.reset(new GLWindowIMGUI);
   // gl.reset(new GLWindowExampleText2D);
   // gl.reset(new GLWindowExamplePrimitive);
