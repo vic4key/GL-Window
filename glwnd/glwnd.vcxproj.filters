@@ -96,6 +96,9 @@
     <ClInclude Include="include\glwnd\primitive.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\tex2d.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -147,6 +150,9 @@
       <Filter>3rdparty\glfreetype\src</Filter>
     </ClCompile>
     <ClCompile Include="src\primitive.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tex2d.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

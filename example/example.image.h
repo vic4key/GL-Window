@@ -2,7 +2,7 @@
 
 #include "example.h"
 
-#include <SOIL2/SOIL2>
+#include <glwnd/tex2d.h>
 
 class GLWindowExampleImage : public GLWindow
 {
@@ -12,29 +12,18 @@ public:
 
   virtual void initial()
   {
-    m_ptr_image = SOIL_load_image("data\\example.png", &m_width, &m_height, 0, SOIL_LOAD_RGBA);
+    glEnable(GL_TEXTURE_2D);
+    m_tex2d.init_from_image_file("data\\example.png");
   }
 
   virtual void final()
   {
-    SOIL_free_image_data(m_ptr_image);
+    glDisable(GL_TEXTURE_2D);
   }
 
   virtual void on_display()
   {
-    GLuint texture = 0;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_ptr_image);
-
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, texture);
+    m_tex2d.use();
 
     glBegin(GL_QUADS);
     {
@@ -44,14 +33,8 @@ public:
       glTexCoord2i(0, 0); glVertex2f(-1.F, +1.F); // left  top
     }
     glEnd();
-
-    glBindTexture(GL_TEXTURE_2D, 0);
-    glDisable(GL_TEXTURE_2D);
-
-    glDeleteTextures(1, &texture);
   }
 
 private:
-  int m_width = 0, m_height = 0;
-  unsigned char* m_ptr_image = nullptr;
+  glwnd::Tex2D m_tex2d;
 };
