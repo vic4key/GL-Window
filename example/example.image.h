@@ -12,17 +12,13 @@ public:
 
   virtual void initial()
   {
-    glEnable(GL_TEXTURE_2D);
     m_tex2d.init_from_image_file("data\\example.png");
-  }
-
-  virtual void final()
-  {
-    glDisable(GL_TEXTURE_2D);
   }
 
   virtual void on_display()
   {
+    glEnable(GL_TEXTURE_2D);
+
     m_tex2d.use();
 
     glBegin(GL_QUADS);
@@ -33,6 +29,8 @@ public:
       glTexCoord2i(0, 0); glVertex2f(-1.F, +1.F); // left  top
     }
     glEnd();
+
+    glDisable(GL_TEXTURE_2D);
   }
 
 private:
