@@ -21,12 +21,10 @@ public:
 	Tex2D(GLint wrap = GL_CLAMP, GLint filter = GL_LINEAR);
 	virtual ~Tex2D();
 
-	bool init_from_image_file(const std::string& file_path);
-	bool init(GLsizei width, GLsizei height, GLvoid* ptr_pixels, GLint iformat, GLenum format);
+	bool initialize_from_image_file(const std::string& file_path);
+	bool initialize(GLsizei width, GLsizei height, GLvoid* ptr_pixels, GLint iformat, GLenum format);
 
 	void use(bool state = true);
-	void bind();
-	void unbind();
 
 private:
 	GLuint m_id;
