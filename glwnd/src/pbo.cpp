@@ -5,6 +5,7 @@
  */
 
 #include "glwnd/pbo.h"
+#include "glwnd/defs.h"
 
 #include <cstring>
 #include <cassert>
@@ -14,16 +15,20 @@ namespace glwnd
 
 PBO::PBO()
   : m_ready(false)
+  , m_id(GL_INVALID_ID)
   , m_display_format(0)
   , m_ptr_pixel_data(nullptr), m_width(0), m_height(0), m_channel(0), m_format(0)
 {
-  // glGenBuffers(1, &m_id);
 }
 
 PBO::~PBO()
 {
-  if (m_id > 0)
+  if (m_id != GL_INVALID_ID)
   {
+    // release memory after used
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    // deallocate memory in GPU
     glDeleteBuffers(1, &m_id);
   }
 }
@@ -35,8 +40,11 @@ bool PBO::setup(GLvoid* ptr_pixel_data, int width, int height, int channel, GLin
     return true;
   }
 
-  glGenBuffers(1, &m_id);
-  assert(m_id > 0);
+  // allocate memory in GPU
+  if (m_id == GL_INVALID_ID)
+  {
+    glGenBuffers(1, &m_id);
+  }
 
   m_display_format = display_format;
 

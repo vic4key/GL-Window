@@ -32,8 +32,11 @@ public:
   //  vds_size - the size of an element or that is total size of all attributes in a VDS
   //  usage    - define that how the buffer object is going to be used
 
+  VBO();
   VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
   virtual ~VBO();
+
+  void initialize(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
 
   // Note parameters for AN ATTRIBUTE in VDS
   //  offset - the start offset

@@ -13,21 +13,8 @@ public:
   GLWindowExampleVDS2A() : GLWindow() {}
   virtual ~GLWindowExampleVDS2A() {}
 
-  virtual void on_display()
+  virtual void initial()
   {
-    glMatrixMode(GL_PROJECTION_MATRIX);
-    gluPerspective(45, 1.F, 0.1, 100);
-
-    glMatrixMode(GL_MODELVIEW_MATRIX);
-    glTranslatef(0, 0, -5);
-
-    // rotate cube by Y-axis
-
-    static float rotate_angle = 0;
-    if (rotate_angle > 360.) rotate_angle = 0;
-    rotate_angle += 0.5F;
-    glRotatef(rotate_angle, 0, 1, 0);
-
     // define vds format and draw
 
     static GLfloat data[] =
@@ -42,11 +29,32 @@ public:
 
     GLuint offset = 0;
     GLuint vds_size = 6 * sizeof(GLfloat); // this vds has 2 attributes (position 3f + color 3f = 6f)
-    static VBO vbo(&data, sizeof(data), vds_size);
-    offset += vbo.declare_position_format(offset, 3, GL_FLOAT, vds_size);
-    offset += vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
-    vbo.draw(GL_QUADS);
+    m_vbo.initialize(&data, sizeof(data), vds_size);
+    offset += m_vbo.declare_position_format(offset, 3, GL_FLOAT, vds_size);
+    offset += m_vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
   }
+
+  virtual void on_display()
+  {
+    glMatrixMode(GL_PROJECTION_MATRIX);
+    gluPerspective(45, 1.F, 0.1, 100);
+
+    glMatrixMode(GL_MODELVIEW_MATRIX);
+    glTranslatef(0, 0, -5);
+
+    // rotate cube by Y-axis
+
+    static float rotate_angle = 0;
+    if (rotate_angle++ > 360.) rotate_angle = 0;
+    glRotatef(rotate_angle, 0, 1, 0);
+
+    // draw cube via vbo
+
+    m_vbo.draw(GL_QUADS);
+  }
+
+private:
+  VBO m_vbo;
 };
 
 // Example VDS with fully 4 attributes : position + normal + color + texcoord
@@ -89,28 +97,8 @@ public:
     // initialize the 2d texture
 
     m_tex2d.initialize_from_image_file("data\\512x512.bmp");
-  }
 
-  virtual void on_display()
-  {
-    glMatrixMode(GL_PROJECTION_MATRIX);
-    gluPerspective(45, 1.F, 0.1, 100);
-
-    glMatrixMode(GL_MODELVIEW_MATRIX);
-    glTranslatef(0, 0, -2.5);
-
-    // rotate cube by Y-axis
-
-    static float rotate_angle = 0;
-    if (rotate_angle > 360.) rotate_angle = 0;
-    rotate_angle += 0.5F;
-    glRotatef(rotate_angle, 0, 1, 0);
-
-    // use the 2d for uv mapping on cube
-
-    m_tex2d.use();
-
-    // define vds format and draw
+    // initialize vbo and define vds format
 
     static GLfloat data[] =
     {
@@ -152,25 +140,47 @@ public:
     };
 
     GLuint vds_size = (3 + 3 + 3 + 2) * sizeof(GLfloat);
-    static VBO vbo(&data, sizeof(data), vds_size);
+    m_vbo.initialize(&data, sizeof(data), vds_size);
 
     GLuint attr_offset, attr_size;
 
     attr_offset = 0;
-    attr_size = vbo.declare_position_format(attr_offset, 3, GL_FLOAT, 0);
+    attr_size = m_vbo.declare_position_format(attr_offset, 3, GL_FLOAT, 0);
 
-    attr_offset += attr_size * vbo.get_num_elements();
-    attr_size = vbo.declare_normal_format(attr_offset, 3, GL_FLOAT, 0);
+    attr_offset += attr_size * m_vbo.get_num_elements();
+    attr_size = m_vbo.declare_normal_format(attr_offset, 3, GL_FLOAT, 0);
 
-    attr_offset += attr_size * vbo.get_num_elements();
-    vbo.declare_color_format(attr_offset, 3, GL_FLOAT, 0);
+    attr_offset += attr_size * m_vbo.get_num_elements();
+    m_vbo.declare_color_format(attr_offset, 3, GL_FLOAT, 0);
 
-    attr_offset += attr_size * vbo.get_num_elements();
-    attr_size = vbo.declare_texture_format(attr_offset, 2, GL_FLOAT, 0);
+    attr_offset += attr_size * m_vbo.get_num_elements();
+    attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT, 0);
+  }
 
-    vbo.draw(GL_QUADS);
+  virtual void on_display()
+  {
+    glMatrixMode(GL_PROJECTION_MATRIX);
+    gluPerspective(45, 1.F, 0.1, 100);
+
+    glMatrixMode(GL_MODELVIEW_MATRIX);
+    glTranslatef(0, 0, -2.5);
+
+    // rotate cube by Y-axis
+
+    static float rotate_angle = 0;
+    if (rotate_angle++ > 360.) rotate_angle = 0;
+    glRotatef(rotate_angle, 0, 1, 0);
+
+    // use the 2d for uv mapping on cube
+
+    m_tex2d.use();
+
+    // draw cube via vbo
+
+    m_vbo.draw(GL_QUADS);
   }
 
 private:
+  glwnd::VBO m_vbo;
   glwnd::Tex2D m_tex2d;
 };

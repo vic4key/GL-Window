@@ -169,6 +169,7 @@
     <ClInclude Include="3rdparty\imgui-1.82\imstb_textedit.h" />
     <ClInclude Include="3rdparty\imgui-1.82\imstb_truetype.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="include\glwnd\defs.h" />
     <ClInclude Include="include\glwnd\geometry.h" />
     <ClInclude Include="include\glwnd\glwnd.h" />
     <ClInclude Include="include\glwnd\linmath.h" />
