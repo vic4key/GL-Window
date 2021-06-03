@@ -314,6 +314,10 @@ int GLWindow::Impl::create()
   // glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
   // glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+  // enable anti aliasing 4x MSAA
+
+  glfwWindowHint(GLFW_SAMPLES, 4);
+
   // enable debugging error
 
   if (m_debug_enabled)
@@ -716,7 +720,7 @@ void GLWindow::enable_debug(bool state)
   m_ptr_impl->m_debug_enabled = state;
 }
 
-void glwnd::GLWindow::enable_coordiates(bool state)
+void GLWindow::enable_coordiates(bool state)
 {
   m_ptr_impl->m_coordiates_enabled = state;
 }
