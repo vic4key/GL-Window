@@ -45,7 +45,7 @@ public:
   void enable_fps(bool state = true);
   void enable_debug(bool state = true);
   void enable_coordiates(bool state = true);
-  void enable_dear_imgui(bool state = true, dear_imgui_cfg* ptr_imgui_cfg = nullptr);
+  void enable_dear_imgui(bool state = true, dear_imgui_cfg* ptr_dear_imgui_cfg = nullptr);
 
 public:
   GLFWwindow&  window();

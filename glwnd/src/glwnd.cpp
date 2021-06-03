@@ -725,15 +725,15 @@ void GLWindow::enable_coordiates(bool state)
   m_ptr_impl->m_coordiates_enabled = state;
 }
 
-void GLWindow::enable_dear_imgui(bool state, dear_imgui_cfg* ptr_imgui_cfg)
+void GLWindow::enable_dear_imgui(bool state, dear_imgui_cfg* ptr_dear_imgui_cfg)
 {
   m_ptr_impl->m_dear_imgui_enabled = state;
 
-  if (ptr_imgui_cfg != nullptr)
+  if (ptr_dear_imgui_cfg != nullptr)
   {
-    m_ptr_impl->m_dear_imgui_cfg.style = ptr_imgui_cfg->style;
-    m_ptr_impl->m_dear_imgui_cfg.font_path = ptr_imgui_cfg->font_path;
-    m_ptr_impl->m_dear_imgui_cfg.font_size = ptr_imgui_cfg->font_size;
+    m_ptr_impl->m_dear_imgui_cfg.style = ptr_dear_imgui_cfg->style;
+    m_ptr_impl->m_dear_imgui_cfg.font_path = ptr_dear_imgui_cfg->font_path;
+    m_ptr_impl->m_dear_imgui_cfg.font_size = ptr_dear_imgui_cfg->font_size;
   }
 }
 
