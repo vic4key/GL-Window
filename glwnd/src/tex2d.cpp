@@ -24,27 +24,11 @@ Tex2D::~Tex2D()
 
 void Tex2D::use(bool state)
 {
-  if (state)
-  {
-    this->bind();
-  }
-  else
-  {
-    this->unbind();
-  }
+  assert(m_id >= 0);
+  glBindTexture(GL_TEXTURE_2D, state ? m_id : 0);
 }
 
-void Tex2D::bind()
-{
-  glBindTexture(GL_TEXTURE_2D, m_id);
-}
-
-void Tex2D::unbind()
-{
-  glBindTexture(GL_TEXTURE_2D, 0);
-}
-
-bool Tex2D::init_from_image_file(const std::string& file_path)
+bool Tex2D::initialize_from_image_file(const std::string& file_path)
 {
   if (m_initialized)
   {
@@ -83,7 +67,7 @@ bool Tex2D::init_from_image_file(const std::string& file_path)
       break;
     }
 
-    result = this->init(width, height, ptr_pixels, internal_format, format);
+    result = this->initialize(width, height, ptr_pixels, internal_format, format);
   }
 
   SOIL_free_image_data(ptr_pixels);
@@ -91,7 +75,7 @@ bool Tex2D::init_from_image_file(const std::string& file_path)
   return result;
 }
 
-bool Tex2D::init(GLsizei width, GLsizei height, GLvoid* ptr_pixels, GLint iformat, GLenum format)
+bool Tex2D::initialize(GLsizei width, GLsizei height, GLvoid* ptr_pixels, GLint iformat, GLenum format)
 {
   if (m_initialized)
   {

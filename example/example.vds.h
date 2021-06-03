@@ -88,7 +88,7 @@ public:
 
     // initialize the 2d texture
 
-    m_tex2d.init_from_image_file("data\\512x512.bmp");
+    m_tex2d.initialize_from_image_file("data\\512x512.bmp");
   }
 
   virtual void on_display()
