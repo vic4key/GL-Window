@@ -26,7 +26,8 @@ int APIENTRY wWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmd
   // gl.reset(new GLWindowExampleImage);
   // gl.reset(new GLWindowExampleVBO);
   // gl.reset(new GLWindowExamplePBO);
-  // gl.reset(new GLWindowExampleVDS);
+  // gl.reset(new GLWindowExampleVDS2A);
+  // gl.reset(new GLWindowExampleVDS4A);
   // gl.reset(new GLWindowIMGUI);
   // gl.reset(new GLWindowExampleText2D);
   // gl.reset(new GLWindowExamplePrimitive);

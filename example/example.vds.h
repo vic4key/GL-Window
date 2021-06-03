@@ -5,11 +5,57 @@
 #include <glwnd/tex2d.h>
 #include <glwnd/vbo.h>
 
-class GLWindowExampleVDS : public GLWindow
+// Example VDS with 2 attributes : position + color
+
+class GLWindowExampleVDS2A : public GLWindow
 {
 public:
-  GLWindowExampleVDS() : GLWindow() {}
-  virtual ~GLWindowExampleVDS() {}
+  GLWindowExampleVDS2A() : GLWindow() {}
+  virtual ~GLWindowExampleVDS2A() {}
+
+  virtual void on_display()
+  {
+    glMatrixMode(GL_PROJECTION_MATRIX);
+    gluPerspective(45, 1.F, 0.1, 100);
+
+    glMatrixMode(GL_MODELVIEW_MATRIX);
+    glTranslatef(0, 0, -5);
+
+    // rotate cube by Y-axis
+
+    static float rotate_angle = 0;
+    if (rotate_angle > 360.) rotate_angle = 0;
+    rotate_angle += 0.5F;
+    glRotatef(rotate_angle, 0, 1, 0);
+
+    // define vds format and draw
+
+    static GLfloat data[] =
+    {
+      -1, -1, -1,  0, 0, 0,   -1, -1, +1,  0, 0, 1,   -1, +1, +1,  0, 1, 1,   -1, +1, -1,  0, 1, 0,
+      +1, -1, -1,  1, 0, 0,   +1, -1, +1,  1, 0, 1,   +1, +1, +1,  1, 1, 1,   +1, +1, -1,  1, 1, 0,
+      -1, -1, -1,  0, 0, 0,   -1, -1, +1,  0, 0, 1,   +1, -1, +1,  1, 0, 1,   +1, -1, -1,  1, 0, 0,
+      -1, +1, -1,  0, 1, 0,   -1, +1, +1,  0, 1, 1,   +1, +1, +1,  1, 1, 1,   +1, +1, -1,  1, 1, 0,
+      -1, -1, -1,  0, 0, 0,   -1, +1, -1,  0, 1, 0,   +1, +1, -1,  1, 1, 0,   +1, -1, -1,  1, 0, 0,
+      -1, -1,  1,  0, 0, 1,   -1, +1, +1,  0, 1, 1,   +1, +1, +1,  1, 1, 1,   +1, -1, +1,  1, 0, 1,
+    };
+
+    GLuint offset = 0;
+    GLuint vds_size = 6 * sizeof(GLfloat); // this vds has 2 attributes (position 3f + color 3f = 6f)
+    static VBO vbo(&data, sizeof(data), vds_size);
+    offset += vbo.declare_position_format(offset, 3, GL_FLOAT, vds_size);
+    offset += vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
+    vbo.draw(GL_QUADS);
+  }
+};
+
+// Example VDS with fully 4 attributes : position + normal + color + texcoord
+
+class GLWindowExampleVDS4A : public GLWindow
+{
+public:
+  GLWindowExampleVDS4A() : GLWindow() {}
+  virtual ~GLWindowExampleVDS4A() {}
 
   virtual void initial()
   {
@@ -64,26 +110,9 @@ public:
 
     m_tex2d.use();
 
-    // initialize and define vds format
+    // define vds format and draw
 
-    // static GLfloat data[] =
-    // {
-    //   -1, -1, -1,  0, 0, 0,   -1, -1, +1,  0, 0, 1,   -1, +1, +1,  0, 1, 1,   -1, +1, -1,  0, 1, 0,
-    //   +1, -1, -1,  1, 0, 0,   +1, -1, +1,  1, 0, 1,   +1, +1, +1,  1, 1, 1,   +1, +1, -1,  1, 1, 0,
-    //   -1, -1, -1,  0, 0, 0,   -1, -1, +1,  0, 0, 1,   +1, -1, +1,  1, 0, 1,   +1, -1, -1,  1, 0, 0,
-    //   -1, +1, -1,  0, 1, 0,   -1, +1, +1,  0, 1, 1,   +1, +1, +1,  1, 1, 1,   +1, +1, -1,  1, 1, 0,
-    //   -1, -1, -1,  0, 0, 0,   -1, +1, -1,  0, 1, 0,   +1, +1, -1,  1, 1, 0,   +1, -1, -1,  1, 0, 0,
-    //   -1, -1,  1,  0, 0, 1,   -1, +1, +1,  0, 1, 1,   +1, +1, +1,  1, 1, 1,   +1, -1, +1,  1, 0, 1,
-    // };
-    // 
-    // GLuint offset = 0;
-    // GLuint vds_size = 6 * sizeof(GLfloat); // this vds has 2 attributes (position 3f + color 3f = 6f)
-    // static VBO vbo(&data, sizeof(data), vds_size);
-    // offset = vbo.declare_position_format(offset, 3, GL_FLOAT, vds_size);
-    // offset = vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
-    // vbo.draw(GL_QUADS);
-
-    GLfloat data[] =
+    static GLfloat data[] =
     {
       // position array
 

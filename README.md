@@ -5,9 +5,7 @@
 ## Information
 
 - [x] Windows 32-bit & 64-bit
-- [x] MS Visual Studio
-	- [x] for 32-bit application
-	- [x] for 64-bit application
+- [x] MS Visual Studio 2019+
 
 ## Feature
 * Modern Open GL
@@ -63,7 +61,8 @@ Released under the [MIT](LICENSE.md) license
 
 >[example/example.vds.h](example/example.vds.h)
 >
->![](screenshots/example.vds.png)
+>![](screenshots/example.vds-2a.png)
+>![](screenshots/example.vds-4a.png)
 >
 
 >[example/example.image.h](example/example.image.h)
