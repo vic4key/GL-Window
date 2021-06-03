@@ -10,6 +10,10 @@
 
 #include "types.h"
 
+#define glwnd_3rd_stringize_ex(s) #s
+#define glwnd_3rd_stringize(s) glwnd_3rd_stringize_ex(s)
+#define glwnd_3rd_include(s)   glwnd_3rd_stringize(../3rdparty/s)
+
 namespace glwnd
 {
 
