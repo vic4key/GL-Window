@@ -31,7 +31,7 @@ int APIENTRY wWinMain(
   // gl.reset(new GLWindowExampleImage);
   // gl.reset(new GLWindowExampleVBO);
   // gl.reset(new GLWindowExamplePBO);
-   gl.reset(new GLWindowExampleVDS2A);
+  // gl.reset(new GLWindowExampleVDS2A);
   // gl.reset(new GLWindowExampleVDS4A);
   // gl.reset(new GLWindowDearImGUI);
   // gl.reset(new GLWindowExampleText2D);
