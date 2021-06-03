@@ -4,19 +4,20 @@
 
 #include glwnd_3rd_include(imgui-1.82/imgui.h)
 
-class GLWindowIMGUI : public GLWindow
+class GLWindowDearImGUI : public GLWindow
 {
 public:
-  GLWindowIMGUI() : GLWindow()
+  GLWindowDearImGUI() : GLWindow() {}
+  virtual ~GLWindowDearImGUI() {}
+
+  virtual void initial()
   {
-    imgui_cfg cfg;
-    cfg.style = imgui_cfg::styles::IMGUI_CLASSIC;
+    dear_imgui_cfg cfg;
+    cfg.style = dear_imgui_cfg::styles::IMGUI_CLASSIC;
     cfg.font_path = "C:\\Windows\\Fonts\\georgia.ttf";
     cfg.font_size = 16.F;
-    this->enable_imgui(true, &cfg);
+    this->enable_dear_imgui(true, &cfg);
   }
-
-  virtual ~GLWindowIMGUI() {};
 
   virtual void on_display()
   {

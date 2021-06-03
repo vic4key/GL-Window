@@ -6,19 +6,12 @@
  * @brief  GL Window
  */
 
-#include <string>
-#include <vector>
-
-#include "types.h"
+#include "defs.h"
 
 struct GLFWwindow;
 
 namespace glwnd
 {
-
-const color_t COLOR_BLACK = 0xFF000000;
-const color_t COLOR_WHITE = 0xFFFFFFFF;
-const color_t COLOR_GRAY  = 0xFF303030;
 
 class GLViewPort;
 class GLPrimitive;
@@ -52,25 +45,11 @@ public:
   void enable_fps(bool state = true);
   void enable_debug(bool state = true);
   void enable_coordiates(bool state = true);
+  void enable_dear_imgui(bool state = true, dear_imgui_cfg* ptr_imgui_cfg = nullptr);
 
 public:
-  struct imgui_cfg
-  {
-    enum class styles
-    {
-      IMGUI_DARK,
-      IMGUI_CLASSIC,
-      IMGUI_LIGHT,
-    } style = styles::IMGUI_CLASSIC;
-    std::string font_path = "";
-    float font_size = 0.F;
-  };
-
-  void enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg = nullptr);
-
-public:
-  GLFWwindow& window();
-  GLViewPort& viewport();
+  GLFWwindow&  window();
+  GLViewPort&  viewport();
   GLPrimitive& renderer();
 
   const std::vector<std::string>& extensions() const;

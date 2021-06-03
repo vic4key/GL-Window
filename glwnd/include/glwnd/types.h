@@ -6,6 +6,9 @@
  * @brief  Data Types
  */
 
+#include <string>
+#include <vector>
+
 namespace glwnd
 {
 
@@ -91,5 +94,17 @@ struct glcolor_t
 
 typedef glcolor_t<float>  glcolorf;
 typedef glcolor_t<double> glcolord;
+
+struct dear_imgui_cfg
+{
+  enum class styles
+  {
+    IMGUI_DARK,
+    IMGUI_CLASSIC,
+    IMGUI_LIGHT,
+  } style = styles::IMGUI_CLASSIC;
+  std::string font_path = "";
+  float font_size = 0.F;
+};
 
 }; // glwnd

@@ -87,15 +87,15 @@ private:
   void display_fps();
 
 private:
-  GLWindow& m_parent;
-  GLFWwindow* m_ptr_window;
-  GLViewPort* m_ptr_viewport;
+  GLWindow&    m_parent;
+  GLFWwindow*  m_ptr_window;
+  GLViewPort*  m_ptr_viewport;
   GLPrimitive* m_ptr_renderer;
 
-  std::string m_name;
   int m_width;
   int m_height;
   color_t m_bg;
+  std::string m_name;
 
   int m_fps;
   TextRender2D m_text_render_fps;
@@ -106,9 +106,8 @@ private:
   bool m_debug_enabled;
   bool m_fps_enabled;
   bool m_coordiates_enabled;
-
-  bool m_imgui_enabled;
-  imgui_cfg m_imgui_cfg;
+  bool m_dear_imgui_enabled;
+  dear_imgui_cfg m_dear_imgui_cfg;
 };
 
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
@@ -116,7 +115,7 @@ GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int h
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_fps_enabled(false), m_fps(0)
   , m_debug_enabled(false)
-  , m_imgui_enabled(false)
+  , m_dear_imgui_enabled(false)
   , m_coordiates_enabled(false)
 {
   m_ptr_viewport = new GLViewPort(m_parent);
@@ -464,12 +463,27 @@ int GLWindow::Impl::initial()
 
   m_parent.initial();
 
+  // setup context for the imgui framework
+
+  if (m_dear_imgui_enabled)
+  {
+    this->imgui_create();
+  }
+
   return 0;
 }
 
 int GLWindow::Impl::final()
 {
+  // destroy the imgui framework
+
+  if (m_dear_imgui_enabled)
+  {
+    this->imgui_destroy();
+  }
+
   m_parent.final();
+
   return 0;
 }
 
@@ -496,7 +510,7 @@ int GLWindow::Impl::display()
   {
     // create a new imgui frame
 
-    if (m_imgui_enabled)
+    if (m_dear_imgui_enabled)
     {
       ImGui_ImplOpenGL3_NewFrame();
       ImGui_ImplGlfw_NewFrame();
@@ -509,7 +523,7 @@ int GLWindow::Impl::display()
 
     // render on the created imgui frame
 
-    if (m_imgui_enabled)
+    if (m_dear_imgui_enabled)
     {
       ImGui::Render();
       ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -532,13 +546,6 @@ int GLWindow::Impl::run()
     return __LINE__;
   }
 
-  // setup context for the imgui framework
-
-  if (m_imgui_enabled)
-  {
-    this->imgui_create();
-  }
-
   // initialize before drawing
 
   this->initial();
@@ -558,13 +565,6 @@ int GLWindow::Impl::run()
   // finalize after drawing
 
   this->final();
-
-  // destroy the imgui framework
-
-  if (m_imgui_enabled)
-  {
-    this->imgui_destroy();
-  }
 
   // destroy the context and clean-up the resources of drawing
 
@@ -588,13 +588,13 @@ void GLWindow::Impl::imgui_create()
 
   // setup style for the imgui framework
 
-  switch (m_imgui_cfg.style)
+  switch (m_dear_imgui_cfg.style)
   {
-  case imgui_cfg::styles::IMGUI_DARK:
+  case dear_imgui_cfg::styles::IMGUI_DARK:
     ImGui::StyleColorsDark();
     break;
 
-  case imgui_cfg::styles::IMGUI_LIGHT:
+  case dear_imgui_cfg::styles::IMGUI_LIGHT:
     ImGui::StyleColorsLight();
     break;
 
@@ -609,9 +609,9 @@ void GLWindow::Impl::imgui_create()
   ImGui_ImplGlfw_InitForOpenGL(m_ptr_window, true);
   ImGui_ImplOpenGL3_Init(glsl_version);
 
-  if (!m_imgui_cfg.font_path.empty() && m_imgui_cfg.font_size > 0.F)
+  if (!m_dear_imgui_cfg.font_path.empty() && m_dear_imgui_cfg.font_size > 0.F)
   {
-    io.Fonts->AddFontFromFileTTF(m_imgui_cfg.font_path.c_str(), m_imgui_cfg.font_size);
+    io.Fonts->AddFontFromFileTTF(m_dear_imgui_cfg.font_path.c_str(), m_dear_imgui_cfg.font_size);
   }
   else
   {
@@ -725,15 +725,15 @@ void GLWindow::enable_coordiates(bool state)
   m_ptr_impl->m_coordiates_enabled = state;
 }
 
-void GLWindow::enable_imgui(bool state, imgui_cfg* ptr_imgui_cfg)
+void GLWindow::enable_dear_imgui(bool state, dear_imgui_cfg* ptr_imgui_cfg)
 {
-  m_ptr_impl->m_imgui_enabled = state;
+  m_ptr_impl->m_dear_imgui_enabled = state;
 
   if (ptr_imgui_cfg != nullptr)
   {
-    m_ptr_impl->m_imgui_cfg.style = ptr_imgui_cfg->style;
-    m_ptr_impl->m_imgui_cfg.font_path = ptr_imgui_cfg->font_path;
-    m_ptr_impl->m_imgui_cfg.font_size = ptr_imgui_cfg->font_size;
+    m_ptr_impl->m_dear_imgui_cfg.style = ptr_imgui_cfg->style;
+    m_ptr_impl->m_dear_imgui_cfg.font_path = ptr_imgui_cfg->font_path;
+    m_ptr_impl->m_dear_imgui_cfg.font_size = ptr_imgui_cfg->font_size;
   }
 }
 
