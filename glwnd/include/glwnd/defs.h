@@ -6,7 +6,7 @@
  * @brief  Definitions
  */
 
-#include <GL/glew.h>
+#include <gl/glew.h>
 
 #include "types.h"
 

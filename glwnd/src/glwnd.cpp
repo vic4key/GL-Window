@@ -12,9 +12,9 @@
 
 #include "debug.inl"
 
-#include <GL/glew.h>
-#include <GL/wglew.h>
-#include <GLFW/glfw3.h>
+#include <gl/glew.h>
+#include <gl/wglew.h>
+#include <glfw/glfw3.h>
 
 #pragma comment(lib, "glu32.lib")
 #pragma comment(lib, "opengl32.lib")

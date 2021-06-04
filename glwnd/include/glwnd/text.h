@@ -6,7 +6,7 @@
  * @brief  Text Render 2D
  */
 
-#include <GL/glew.h>
+#include <gl/glew.h>
 #include <string>
 #include <map>
 

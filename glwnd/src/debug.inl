@@ -6,8 +6,8 @@
  * @brief  OpenGL Debugging Error
  */
 
-#include <GL/glew.h>
-#include <Windows.h>
+#include <gl/glew.h>
+#include <windows.h>
 #include <sstream>
 
 #define CASE(code) case code: ss << #code ; break

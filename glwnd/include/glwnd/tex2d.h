@@ -6,7 +6,7 @@
  * @brief  Texture 2D
  */
 
-#include <GL/glew.h>
+#include <gl/glew.h>
 #include <string>
 
 #include "defs.h"

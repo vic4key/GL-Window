@@ -6,7 +6,7 @@
  * @brief  Vertex Buffer Object (VBO)
  */
 
-#include <GL/glew.h>
+#include <gl/glew.h>
 #include <vector>
 
 #include "defs.h"

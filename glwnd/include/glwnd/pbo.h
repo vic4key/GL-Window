@@ -6,7 +6,7 @@
  * @brief  Pixel Buffer Object (PBO)
  */
 
-#include <GL/glew.h>
+#include <gl/glew.h>
 #include <functional>
 #include <string>
 
