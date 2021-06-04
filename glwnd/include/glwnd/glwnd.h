@@ -31,7 +31,7 @@ public:
   virtual void on_mouse_move(double x, double y);
   virtual void on_mouse_enter_leave(bool entered, double x, double y);
   virtual void on_mouse_click(int button, int action, int mods);
-  virtual void on_mouse_wheel(double delta_x, double delta_y);
+  virtual void on_mouse_wheel(double dx, double dy);
 
   virtual void on_keyboard_key(int key, int code, int action, int mods);
   virtual void on_keyboard_char(unsigned int code);
