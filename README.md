@@ -16,12 +16,12 @@
   * Drag & Drop Events
  * Vertex Buffer Object (VBO)
  * Pixel Buffer Object (PBO)
+ * Texture Manipulation
  * Integrated Dear ImGUI
  * Text Rendering
  * Primitive Rendering
  * Debugging Error
-* Etc
-
+ * Etc
 
 ## License
 
@@ -48,7 +48,7 @@ Released under the [MIT](LICENSE.md) license
 >![](screenshots/example.simple.png)
 
 >[example/example.imgui.h](example/example.imgui.h)
-
+>
 >![](screenshots/example.imgui.png)
 
 >[example/example.events.h](example/example.events.h)
