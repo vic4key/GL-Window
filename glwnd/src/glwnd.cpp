@@ -46,10 +46,10 @@ public:
   void on_display();
   void on_resize(int Width, int Height);
 
-  void on_mouse_move(double x, double y);
-  void on_mouse_enter_leave(bool entered, double x, double y);
-  void on_mouse_click(int button, int action, int mods);
-  void on_mouse_wheel(double dx, double dy);
+  void on_mouse_move(int x, int y);
+  void on_mouse_enter_leave(bool entered, int x, int y);
+  void on_mouse_click(int button, int action, int mods, int x, int y);
+  void on_mouse_wheel(int dx, int dy);
 
   void on_keyboard_key(int key, int code, int action, int mods);
   void on_keyboard_char(unsigned int code);
@@ -85,6 +85,8 @@ private:
   void imgui_destroy();
 
   void display_fps();
+
+  p2i get_current_mouse_position();
 
 private:
   GLWindow&    m_parent;
@@ -138,22 +140,22 @@ void GLWindow::Impl::on_resize(int width, int height)
   m_parent.on_resize(width, height);
 }
 
-void GLWindow::Impl::on_mouse_move(double x, double y)
+void GLWindow::Impl::on_mouse_move(int x, int y)
 {
   m_parent.on_mouse_move(x, y);
 }
 
-void GLWindow::Impl::on_mouse_enter_leave(bool entered, double x, double y)
+void GLWindow::Impl::on_mouse_enter_leave(bool entered, int x, int y)
 {
   m_parent.on_mouse_enter_leave(entered, x, y);
 }
 
-void GLWindow::Impl::on_mouse_click(int button, int action, int mods)
+void GLWindow::Impl::on_mouse_click(int button, int action, int mods, int x, int y)
 {
-  m_parent.on_mouse_click(button, action, mods);
+  m_parent.on_mouse_click(button, action, mods, x, y);
 }
 
-void GLWindow::Impl::on_mouse_wheel(double dx, double dy)
+void GLWindow::Impl::on_mouse_wheel(int dx, int dy)
 {
   m_parent.on_mouse_wheel(dx, dy);
 }
@@ -196,12 +198,14 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   glfwSwapBuffers(ptr_window);
 }
 
-void GLWindow::Impl::mouse_move(GLFWwindow* ptr_window, double x, double y)
+void GLWindow::Impl::mouse_move(GLFWwindow* ptr_window, double, double)
 {
   auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
   assert(ptr_parent_impl != nullptr);
 
-  ptr_parent_impl->on_mouse_move(x, y);
+  const auto v = ptr_parent_impl->get_current_mouse_position();
+
+  ptr_parent_impl->on_mouse_move(v.x(), v.y());
 }
 
 void GLWindow::Impl::mouse_enter_leave(GLFWwindow* ptr_window, int entered)
@@ -209,33 +213,9 @@ void GLWindow::Impl::mouse_enter_leave(GLFWwindow* ptr_window, int entered)
   auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
   assert(ptr_parent_impl != nullptr);
 
-  double x = 0, y = 0;
-  glfwGetCursorPos(ptr_window, &x, &y);
+  const auto v = ptr_parent_impl->get_current_mouse_position();
 
-  int width = 0, height = 0;
-  glfwGetWindowSize(ptr_window, &width, &height);
-
-  if (x < 0)
-  {
-    x = 0;
-  }
-
-  if (y < 0)
-  {
-    y = 0;
-  }
-
-  if (x > width)
-  {
-    x = width;
-  }
-
-  if (y > height)
-  {
-    y = height;
-  }
-
-  ptr_parent_impl->on_mouse_enter_leave(entered != 0, x, y);
+  ptr_parent_impl->on_mouse_enter_leave(entered != 0, v.x(), v.y());
 }
 
 void GLWindow::Impl::mouse_click(GLFWwindow* ptr_window, int button, int action, int mods)
@@ -243,7 +223,9 @@ void GLWindow::Impl::mouse_click(GLFWwindow* ptr_window, int button, int action,
   auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
   assert(ptr_parent_impl != nullptr);
 
-  ptr_parent_impl->on_mouse_click(button, action, mods);
+  const auto v = ptr_parent_impl->get_current_mouse_position();
+
+  ptr_parent_impl->on_mouse_click(button, action, mods, v.x(), v.y());
 }
 
 void GLWindow::Impl::mouse_wheel(GLFWwindow* ptr_window, double dx, double dy)
@@ -251,7 +233,7 @@ void GLWindow::Impl::mouse_wheel(GLFWwindow* ptr_window, double dx, double dy)
   auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
   assert(ptr_parent_impl != nullptr);
 
-  ptr_parent_impl->on_mouse_wheel(dx, dy);
+  ptr_parent_impl->on_mouse_wheel(int(dx), int(dy));
 }
 
 void GLWindow::Impl::keyboard_key(GLFWwindow* ptr_window, int key, int code, int action, int mods)
@@ -664,6 +646,42 @@ void GLWindow::Impl::clear(color_t* pbg)
   glClearStencil(0);
 }
 
+p2i GLWindow::Impl::get_current_mouse_position()
+{
+  assert(m_ptr_window != nullptr);
+
+  double x = 0., y = 0.;
+
+  glfwGetCursorPos(m_ptr_window, &x, &y);
+
+  int width = 0, height = 0;
+  glfwGetWindowSize(m_ptr_window, &width, &height);
+
+  y = height - y; // cuz win coordinate fipped
+
+  if (x < 0)
+  {
+    x = 0;
+  }
+
+  if (y < 0)
+  {
+    y = 0;
+  }
+
+  if (x > width)
+  {
+    x = width;
+  }
+
+  if (y > height)
+  {
+    y = height;
+  }
+
+  return p2i(int(x), int(y));
+}
+
 /**
  * CGLWindow
  */
@@ -763,22 +781,22 @@ void GLWindow::on_resize(int width, int height)
   // OVERRIDABLE
 }
 
-void GLWindow::on_mouse_move(double x, double y)
+void GLWindow::on_mouse_move(int x, int y)
 {
   // OVERRIDABLE
 }
 
-void GLWindow::on_mouse_enter_leave(bool Entered, double x, double y)
+void GLWindow::on_mouse_enter_leave(bool entered, int x, int y)
 {
   // OVERRIDABLE
 }
 
-void GLWindow::on_mouse_click(int button, int action, int mods)
+void GLWindow::on_mouse_click(int button, int action, int mods, int x, int y)
 {
   // OVERRIDABLE
 }
 
-void GLWindow::on_mouse_wheel(double dx, double dy)
+void GLWindow::on_mouse_wheel(int dx, int dy)
 {
   // OVERRIDABLE
 }
