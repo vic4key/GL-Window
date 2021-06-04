@@ -48,6 +48,45 @@ std::string log(const std::string format, ...)
   return s;
 }
 
+GLuint gl_sizeof_type(GLenum type)
+{
+  GLuint result = 0;
+
+  switch (type)
+  {
+  case GL_BYTE:
+  case GL_UNSIGNED_BYTE:
+    result = 1;
+    break;
+
+  case GL_SHORT:
+  case GL_UNSIGNED_SHORT:
+  case GL_2_BYTES:
+    result = 2;
+    break;
+
+  case GL_INT:
+  case GL_UNSIGNED_INT:
+  case GL_FLOAT:
+  case GL_4_BYTES:
+    result = 4;
+    break;
+
+  case GL_3_BYTES:
+    result = 3;
+    break;
+
+  case GL_DOUBLE:
+    result = 8;
+    break;
+
+  default:
+    break;
+  }
+
+  return result;
+}
+
 }; // utils
 
 }; // glwnd

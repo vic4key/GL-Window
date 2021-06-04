@@ -6,6 +6,7 @@
 
 #include "glwnd/vbo.h"
 #include "glwnd/defs.h"
+#include "glwnd/utils.h"
 
 #include <cassert>
 
@@ -13,45 +14,6 @@
 
 namespace glwnd
 {
-
-static auto gl_sizeof_type= [](GLenum type) -> GLuint
-{
-  GLuint result = 0;
-
-  switch (type)
-  {
-  case GL_BYTE:
-  case GL_UNSIGNED_BYTE:
-    result = 1;
-    break;
-
-  case GL_SHORT:
-  case GL_UNSIGNED_SHORT:
-  case GL_2_BYTES:
-    result = 2;
-    break;
-
-  case GL_INT:
-  case GL_UNSIGNED_INT:
-  case GL_FLOAT:
-  case GL_4_BYTES:
-    result = 4;
-    break;
-
-  case GL_3_BYTES:
-    result = 3;
-    break;
-
-  case GL_DOUBLE:
-    result = 8;
-    break;
-
-  default:
-    break;
-  }
-
-  return result;
-};
 
 VBO::VBO()
   : m_id(GL_INVALID_ID), m_num_elements(0), m_vds_size(0), m_binded(false)
@@ -141,7 +103,7 @@ GLuint VBO::declare_position_format(GLuint offset, GLuint num, GLenum type, GLui
 
   glVertexPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  return num * gl_sizeof_type(type);
+  return num * utils::gl_sizeof_type(type);
 }
 
 GLuint VBO::declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
@@ -151,7 +113,7 @@ GLuint VBO::declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint 
 
   glColorPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  return num * gl_sizeof_type(type);
+  return num * utils::gl_sizeof_type(type);
 }
 
 GLuint VBO::declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
@@ -163,7 +125,7 @@ GLuint VBO::declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuin
 
   glTexCoordPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  return num * gl_sizeof_type(type);
+  return num * utils::gl_sizeof_type(type);
 }
 
 GLuint VBO::declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
@@ -173,7 +135,7 @@ GLuint VBO::declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint
 
   glNormalPointer(type, stride, reinterpret_cast<GLvoid*>(offset));
 
-  return num * gl_sizeof_type(type);
+  return num * utils::gl_sizeof_type(type);
 }
 
 }; // glwnd

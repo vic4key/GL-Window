@@ -6,6 +6,7 @@
  * @brief  Utility
  */
 
+#include <gl/glew.h>
 #include <string>
 #include <vector>
 
@@ -57,6 +58,8 @@ T conv_range(T l1, T h1, T l2, T h2, T v)
 void read_file(const std::string& file_path, std::vector<unsigned char>& data);
 
 std::string log(const std::string format, ...);
+
+GLuint gl_sizeof_type(GLenum type);
 
 }; // utils
 
