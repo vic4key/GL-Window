@@ -14,7 +14,7 @@ public:
   virtual void initial()
   {
     m_ptr_image = SOIL_load_image("data\\example.png", &m_width, &m_height, &m_channel, SOIL_LOAD_RGBA);
-    m_pbo.setup(m_ptr_image, m_width, m_height, m_channel, GL_RGBA, GL_RGBA);
+    m_pbo.initialize(m_ptr_image, m_width, m_height, m_channel, GL_RGBA, GL_RGBA);
   }
 
   virtual void final()
@@ -37,7 +37,7 @@ public:
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 
-    m_pbo.TexImage2D();
+    m_pbo.use();
 
     glBegin(GL_QUADS);
     {

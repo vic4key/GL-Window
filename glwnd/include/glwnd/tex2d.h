@@ -7,8 +7,9 @@
  */
 
 #include <GL/glew.h>
-
 #include <string>
+
+#include "defs.h"
 
 namespace glwnd
 {
@@ -20,6 +21,8 @@ class Tex2D
 public:
 	Tex2D(GLint wrap = GL_CLAMP, GLint filter = GL_LINEAR);
 	virtual ~Tex2D();
+
+	GLWND_DELETE_UNUSED_OPERATORS(Tex2D)
 
 	bool initialize_from_image_file(const std::string& file_path);
 	bool initialize(GLsizei width, GLsizei height, GLvoid* ptr_pixels, GLint iformat, GLenum format);

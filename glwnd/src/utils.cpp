@@ -13,6 +13,9 @@
 namespace glwnd
 {
 
+namespace utils
+{
+
 void read_file(const std::string& file_path, std::vector<unsigned char>& data)
 {
 	FILE* f = nullptr;
@@ -45,4 +48,6 @@ std::string log(const std::string format, ...)
   return s;
 }
 
-}; // Utils
+}; // utils
+
+}; // glwnd

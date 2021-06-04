@@ -35,9 +35,9 @@ public:
     LOG("%d %d %d", button, action, mods);
   }
 
-  virtual void on_mouse_wheel(double delta_x, double delta_y)
+  virtual void on_mouse_wheel(double dx, double dy)
   {
-    LOG("%.2f %.2f", float(delta_x), float(delta_y));
+    LOG("%.2f %.2f", float(dx), float(dy));
   }
 
   virtual void on_keyboard_key(int key, int code, int action, int mods)

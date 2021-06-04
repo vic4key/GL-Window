@@ -16,8 +16,8 @@ namespace glwnd
 PBO::PBO()
   : m_ready(false)
   , m_id(GL_INVALID_ID)
-  , m_display_format(0)
-  , m_ptr_pixel_data(nullptr), m_width(0), m_height(0), m_channel(0), m_format(0)
+  , m_format(0)
+  , m_ptr_pixels(nullptr), m_width(0), m_height(0), m_channel(0), m_iformat(0)
 {
 }
 
@@ -33,7 +33,7 @@ PBO::~PBO()
   }
 }
 
-bool PBO::setup(GLvoid* ptr_pixel_data, int width, int height, int channel, GLint image_format, GLint display_format)
+bool PBO::initialize(GLvoid* ptr_pixels, int width, int height, int channel, GLint iformat, GLint format)
 {
   if (m_ready)
   {
@@ -46,18 +46,18 @@ bool PBO::setup(GLvoid* ptr_pixel_data, int width, int height, int channel, GLin
     glGenBuffers(1, &m_id);
   }
 
-  m_display_format = display_format;
+  m_format = format;
 
-  m_ptr_pixel_data = ptr_pixel_data;
+  m_ptr_pixels = ptr_pixels;
   m_width   = width;
   m_height  = height;
   m_channel = channel;
-  m_format  = image_format;
+  m_iformat = iformat;
 
   return this->unpack();
 }
 
-bool PBO::TexImage2D()
+bool PBO::use()
 {
   if (!m_ready)
   {
@@ -69,20 +69,20 @@ bool PBO::TexImage2D()
     ::glTexImage2D(
       GL_TEXTURE_2D,
       0,
-      m_format,
+      m_iformat,
       m_width,
       m_height,
       0,
-      m_display_format,
+      m_format,
       GL_UNSIGNED_BYTE,
-      m_ptr_pixel_data
+      m_ptr_pixels
     );
   });
 }
 
 bool PBO::unpack()
 {
-  if (m_ptr_pixel_data == nullptr || m_width <= 0 || m_height <= 0 || m_channel <= 0)
+  if (m_ptr_pixels == nullptr || m_width <= 0 || m_height <= 0 || m_channel <= 0)
   {
     return false;
   }
@@ -99,7 +99,7 @@ bool PBO::unpack()
   void* ptr_mapped_buffer = glMapBuffer(GL_PIXEL_UNPACK_BUFFER, GL_WRITE_ONLY);
 
   // store the pixel data into the mapped writable PBO buffer in GPU
-  memcpy(ptr_mapped_buffer, m_ptr_pixel_data, size);
+  memcpy(ptr_mapped_buffer, m_ptr_pixels, size);
 
   // unmap the buffer after copied
   glUnmapBuffer(GL_PIXEL_UNPACK_BUFFER);
@@ -117,7 +117,7 @@ bool PBO::unpack()
 
 bool PBO::pack(std::function<void(const void* ptr)> fn)
 {
-  if (!m_ready || m_ptr_pixel_data == nullptr || m_width <= 0 || m_height <= 0 || m_channel <= 0)
+  if (!m_ready || m_ptr_pixels == nullptr || m_width <= 0 || m_height <= 0 || m_channel <= 0)
   {
     return false;
   }
@@ -126,7 +126,7 @@ bool PBO::pack(std::function<void(const void* ptr)> fn)
   glBindBuffer(GL_PIXEL_PACK_BUFFER, m_id);
 
   // PBO access to the allocated DMA buffer that stored the pixel data before
-  glGetTexImage(GL_TEXTURE_2D, 0, m_format, GL_UNSIGNED_BYTE, nullptr);
+  glGetTexImage(GL_TEXTURE_2D, 0, m_iformat, GL_UNSIGNED_BYTE, nullptr);
 
   // map the accessed DMA buffer as a read-only buffer
   void* ptr_mapped_buffer = glMapBuffer(GL_PIXEL_PACK_BUFFER, GL_READ_ONLY);

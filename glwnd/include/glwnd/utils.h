@@ -14,6 +14,9 @@
 namespace glwnd
 {
 
+namespace utils
+{
+
 template <class std_string_t>
 std::vector<std_string_t> split_string_t(const std_string_t& str, const std_string_t& sep)
 {
@@ -55,6 +58,8 @@ void read_file(const std::string& file_path, std::vector<unsigned char>& data);
 
 std::string log(const std::string format, ...);
 
+}; // utils
+
 }; // glwnd
 
-#define LOG(...) glwnd::log(__FUNCTION__ " " __VA_ARGS__)
+#define LOG(...) utils::log(__FUNCTION__ " " __VA_ARGS__)

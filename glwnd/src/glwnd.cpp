@@ -49,7 +49,7 @@ public:
   void on_mouse_move(double x, double y);
   void on_mouse_enter_leave(bool entered, double x, double y);
   void on_mouse_click(int button, int action, int mods);
-  void on_mouse_wheel(double delta_x, double delta_y);
+  void on_mouse_wheel(double dx, double dy);
 
   void on_keyboard_key(int key, int code, int action, int mods);
   void on_keyboard_char(unsigned int code);
@@ -67,7 +67,7 @@ private:
   static void mouse_move(GLFWwindow* ptr_window, double x, double y);
   static void mouse_enter_leave(GLFWwindow* ptr_window, int entered);
   static void mouse_click(GLFWwindow* ptr_window, int button, int action, int mods);
-  static void mouse_wheel(GLFWwindow* ptr_window, double delta_x, double delta_y);
+  static void mouse_wheel(GLFWwindow* ptr_window, double dx, double dy);
 
   static void keyboard_key(GLFWwindow* ptr_window, int key, int code, int action, int mods);
   static void keyboard_char(GLFWwindow* ptr_window, unsigned int code);
@@ -153,9 +153,9 @@ void GLWindow::Impl::on_mouse_click(int button, int action, int mods)
   m_parent.on_mouse_click(button, action, mods);
 }
 
-void GLWindow::Impl::on_mouse_wheel(double delta_x, double delta_y)
+void GLWindow::Impl::on_mouse_wheel(double dx, double dy)
 {
-  m_parent.on_mouse_wheel(delta_x, delta_y);
+  m_parent.on_mouse_wheel(dx, dy);
 }
 
 void GLWindow::Impl::on_keyboard_key(int key, int code, int action, int mods)
@@ -175,7 +175,7 @@ void GLWindow::Impl::on_drag_drop(const std::vector<std::string>& paths)
 
 void GLWindow::Impl::error(int code, const char* description)
 {
-  glwnd::log("GLFW -> %d, %s", code, description);
+  utils::log("GLFW -> %d, %s", code, description);
 }
 
 void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
@@ -246,12 +246,12 @@ void GLWindow::Impl::mouse_click(GLFWwindow* ptr_window, int button, int action,
   ptr_parent_impl->on_mouse_click(button, action, mods);
 }
 
-void GLWindow::Impl::mouse_wheel(GLFWwindow* ptr_window, double delta_x, double delta_y)
+void GLWindow::Impl::mouse_wheel(GLFWwindow* ptr_window, double dx, double dy)
 {
   auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
   assert(ptr_parent_impl != nullptr);
 
-  ptr_parent_impl->on_mouse_wheel(delta_x, delta_y);
+  ptr_parent_impl->on_mouse_wheel(dx, dy);
 }
 
 void GLWindow::Impl::keyboard_key(GLFWwindow* ptr_window, int key, int code, int action, int mods)
@@ -300,7 +300,7 @@ int GLWindow::Impl::create()
 
   if (!glfwInit())
   {
-    glwnd::log("GLFW -> glfwInit");
+    utils::log("GLFW -> glfwInit");
     return __LINE__;
   }
 
@@ -332,7 +332,7 @@ int GLWindow::Impl::create()
   m_ptr_window = glfwCreateWindow(m_width, m_height, m_name.c_str(), nullptr, nullptr);
   if (m_ptr_window == nullptr)
   {
-    glwnd::log("GLFW -> glfwCreateWindow");
+    utils::log("GLFW -> glfwCreateWindow");
     return __LINE__;
   }
 
@@ -373,7 +373,7 @@ int GLWindow::Impl::create()
   auto ret = glewInit();
   if (ret != GLEW_OK)
   {
-    glwnd::log("GLFW -> glewInit");;
+    utils::log("GLFW -> glewInit");;
     return __LINE__;
   }
 
@@ -395,13 +395,13 @@ int GLWindow::Impl::create()
   // logging several OpenGL information
 
   auto vendor = glGetString(GL_VENDOR);
-  glwnd::log("Vendor: %s", vendor);
+  utils::log("Vendor: %s", vendor);
 
   auto renderer = glGetString(GL_RENDERER);
-  glwnd::log("Renderer: %s", renderer);
+  utils::log("Renderer: %s", renderer);
 
   auto version = glGetString(GL_VERSION);
-  glwnd::log("OpenGL Version: %s", version);
+  utils::log("OpenGL Version: %s", version);
 
   int n = 0;
   glGetIntegerv(GL_NUM_EXTENSIONS, &n);
@@ -413,7 +413,7 @@ int GLWindow::Impl::create()
   }
 
   const auto s = wglGetExtensionsStringARB(wglGetCurrentDC());
-  m_arb_extensions = glwnd::split_string_t<std::string>(s, " ");
+  m_arb_extensions = utils::split_string_t<std::string>(s, " ");
 
   // setup window view-port
 
@@ -772,7 +772,7 @@ void GLWindow::on_mouse_click(int button, int action, int mods)
   // OVERRIDABLE
 }
 
-void GLWindow::on_mouse_wheel(double delta_x, double delta_y)
+void GLWindow::on_mouse_wheel(double dx, double dy)
 {
   // OVERRIDABLE
 }

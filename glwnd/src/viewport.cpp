@@ -97,8 +97,8 @@ p3d GLViewPort::win_to_ndc(const p3i& point)
   auto& ndc = m_coordinate.ndc;
   auto& win = m_coordinate.win;
 
-  auto x = conv_range<GLdouble>(0, win.width(), ndc.left(), ndc.right(), point.x());
-  auto y = conv_range<GLdouble>(0, win.height(), ndc.bottom(), ndc.top(), point.y());
+  auto x = utils::conv_range<GLdouble>(0, win.width(), ndc.left(), ndc.right(), point.x());
+  auto y = utils::conv_range<GLdouble>(0, win.height(), ndc.bottom(), ndc.top(), point.y());
   auto z = 0.;
 
   return p3d(x, y, z);
@@ -116,8 +116,8 @@ p3i GLViewPort::ndc_to_win(const p3d& point)
   auto& ndc = m_coordinate.ndc;
   auto& win = m_coordinate.win;
 
-  auto x = conv_range<GLdouble>(ndc.left(), ndc.right(), 0, win.width(), point.x());
-  auto y = conv_range<GLdouble>(ndc.bottom(), ndc.top(), 0, win.height(), point.y());
+  auto x = utils::conv_range<GLdouble>(ndc.left(), ndc.right(), 0, win.width(), point.x());
+  auto y = utils::conv_range<GLdouble>(ndc.bottom(), ndc.top(), 0, win.height(), point.y());
   auto z = 0.;
 
   return p3i(int(x), int(y), int(z));

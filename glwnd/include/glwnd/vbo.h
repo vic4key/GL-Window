@@ -7,8 +7,9 @@
  */
 
 #include <GL/glew.h>
-
 #include <vector>
+
+#include "defs.h"
 
 /**
  * VERTEX DATA STRUCTURE aka VDS - a data structure stored any/all of the following attributes:
@@ -35,6 +36,8 @@ public:
   VBO();
   VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
   virtual ~VBO();
+
+  GLWND_DELETE_UNUSED_OPERATORS(VBO)
 
   void initialize(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
 
