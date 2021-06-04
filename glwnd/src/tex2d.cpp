@@ -5,6 +5,7 @@
  */
 
 #include "glwnd/tex2d.h"
+#include "glwnd/utils.h"
 
 #include <SOIL2/SOIL2>
 #include <cassert>
@@ -43,34 +44,35 @@ bool Tex2D::initialize_from_image_file(const std::string& file_path)
   auto ptr_pixels = SOIL_load_image(file_path.c_str(), &width, &height, &channel, SOIL_LOAD_AUTO);
   if (ptr_pixels != nullptr)
   {
-    GLint format = GL_RGBA;
-    GLint internal_format = GL_RGBA8;
+    GLint format  = GL_RGBA;
+    GLint iformat = GL_RGBA8;
+    utils::image_channel_to_format_types(channel, iformat, format);
 
     switch (channel)
     {
     case 1: // gray
       format = GL_LUMINANCE;
-      internal_format = GL_LUMINANCE8;
+      iformat = GL_LUMINANCE8;
       break;
 
     case 3: // rgb
       format = GL_RGB;
-      internal_format = GL_RGB8;
+      iformat = GL_RGB8;
       break;
 
     case 4: // rgba
       format = GL_RGBA;
-      internal_format = GL_RGBA8;
+      iformat = GL_RGBA8;
       break;
 
     default:
       break;
     }
 
-    result = this->initialize(width, height, ptr_pixels, internal_format, format);
-  }
+    result = this->initialize(width, height, ptr_pixels, iformat, format);
 
-  SOIL_free_image_data(ptr_pixels);
+    SOIL_free_image_data(ptr_pixels);
+  }
 
   return result;
 }

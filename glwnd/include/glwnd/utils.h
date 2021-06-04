@@ -61,6 +61,8 @@ std::string log(const std::string format, ...);
 
 GLuint gl_sizeof_type(GLenum type);
 
+void image_channel_to_format_types(int channel, GLint& iformat, GLint& format);
+
 }; // utils
 
 }; // glwnd

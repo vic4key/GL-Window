@@ -8,6 +8,7 @@
 
 #include <GL/glew.h>
 #include <functional>
+#include <string>
 
 #include "defs.h"
 
@@ -22,6 +23,7 @@ public:
 
   GLWND_DELETE_UNUSED_OPERATORS(PBO)
 
+  bool initialize_from_image_file(const std::string& file_path);
   bool initialize(GLvoid* ptr_pixel_data, int width, int height, int channel, GLint iformat, GLint format);
   bool use();
 

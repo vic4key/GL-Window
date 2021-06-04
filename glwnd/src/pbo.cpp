@@ -6,9 +6,11 @@
 
 #include "glwnd/pbo.h"
 #include "glwnd/defs.h"
+#include "glwnd/utils.h"
 
-#include <cstring>
+#include <SOIL2/SOIL2>
 #include <cassert>
+#include <cstring>
 
 namespace glwnd
 {
@@ -31,6 +33,28 @@ PBO::~PBO()
     // deallocate memory in GPU
     glDeleteBuffers(1, &m_id);
   }
+}
+
+bool PBO::initialize_from_image_file(const std::string& file_path)
+{
+  bool result = false;
+
+  int width = 0;
+  int height = 0;
+  int channel = 0;
+  auto ptr_pixels = SOIL_load_image(file_path.c_str(), &width, &height, &channel, SOIL_LOAD_AUTO);
+  if (ptr_pixels != nullptr)
+  {
+    GLint format  = GL_RGBA;
+    GLint iformat = GL_RGBA8;
+    utils::image_channel_to_format_types(channel, iformat, format);
+
+    result = this->initialize(ptr_pixels, width, height, channel, iformat, format);
+
+    SOIL_free_image_data(ptr_pixels);
+  }
+
+  return result;
 }
 
 bool PBO::initialize(GLvoid* ptr_pixels, int width, int height, int channel, GLint iformat, GLint format)
@@ -75,7 +99,7 @@ bool PBO::use()
       0,
       m_format,
       GL_UNSIGNED_BYTE,
-      m_ptr_pixels
+      ptr
     );
   });
 }

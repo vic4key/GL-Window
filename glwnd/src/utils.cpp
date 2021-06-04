@@ -87,6 +87,30 @@ GLuint gl_sizeof_type(GLenum type)
   return result;
 }
 
+void image_channel_to_format_types(int channel, GLint& iformat, GLint& format)
+{
+  switch (channel)
+  {
+  case 1: // gray
+    format  = GL_LUMINANCE;
+    iformat = GL_LUMINANCE8;
+    break;
+
+  case 3: // rgb
+    format  = GL_RGB;
+    iformat = GL_RGB8;
+    break;
+
+  case 4: // rgba
+    format  = GL_RGBA;
+    iformat = GL_RGBA8;
+    break;
+
+  default:
+    break;
+  }
+}
+
 }; // utils
 
 }; // glwnd

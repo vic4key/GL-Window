@@ -13,13 +13,7 @@ public:
 
   virtual void initial()
   {
-    m_ptr_image = SOIL_load_image("data\\example.png", &m_width, &m_height, &m_channel, SOIL_LOAD_RGBA);
-    m_pbo.initialize(m_ptr_image, m_width, m_height, m_channel, GL_RGBA, GL_RGBA);
-  }
-
-  virtual void final()
-  {
-    SOIL_free_image_data(m_ptr_image);
+    m_pbo.initialize_from_image_file("data\\example.png");
   }
 
   virtual void on_display()
