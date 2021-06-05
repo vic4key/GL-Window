@@ -20,14 +20,14 @@ public:
     LOG("%d %d", width, height);
   }
 
-  virtual void on_mouse_move(double X, double Y)
+  virtual void on_mouse_move(int X, int Y)
   {
-    LOG("%.2f %.2f", float(X), float(Y));
+    LOG("%d %d", X, Y);
   }
 
-  virtual void on_mouse_enter_leave(bool entered, double X, double Y)
+  virtual void on_mouse_enter_leave(bool entered, int X, int Y)
   {
-    LOG("%s %.2f %.2f", entered ? "enter" : "leave", float(X), float(Y));
+    LOG("%s %d %d", entered ? "enter" : "leave", X, Y);
   }
 
   virtual void on_mouse_click(int button, int action, int mods)
@@ -35,9 +35,9 @@ public:
     LOG("%d %d %d", button, action, mods);
   }
 
-  virtual void on_mouse_wheel(double dx, double dy)
+  virtual void on_mouse_wheel(int dx, int dy)
   {
-    LOG("%.2f %.2f", float(dx), float(dy));
+    LOG("%d %d", dx, dy);
   }
 
   virtual void on_keyboard_key(int key, int code, int action, int mods)
