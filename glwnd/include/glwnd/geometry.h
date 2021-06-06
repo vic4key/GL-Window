@@ -579,6 +579,11 @@ public:
     m_fliped[flip_t::horizontal] = false;
   }
 
+  void set(const rect_t& rect)
+  {
+    set(rect.left(), rect.top(), rect.right(), rect.bottom());
+  }
+
   void set(const T width, const T height)
   {
     set(0, 0, width, height);
@@ -614,7 +619,7 @@ public:
 
   T low() const
   {
-    auto w  = this->width();
+    auto w = this->width();
     auto h = this->height();
     return w < h ? w : h;
   }

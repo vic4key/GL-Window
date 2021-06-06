@@ -188,7 +188,8 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   ptr_parent_impl->m_width  = width;
   ptr_parent_impl->m_height = height;
 
-  ptr_parent_impl->m_ptr_viewport->setup(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
+  r4i rect(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
+  ptr_parent_impl->m_ptr_viewport->setup(rect);
 
   ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
 
@@ -399,7 +400,8 @@ int GLWindow::Impl::create()
 
   // setup window view-port
 
-  m_ptr_viewport->setup(m_width, m_height);
+  r4i rect(m_width, m_height);
+  m_ptr_viewport->setup(rect);
 
   // set text render for fps
 

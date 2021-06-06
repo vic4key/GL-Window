@@ -26,7 +26,7 @@ GLViewPort::coordinate_t& GLViewPort::coordinate()
   return m_coordinate;
 }
 
-void GLViewPort::setup(int width, int height)
+void GLViewPort::setup(const r4i& rect)
 {
   auto& win = m_coordinate.win;
   auto& ndc = m_coordinate.ndc;
@@ -37,39 +37,32 @@ void GLViewPort::setup(int width, int height)
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
 
-  // calculate the aspect value
-
-  width  = width  == 0 ? 1 : width;
-  height = height == 0 ? 1 : height;
-  const GLdouble aspect = GLdouble(width) / GLdouble(height);
-
   // setup the window coordinate
 
-  win.set(0, 0, width, height);
-  win.flip(r4i::flip_t::vertical); // win coordinate -> ndc coordinate
-
-  glViewport(0, 0, win.width(), win.height());
+  win.set(rect);
+  win.flip(r4i::flip_t::vertical); // window coordinate -> opengl coordinate
 
   // setup the square coordinate
 
-  const int square_size = aspect > 1. ? win.height() : win.width();
-  squ.set(win.width(), win.height());
-  squ.flip(r4i::flip_t::vertical); // square coordinate -> ndc coordinate
+  const int square_size = win.low();
+  squ.set(win);
 
   if (win.width() >= win.height())
   {
     int padding = (win.width() - square_size) / 2;
-    squ.left(padding);
-    squ.right(square_size + padding);
+    squ.left(squ.left() + padding);
+    squ.right(squ.right() - padding);
   }
   else
   {
     int padding = (win.height() - square_size) / 2;
-    squ.top(square_size + padding);
-    squ.bottom(padding);
+    squ.top(squ.top() - padding);
+    squ.bottom(squ.bottom() + padding);
   }
 
   // setup the normalized device coordinate
+
+  const GLdouble aspect = GLdouble(win.width()) / GLdouble(win.height());
 
   ndc.set(-1.0, +1.0, +1.0, -1.0);
 
@@ -84,6 +77,9 @@ void GLViewPort::setup(int width, int height)
     ndc.bottom(ndc.bottom() / aspect);
   }
 
+  // setup view port
+
+  glViewport(win.left(), win.bottom(), win.width(), win.height());
   gluOrtho2D(ndc.left(), ndc.right(), ndc.bottom(), ndc.top());
 
   // change the current context matrix to model-view
@@ -97,8 +93,8 @@ p3d GLViewPort::win_to_ndc(const p3i& point)
   auto& ndc = m_coordinate.ndc;
   auto& win = m_coordinate.win;
 
-  auto x = utils::conv_range<GLdouble>(0, win.width(), ndc.left(), ndc.right(), point.x());
-  auto y = utils::conv_range<GLdouble>(0, win.height(), ndc.bottom(), ndc.top(), point.y());
+  auto x = utils::conv_range<GLdouble>(win.left(), win.right(), ndc.left(), ndc.right(), point.x());
+  auto y = utils::conv_range<GLdouble>(win.bottom(), win.top(), ndc.bottom(), ndc.top(), point.y());
   auto z = 0.;
 
   return p3d(x, y, z);
@@ -116,8 +112,8 @@ p3i GLViewPort::ndc_to_win(const p3d& point)
   auto& ndc = m_coordinate.ndc;
   auto& win = m_coordinate.win;
 
-  auto x = utils::conv_range<GLdouble>(ndc.left(), ndc.right(), 0, win.width(), point.x());
-  auto y = utils::conv_range<GLdouble>(ndc.bottom(), ndc.top(), 0, win.height(), point.y());
+  auto x = utils::conv_range<GLdouble>(ndc.left(), ndc.right(), win.left(), win.right(), point.x());
+  auto y = utils::conv_range<GLdouble>(ndc.bottom(), ndc.top(), win.bottom(), win.top(), point.y());
   auto z = 0.;
 
   return p3i(int(x), int(y), int(z));

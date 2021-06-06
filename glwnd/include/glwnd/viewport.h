@@ -26,7 +26,7 @@ public:
   GLViewPort(GLWindow& parent);
   virtual ~GLViewPort();
 
-  void setup(int width, int height);
+  void setup(const r4i& rect);
 
   coordinate_t& coordinate();
 
