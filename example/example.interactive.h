@@ -18,10 +18,12 @@ public:
     glMatrixMode(GL_MODELVIEW_MATRIX);
     glTranslatef(0, 0, -5);
 
-    // rotate and scale the cube
+    // rotate and scale cube
+    // https://i.stack.imgur.com/1OFpX.png
 
-    glRotated(m_rotate_factor.x(), 1, 0, 0);
-    glRotated(m_rotate_factor.y(), 0, 1, 0);
+    glRotated(m_rotate_factor.x(), 1, 0, 0); // pitch - rotate around x-axis
+    glRotated(m_rotate_factor.y(), 0, 1, 0); // jaw   - rotate around y-axis
+    glRotated(m_rotate_factor.z(), 0, 0, 1); // roll  - rotate around z-axis
 
     glScaled(m_scale_factor, m_scale_factor, m_scale_factor);
 
@@ -75,19 +77,19 @@ public:
       switch (key)
       {
       case GLFW_KEY_UP:
-        v.y(v.y() + rotate_speed);
+        v.x(v.x() + rotate_speed);
         break;
 
       case GLFW_KEY_DOWN:
-        v.y(v.y() - rotate_speed);
-        break;
-
-      case GLFW_KEY_LEFT:
         v.x(v.x() - rotate_speed);
         break;
 
+      case GLFW_KEY_LEFT:
+        v.y(v.y() - rotate_speed);
+        break;
+
       case GLFW_KEY_RIGHT:
-        v.x(v.x() + rotate_speed);
+        v.y(v.y() + rotate_speed);
         break;
 
       default:
@@ -95,7 +97,7 @@ public:
       }
     }
 
-    m_rotate_factor += v2i(-v.y(), v.x());
+    m_rotate_factor += v2i(-v.x(), v.y());
   }
 
 private:
