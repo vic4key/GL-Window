@@ -127,9 +127,19 @@ public:
     set_ex(D, X, Y, Z, W);
   }
 
+  void x(const T& v)
+  {
+    m_v[0] = v;
+  }
+
   const T& x() const
   {
     return m_v[0];
+  }
+
+  void y(const T& v)
+  {
+    m_v[1] = v;
   }
 
   const T& y() const
@@ -137,9 +147,24 @@ public:
     return m_v[1];
   }
 
+  void z(const T& v)
+  {
+    m_v[2] = v;
+  }
+
   const T& z() const
   {
     return m_v[2];
+  }
+
+  void w(const T& v)
+  {
+    m_v[3] = v;
+  }
+
+  const T& w() const
+  {
+    return m_v[3];
   }
 
   const T* data() const
