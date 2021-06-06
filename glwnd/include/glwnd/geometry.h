@@ -319,6 +319,11 @@ public:
   {
   }
 
+  vector_t(const point_t<N, T>& right)
+  {
+    static_cast<point_t<N, T>&>(*this) = right;
+  }
+
   vector_t operator*(const vector_t& v)
   {
     vector_t result(*this);
@@ -425,6 +430,11 @@ public:
     this->set_ex(D, X, Y);
   }
 
+  vector_2d_t(const point_t<2, T>& right)
+  {
+    static_cast<point_t<2, T>&>(*this) = right;
+  }
+
   T cross(const vector_2d_t& v)
   {
     return this->x() * v.y() - this->y() * v.x();
@@ -450,6 +460,11 @@ public:
   vector_3d_t(const T X, const T Y, const T Z)
   {
     this->set_ex(D, X, Y, Z);
+  }
+
+  vector_3d_t(const point_t<2, T>& right)
+  {
+    static_cast<point_t<3, T>&>(*this) = right;
   }
 
   vector_3d_t cross(const vector_3d_t& v)
@@ -482,6 +497,11 @@ public:
   vector_4d_t(const T X, const T Y, const T Z, const T W)
   {
     this->set_ex(D, X, Y, Z, W);
+  }
+
+  vector_4d_t(const point_t<4, T>& right)
+  {
+    static_cast<point_t<4, T>&>(*this) = right;
   }
 
   vector_4d_t cross(const vector_4d_t& v)
