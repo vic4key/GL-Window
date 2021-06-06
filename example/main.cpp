@@ -13,6 +13,7 @@
 #include "example.simple.h"
 #include "example.events.h"
 #include "example.primitive.h"
+#include "example.interactive.h"
 
 #include <memory>
 
@@ -36,6 +37,7 @@ int APIENTRY wWinMain(
   // gl.reset(new GLWindowDearImGUI);
   // gl.reset(new GLWindowExampleText2D);
   // gl.reset(new GLWindowExamplePrimitive);
+  // gl.reset(new GLWindowExampleInteractive);
   gl->run();
 
   return EXIT_SUCCESS;

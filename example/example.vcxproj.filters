@@ -60,6 +60,9 @@
     <ClInclude Include="example.vds.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="example.interactive.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="example.rc">

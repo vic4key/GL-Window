@@ -53,7 +53,7 @@ public:
     m_vbo.draw(GL_QUADS);
   }
 
-private:
+protected:
   VBO m_vbo;
 };
 
@@ -180,7 +180,7 @@ public:
     m_vbo.draw(GL_QUADS);
   }
 
-private:
+protected:
   glwnd::VBO m_vbo;
   glwnd::Tex2D m_tex2d;
 };
