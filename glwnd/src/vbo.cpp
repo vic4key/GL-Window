@@ -39,14 +39,14 @@ VBO::~VBO()
     // release memory after used
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    // deallocate memory in GPU
+    // deallocate the buffer memory in GPU
     glDeleteBuffers(1, &m_id);
   }
 }
 
-void VBO::initialize(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage /*= GL_STATIC_DRAW*/)
+bool VBO::initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
 {
-  // allocate memory in GPU
+  // declare a buffer memory in GPU
   if (m_id == GL_INVALID_ID)
   {
     glGenBuffers(1, &m_id);
@@ -54,15 +54,55 @@ void VBO::initialize(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLen
 
   this->bind();
 
+  // allocate memory in GPU then send data from app to store into GPU
+  glBufferData(GL_ARRAY_BUFFER, data_size, data_ptr, usage);
+
   // calculate number of elements in the data block
   m_num_elements = data_size / vds_size;
-
-  // send and store data to GPU
-  glBufferData(GL_ARRAY_BUFFER, data_size, data_ptr, usage);
 
   // verify the stored data size is the sane as the sent data size
   GLsizei stored_data_size = 0;
   glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
+
+  return data_size == stored_data_size;
+}
+
+bool VBO::initialize(const std::initializer_list<block_t>& data_list, GLsizei vds_size, GLenum usage)
+{
+  // declare a buffer memory in GPU
+  if (m_id == GL_INVALID_ID)
+  {
+    glGenBuffers(1, &m_id);
+  }
+
+  this->bind();
+
+  // calculate total data size in the data list
+  GLsizei data_size = 0;
+  for (auto& e : data_list)
+  {
+    data_size += e.size;
+  }
+
+  // allocate memory in GPU
+  glBufferData(GL_ARRAY_BUFFER, data_size, nullptr, usage);
+
+  // send data list from app to store into GPU
+  GLsizei data_offset = 0;
+  for (auto& e : data_list)
+  {
+    glBufferSubData(GL_ARRAY_BUFFER, data_offset, e.size, e.ptr);
+    data_offset += e.size;
+  }
+
+  // calculate number of elements in the data block
+  m_num_elements = data_size / vds_size;
+
+  // verify the stored data size is the sane as the sent data size
+  GLsizei stored_data_size = 0;
+  glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
+
+  return data_size == stored_data_size;
 }
 
 void VBO::bind()

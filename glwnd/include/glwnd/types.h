@@ -95,6 +95,15 @@ struct glcolor_t
 typedef glcolor_t<float>  glcolorf;
 typedef glcolor_t<double> glcolord;
 
+struct block_t
+{
+  void* ptr;
+  int   size;
+
+  block_t() : ptr(nullptr), size(0) {}
+  block_t(void* p, int z) : ptr(p), size(z) {}
+};
+
 struct dear_imgui_cfg
 {
   enum class styles

@@ -8,6 +8,7 @@
 
 #include <gl/glew.h>
 #include <vector>
+#include <initializer_list>
 
 #include "defs.h"
 
@@ -39,7 +40,8 @@ public:
 
   GLWND_DELETE_UNUSED_OPERATORS(VBO)
 
-  void initialize(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
+  bool initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
+  bool initialize(const std::initializer_list<block_t>& data_list, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
 
   // Note parameters for AN ATTRIBUTE in VDS
   //  offset - the start offset

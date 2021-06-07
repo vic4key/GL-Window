@@ -30,7 +30,7 @@ PBO::~PBO()
     // release memory after used
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    // deallocate memory in GPU
+    // deallocate the buffer memory in GPU
     glDeleteBuffers(1, &m_id);
   }
 }
@@ -64,7 +64,7 @@ bool PBO::initialize(GLvoid* ptr_pixels, int width, int height, int channel, GLi
     return true;
   }
 
-  // allocate memory in GPU
+  // declare a buffer memory in GPU
   if (m_id == GL_INVALID_ID)
   {
     glGenBuffers(1, &m_id);
