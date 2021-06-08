@@ -77,7 +77,7 @@ void GLViewPort::setup(const r4i& rect)
     ndc.bottom(ndc.bottom() / aspect);
   }
 
-  // setup view port
+  // setup view port - mapping window coordinate (win-flipped) to normalized device coordinate (ndc)
 
   glViewport(win.left(), win.bottom(), win.width(), win.height());
   gluOrtho2D(ndc.left(), ndc.right(), ndc.bottom(), ndc.top());
