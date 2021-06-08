@@ -68,6 +68,11 @@ public:
 
   virtual void on_keyboard_key(int key, int code, int action, int mods)
   {
+    if (action == GLFW_PRESS && key == GLFW_KEY_F11)
+    {
+      this->toggle_fullscreen();
+    }
+
     p2i v(0, 0);
 
     if (action == GLFW_PRESS || action == GLFW_REPEAT)

@@ -42,6 +42,8 @@ public:
   void run();
   void clear(color_t* pbg = nullptr);
 
+  void toggle_fullscreen();
+
   void enable_fps(bool state = true);
   void enable_debug(bool state = true);
   void enable_coordiates(bool state = true);

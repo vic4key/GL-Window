@@ -85,8 +85,9 @@ private:
   void imgui_destroy();
 
   void display_fps();
-
-  p2i get_current_mouse_position();
+  void toggle_fullscreen();
+  p2i  get_current_mouse_position();
+  GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
 
 private:
   GLWindow&    m_parent;
@@ -349,6 +350,8 @@ int GLWindow::Impl::create()
 
   glfwMakeContextCurrent(m_ptr_window);
 
+  // turn-on v-sync (for enabled double-buffer)
+
   glfwSwapInterval(1);
 
   // initialize the GLEW library
@@ -356,7 +359,7 @@ int GLWindow::Impl::create()
   auto ret = glewInit();
   if (ret != GLEW_OK)
   {
-    utils::log("GLFW -> glewInit");;
+    utils::log("GLFW -> glewInit");
     return __LINE__;
   }
 
@@ -648,6 +651,96 @@ void GLWindow::Impl::clear(color_t* pbg)
   glClearStencil(0);
 }
 
+void GLWindow::Impl::toggle_fullscreen()
+{
+  auto ptr_current_monitor = this->get_ptr_current_monitor(m_ptr_window);
+  assert(ptr_current_monitor != nullptr);
+
+  auto ptr_video_mode = glfwGetVideoMode(ptr_current_monitor);
+  assert(ptr_video_mode != nullptr);
+
+  static bool fullscreen = false;
+  fullscreen = !fullscreen;
+
+  static r4i backup;
+  int x = 0, y = 0, w = 0, h = 0;
+
+  if (fullscreen)
+  {
+    // backup the position/size of the current window that being in windowed mode
+    glfwGetWindowPos(m_ptr_window, &x, &y);
+    glfwGetWindowSize(m_ptr_window, &w, &h);
+    backup.set(x, y, x + w, y + h);
+
+    // get the position/size of the current screen
+    x = 0;
+    y = 0;
+    w = ptr_video_mode->width;
+    h = ptr_video_mode->height;
+
+    // set the current window to full-screen mode
+    glfwSetWindowMonitor(m_ptr_window, ptr_current_monitor, x, y, w, h, GLFW_DONT_CARE);
+  }
+  else // windowed
+  {
+    // restore the position/size of the current window that previously in windowed mode
+    const auto origin = backup.origin();
+    x = origin.x();
+    y = origin.y();
+    w = backup.width();
+    h = backup.height();
+
+    // set the current window to the previous position/size that in windowed mode
+    glfwSetWindowMonitor(m_ptr_window, nullptr, x, y, w, h, GLFW_DONT_CARE);
+  }
+}
+
+GLFWmonitor* GLWindow::Impl::get_ptr_current_monitor(GLFWwindow* ptr_window)
+{
+  if (ptr_window == nullptr)
+  {
+    return nullptr;
+  }
+
+  int num_monitors = 0;
+  auto pptr_monitors = glfwGetMonitors(&num_monitors);
+  if (pptr_monitors == nullptr || num_monitors == 0)
+  {
+    return nullptr;
+  }
+  
+  int wx = 0, wy = 0, ww = 0, wh = 0;
+  glfwGetWindowPos(ptr_window, &wx, &wy);
+  glfwGetWindowSize(ptr_window, &ww, &wh);
+
+  GLFWmonitor* ptr_monitor = nullptr;
+  int overlap = 0, best_overlap = 0;
+
+  for (int i = 0; i < num_monitors; i++)
+  {
+    auto ptr_video_mode = glfwGetVideoMode(pptr_monitors[i]);
+    if (ptr_video_mode != nullptr)
+    {
+      int mx, my, mw, mh;
+      glfwGetMonitorPos(pptr_monitors[i], &mx, &my);
+      mw = ptr_video_mode->width;
+      mh = ptr_video_mode->height;
+
+      int overlap =\
+        max(0, min(wx + ww, mx + mw) - max(wx, mx)) *
+        max(0, min(wy + wh, my + mh) - max(wy, my));
+
+      if (best_overlap < overlap)
+      {
+        best_overlap = overlap;
+        ptr_monitor  = pptr_monitors[i];
+      }
+    }
+  }
+
+  return ptr_monitor;
+}
+
 p2i GLWindow::Impl::get_current_mouse_position()
 {
   assert(m_ptr_window != nullptr);
@@ -734,6 +827,11 @@ void GLWindow::run()
 void GLWindow::clear(color_t* pbg)
 {
   m_ptr_impl->clear(pbg);
+}
+
+void GLWindow::toggle_fullscreen()
+{
+  m_ptr_impl->toggle_fullscreen();
 }
 
 void GLWindow::enable_fps(bool state)
