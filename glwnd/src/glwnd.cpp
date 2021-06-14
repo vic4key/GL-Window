@@ -16,11 +16,6 @@
 #include <gl/wglew.h>
 #include <glfw/glfw3.h>
 
-#pragma comment(lib, "glu32.lib")
-#pragma comment(lib, "opengl32.lib")
-#pragma comment(lib, "glew32.lib")
-#pragma comment(lib, "glfw3.lib")
-
 #include "imgui-1.82/backends/imgui_impl_glfw.h"
 #include "imgui-1.82/backends/imgui_impl_opengl3.h"
 

@@ -3,7 +3,7 @@
 #include "example.h"
 
 #include <glwnd/pbo.h>
-#include <SOIL2/SOIL2>
+#include <SOIL2/SOIL2.h>
 
 class GLWindowExamplePBO : public GLWindow
 {

@@ -7,7 +7,7 @@
 #include "glwnd/tex2d.h"
 #include "glwnd/utils.h"
 
-#include <SOIL2/SOIL2>
+#include <SOIL2/SOIL2.h>
 #include <cassert>
 
 namespace glwnd
