@@ -39,7 +39,7 @@ private:
   GLuint compile(const GLchar* source, GLuint shaderType);
 
 private:
-  GLuint m_id = -1;
+  GLuint m_id;
 };
 
 }; // glwnd

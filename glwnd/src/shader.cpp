@@ -12,8 +12,9 @@
 namespace glwnd
 {
 
-Shader::Shader()
+Shader::Shader() : m_id(-1)
 {
+  m_id = glCreateProgram();
 }
 
 Shader::~Shader()
@@ -40,10 +41,11 @@ void Shader::build_file(const std::string& vertex_file_path, const std::string& 
 
 void Shader::build_code(const char* vertex_source_code, const char* fragment_source_code)
 {
+  assert(m_id != -1);
+
   GLuint vertex_compiled = this->compile(vertex_source_code, GL_VERTEX_SHADER);
   GLuint fragment_compiled = this->compile(fragment_source_code, GL_FRAGMENT_SHADER);
 
-  m_id = glCreateProgram();
   glAttachShader(m_id, vertex_compiled);
   glAttachShader(m_id, fragment_compiled);
   glLinkProgram(m_id);
