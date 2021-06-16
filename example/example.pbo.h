@@ -13,7 +13,7 @@ public:
 
   virtual void initial()
   {
-    m_pbo.initialize_from_image_file("data\\example.png");
+    m_pbo.initialize_from_image_file("assets\\example.png");
   }
 
   virtual void on_display()

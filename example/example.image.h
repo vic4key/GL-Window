@@ -12,7 +12,7 @@ public:
 
   virtual void initial()
   {
-    m_tex2d.initialize_from_image_file("data\\example.png");
+    m_tex2d.initialize_from_image_file("assets\\example.png");
   }
 
   virtual void on_display()
