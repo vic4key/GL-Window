@@ -117,6 +117,9 @@
     <ClInclude Include="3rdparty\tinyobjloader\TinyObjLoader.h">
       <Filter>3rdparty\tinyobjloader\include</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\shader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -177,6 +180,9 @@
       <Filter>3rdparty\tinyobjloader\src</Filter>
     </ClCompile>
     <ClCompile Include="src\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\shader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
