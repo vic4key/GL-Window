@@ -36,7 +36,6 @@ public:
   void  uniform(const std::string& name, glm::mat4 value) const;
 
 private:
-  std::string load_text_file(const std::string& file_path);
   GLuint compile(const GLchar* source, GLuint shaderType);
 
 private:
