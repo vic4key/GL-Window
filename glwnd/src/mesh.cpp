@@ -11,7 +11,20 @@
 namespace glwnd
 {
 
-Mesh::Mesh(const std::string& file_path)
+Mesh::Mesh() : m_vao(-1), m_vbo_positions(-1), m_vbo_texcoords(-1), m_vbo_normals(-1), m_vbo_elements(-1)
+{
+}
+
+Mesh::~Mesh()
+{
+  glDeleteBuffers(1, &m_vbo_positions);
+  glDeleteBuffers(1, &m_vbo_texcoords);
+  glDeleteBuffers(1, &m_vbo_normals);
+  glDeleteBuffers(1, &m_vbo_elements);
+  glDeleteVertexArrays(1, &m_vao);
+}
+
+void Mesh::load(const std::string& file_path)
 {
   assert(!file_path.empty());
 
@@ -80,7 +93,7 @@ Mesh::Mesh(const std::string& file_path)
       info.append("normals");
     }
 
-    assert(0); // "There are no " + info + " in mesh from file \"" + file + "\".");
+    assert(0 && "no data in mesh from file");
   }
 
   glGenVertexArrays(1, &m_vao);
@@ -117,15 +130,6 @@ Mesh::Mesh(const std::string& file_path)
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_elements);
 
   glBindVertexArray(0);
-}
-
-Mesh::~Mesh()
-{
-  glDeleteBuffers(1, &m_vbo_positions);
-  glDeleteBuffers(1, &m_vbo_texcoords);
-  glDeleteBuffers(1, &m_vbo_normals);
-  glDeleteBuffers(1, &m_vbo_elements);
-  glDeleteVertexArrays(1, &m_vao);
 }
 
 void Mesh::render()

@@ -22,14 +22,14 @@ public:
   using uint16 = std::uint16_t;
   using uint32 = std::uint32_t;
 
-  Mesh() = delete;
+  Mesh();
   Mesh(Mesh&&) = default;
   Mesh(const Mesh&) = delete;
   Mesh& operator=(Mesh&&) = default;
   Mesh& operator=(const Mesh&) = delete;
-  Mesh(const std::string& file_path);
   virtual ~Mesh();
 
+  void load(const std::string& file_path);
   void render();
 
 private:
