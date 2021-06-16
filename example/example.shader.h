@@ -2,10 +2,12 @@
 
 #include "example.h"
 
+#include <glwnd/shader.h>
+
 class GLWindowExampleShader : public GLWindow
 {
 public:
-  GLWindowExampleShader() : GLWindow(), m_vbo(0), m_vao(0), m_shader_program(-1) {}
+  GLWindowExampleShader() : GLWindow(), m_vbo(0), m_vao(0) {}
   virtual ~GLWindowExampleShader() {}
 
   virtual void initial()
@@ -30,21 +32,7 @@ public:
       "     fragColor = vec4(vertexColor, 1.0f);\n"
       "}\n";
 
-    GLuint vertex_shader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vertex_shader, 1, &vertex_shader_source, NULL);
-    glCompileShader(vertex_shader);
-
-    GLuint fragment_shader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fragment_shader, 1, &fragment_shader_source, NULL);
-    glCompileShader(fragment_shader);
-
-    m_shader_program = glCreateProgram();
-    glAttachShader(m_shader_program, vertex_shader);
-    glAttachShader(m_shader_program, fragment_shader);
-    glLinkProgram(m_shader_program);
-
-    glDeleteShader(vertex_shader);
-    glDeleteShader(fragment_shader);
+    m_shader.build_code(vertex_shader_source, fragment_shader_source);
 
     float vertices[] =
     {
@@ -78,7 +66,8 @@ public:
 
   virtual void on_display()
   {
-    glUseProgram(m_shader_program);
+    m_shader.use();
+
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
   }
@@ -86,5 +75,5 @@ public:
 private:
   GLuint m_vbo;
   GLuint m_vao;
-  GLuint m_shader_program;
+  Shader m_shader;
 };

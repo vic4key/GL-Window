@@ -5,28 +5,43 @@
  */
 
 #include "glwnd/shader.h"
-
-#include <fstream>
-#include <sstream>
+#include "glwnd/utils.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
 namespace glwnd
 {
 
-Shader::Shader(const std::string& vertex_file_path, const std::string& fragment_file_path)
+Shader::Shader()
+{
+}
+
+Shader::~Shader()
+{
+  if (m_id != -1)
+  {
+    glDeleteProgram(m_id);
+  }
+}
+
+void Shader::build_file(const std::string& vertex_file_path, const std::string& fragment_file_path)
 {
   assert(!vertex_file_path.empty());
   assert(!fragment_file_path.empty());
 
-  std::string vertex_source_code = this->load_text_file(vertex_file_path);
+  auto vertex_source_code = utils::load_text_file(vertex_file_path);
   assert(!vertex_source_code.empty());
 
-  std::string fragment_source_code = this->load_text_file(fragment_file_path);
+  auto fragment_source_code = utils::load_text_file(fragment_file_path);
   assert(!fragment_source_code.empty());
 
-  GLuint vertex_compiled = compile(vertex_source_code.c_str(), GL_VERTEX_SHADER);
-  GLuint fragment_compiled = compile(fragment_source_code.c_str(), GL_FRAGMENT_SHADER);
+  this->build_code(vertex_source_code.c_str(), fragment_source_code.c_str());
+}
+
+void Shader::build_code(const char* vertex_source_code, const char* fragment_source_code)
+{
+  GLuint vertex_compiled = this->compile(vertex_source_code, GL_VERTEX_SHADER);
+  GLuint fragment_compiled = this->compile(fragment_source_code, GL_FRAGMENT_SHADER);
 
   m_id = glCreateProgram();
   glAttachShader(m_id, vertex_compiled);
@@ -39,22 +54,6 @@ Shader::Shader(const std::string& vertex_file_path, const std::string& fragment_
 
   glDeleteShader(vertex_compiled);
   glDeleteShader(fragment_compiled);
-}
-
-Shader::~Shader()
-{
-  if (m_id != -1)
-  {
-    glDeleteProgram(m_id);
-  }
-}
-
-std::string Shader::load_text_file(const std::string& file_path)
-{
-  std::ifstream t(file_path);
-  std::stringstream buffer;
-  buffer << t.rdbuf();
-  return buffer.str();
 }
 
 GLuint Shader::compile(const GLchar* source, GLuint shaderType)

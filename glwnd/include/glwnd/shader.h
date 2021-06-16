@@ -19,13 +19,11 @@ class Shader
 public:
   using int32 = std::int32_t;
 
-  Shader(const std::string& vertex_file_path, const std::string& fragment_file_path);
-  Shader() = delete;
-  Shader(const Shader&) = default;
-  Shader(Shader&&) = default;
-  Shader& operator=(const Shader&) = default;
-  Shader& operator=(Shader&&) = default;
+  Shader();
   virtual ~Shader();
+
+  void build_file(const std::string& vertex_file_path, const std::string& fragment_file_path);
+  void build_code(const char* vertex_source_code, const char* fragment_source_code);
 
   void use() const;
 

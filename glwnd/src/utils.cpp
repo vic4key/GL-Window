@@ -9,6 +9,8 @@
 #include "glwnd/utils.h"
 
 #include <Windows.h>
+#include <fstream>
+#include <sstream>
 
 namespace glwnd
 {
@@ -16,7 +18,7 @@ namespace glwnd
 namespace utils
 {
 
-void read_file(const std::string& file_path, std::vector<unsigned char>& data)
+void load_file(const std::string& file_path, std::vector<unsigned char>& data)
 {
 	FILE* f = nullptr;
 	fopen_s(&f, file_path.c_str(), "rb");
@@ -29,6 +31,14 @@ void read_file(const std::string& file_path, std::vector<unsigned char>& data)
 	fread(&data[0], 1, file_size, f);
 
 	fclose(f);
+}
+
+std::string load_text_file(const std::string& file_path)
+{
+  std::ifstream f(file_path);
+  std::stringstream ss;
+  ss << f.rdbuf();
+  return ss.str();
 }
 
 std::string log(const std::string format, ...)
