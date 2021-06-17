@@ -6,6 +6,7 @@
 #include "example.pbo.h"
 #include "example.vds.h"
 #include "example.text.h"
+#include "example.mesh.h"
 #include "example.image.h"
 #include "example.imgui.h"
 #include "example.shader.h"
@@ -29,6 +30,7 @@ int APIENTRY wWinMain(
   // gl.reset(new GLWindowExampleEvents);
   // gl.reset(new GLWindowExampleShader);
   // gl.reset(new GLWindowExampleImage);
+  // gl.reset(new GLWindowExampleMesh);
   // gl.reset(new GLWindowExampleVBO);
   // gl.reset(new GLWindowExamplePBO);
   // gl.reset(new GLWindowExampleVDS2A);
