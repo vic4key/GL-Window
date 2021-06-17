@@ -55,6 +55,12 @@ T conv_range(T l1, T h1, T l2, T h2, T v)
   return T(l2 + double(v - l1) * double(h2 - l2) / double(h1 - l1));
 }
 
+template <typename T>
+T align_up(T v, T a = T(4)) // default alignent = 4
+{
+  return ((v + (a - 1)) & ~(a - 1));
+}
+
 void load_file(const std::string& file_path, std::vector<unsigned char>& data);
 
 std::string load_text_file(const std::string& file_path);

@@ -5,6 +5,7 @@
  */
 
 #include "glwnd/mesh.h"
+#include "glwnd/utils.h"
 
 #include "TinyObjLoader.h"
 
@@ -33,6 +34,10 @@ void Mesh::load(const std::string& file_path)
 
   tinyobj::LoadObj(shapes, materials, file_path.c_str());
 
+  // positions
+
+  m_positions.reserve(utils::align_up(shapes[0].mesh.positions.size() / 3));
+
   for (uint32 i = 0; i < shapes[0].mesh.positions.size(); i += 3)
   {
     m_positions.push_back(glm::vec3(
@@ -41,12 +46,20 @@ void Mesh::load(const std::string& file_path)
       shapes[0].mesh.positions[i + 2]));
   }
 
+  // texcoords
+
+  m_texcoords.reserve(utils::align_up(shapes[0].mesh.texcoords.size() / 2));
+
   for (uint32 i = 0; i < shapes[0].mesh.texcoords.size(); i += 2)
   {
     m_texcoords.push_back(glm::vec2(
       shapes[0].mesh.texcoords[i],
       shapes[0].mesh.texcoords[i + 1]));
   }
+
+  // normals
+
+  m_normals.reserve(utils::align_up(shapes[0].mesh.normals.size() / 3));
 
   for (uint32 i = 0; i < shapes[0].mesh.normals.size(); i += 3)
   {
@@ -55,6 +68,10 @@ void Mesh::load(const std::string& file_path)
       shapes[0].mesh.normals[i + 1],
       shapes[0].mesh.normals[i + 2]));
   }
+
+  // m_indices
+
+  m_indices.reserve(shapes[0].mesh.indices.size());
 
   for (uint32 i = 0; i < shapes[0].mesh.indices.size(); i++)
   {
