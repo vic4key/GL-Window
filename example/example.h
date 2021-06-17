@@ -2,10 +2,9 @@
 
 #include "resource.h"
 
+#include <gl/glew.h>
 #include <glwnd/glwnd>
 using namespace glwnd;
-
-#include <GL/glew.h>
 
 class GLWindowExample : public GLWindow
 {
