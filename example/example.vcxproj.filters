@@ -51,9 +51,6 @@
     <ClInclude Include="example.text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="example.sample.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="example.primitive.h">
       <Filter>Header Files</Filter>
     </ClInclude>

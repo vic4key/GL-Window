@@ -9,7 +9,6 @@
 #include "example.image.h"
 #include "example.imgui.h"
 #include "example.shader.h"
-#include "example.sample.h"
 #include "example.simple.h"
 #include "example.events.h"
 #include "example.primitive.h"
@@ -25,7 +24,7 @@ int APIENTRY wWinMain(
 )
 {
   std::unique_ptr<GLWindow> gl;
-  gl.reset(new GLWindowExampleSample);
+  gl.reset(new GLWindowExample);
   // gl.reset(new GLWindowExampleSimple);
   // gl.reset(new GLWindowExampleEvents);
   // gl.reset(new GLWindowExampleShader);

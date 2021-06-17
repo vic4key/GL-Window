@@ -160,7 +160,6 @@
     <ClInclude Include="example.interactive.h" />
     <ClInclude Include="example.pbo.h" />
     <ClInclude Include="example.primitive.h" />
-    <ClInclude Include="example.sample.h" />
     <ClInclude Include="example.shader.h" />
     <ClInclude Include="example.simple.h" />
     <ClInclude Include="example.text.h" />
