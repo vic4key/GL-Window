@@ -34,5 +34,5 @@ public:
   }
 
 private:
-  glwnd::Tex2D m_tex2d;
+  Tex2D m_tex2d;
 };

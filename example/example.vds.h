@@ -181,6 +181,6 @@ public:
   }
 
 protected:
-  glwnd::VBO m_vbo;
-  glwnd::Tex2D m_tex2d;
+  VBO m_vbo;
+  Tex2D m_tex2d;
 };
