@@ -12,33 +12,33 @@ public:
 
   virtual void initial()
   {
-    const char* vertex_shader_source =
-      "#version 330 core\n"
-      "layout (location = 0) in vec3 position;\n"
-      "layout (location = 1) in vec3 color;\n"
-      "out vec3 vertexColor;\n"
-      "void main()\n"
-      "{\n"
-      "    gl_Position = vec4(position, 1.0);\n"
-      "    vertexColor = color;\n"
-      "}\n";
+    const char* vertex_shader_source = R"(
+      #version 330 core
+      layout (location = 0) in vec3 position;
+      layout (location = 1) in vec3 color;
+      out vec3 vertexColor;
+      void main()
+      {
+        gl_Position = vec4(position, 1.0);
+        vertexColor = color;
+      })";
 
-    const char* fragment_shader_source =
-      "#version 330 core\n"
-      "out vec4 fragColor;\n"
-      "in vec3 vertexColor;\n"
-      "void main()\n"
-      "{\n"
-      "     fragColor = vec4(vertexColor, 1.0f);\n"
-      "}\n";
+    const char* fragment_shader_source = R"(
+      #version 330 core
+      in  vec3 vertexColor;
+      out vec4 fragColor;
+      void main()
+      {
+        fragColor = vec4(vertexColor, 1.0f);
+      };)";
 
     m_shader.build_code(vertex_shader_source, fragment_shader_source);
 
-    float vertices[] =
+    float data[] =
     {
-      -0.5F, -0.5F, 0.F, 1.F, 0.F, 0.F, // r
-       0.5F, -0.5F, 0.F, 0.F, 1.F, 0.F, // g
-       0.0F,  0.5F, 0.F, 0.F, 0.F, 1.F  // b
+      -0.5F, -0.5F, +0.F, +1.F, +0.F, +0.F, // r
+      +0.5F, -0.5F, +0.F, +0.F, +1.F, +0.F, // g
+      +0.0F, +0.5F, +0.F, +0.F, +0.F, +1.F  // b
     };
 
     glGenVertexArrays(1, &m_vao);
@@ -46,7 +46,7 @@ public:
 
     glGenBuffers(1, &m_vbo);
     glBindBuffer(GL_ARRAY_BUFFER, m_vbo);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(data), data, GL_STATIC_DRAW);
 
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
     glEnableVertexAttribArray(0);
