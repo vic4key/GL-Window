@@ -41,7 +41,7 @@ public:
   virtual ~Impl();
 
   void on_display(GLView& view);
-  void on_resize(int Width, int Height);
+  void on_resize(int width, int height);
 
   void on_mouse_move(int x, int y);
   void on_mouse_enter_leave(bool entered, int x, int y);
