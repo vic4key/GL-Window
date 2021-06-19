@@ -22,8 +22,8 @@ public:
 
   virtual void on_display(GLView& view)
   {
-    color_t color_bias[] = { 0xFF0000, 0x00FF00, 0x0000FF, 0xFF00FF };
-    auto color = glcolor_t<GLfloat>(color_bias[view.index()]);
+    color_t colors[] = { 0xFF0000, 0x00FF00, 0x0000FF, 0xFF00FF };
+    auto color = glcolor_t<GLfloat>(colors[view.index()]);
 
     glColor3f(color.r, color.g, color.b);
     glBegin(GL_POLYGON);
