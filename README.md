@@ -18,8 +18,10 @@
  * Pixel Buffer Object (PBO)
  * Texture Manipulation
  * Integrated Dear ImGUI
- * Text Rendering
- * Primitive Rendering
+ * Shader (GLSL)
+ * Text Renderer
+ * Primitive Renderer
+ * Mesh Loader/Renderer
  * Debugging Error
  * Etc
 
@@ -48,16 +50,8 @@ Released under the [MIT](LICENSE.md) license
 >![](screenshots/example.simple.png)
 
 >[example/example.imgui.h](example/example.imgui.h)
->
+
 >![](screenshots/example.imgui.png)
-
->[example/example.events.h](example/example.events.h)
->
->![](screenshots/example.events.png)
-
->[example/example.shader.h](example/example.shader.h)
->
->![](screenshots/example.shader.png)
 
 >[example/example.vds.h](example/example.vds.h)
 >
@@ -65,8 +59,12 @@ Released under the [MIT](LICENSE.md) license
 >![](screenshots/example.vds-4a.png)
 
 >[example/example.mesh.h](example/example.mesh.h)
->
+
 >![](screenshots/example.mesh.png?)
+
+>[example/example.shader.h](example/example.shader.h)
+
+>![](screenshots/example.shader.png)
 
 >[example/example.image.h](example/example.image.h)
 >
@@ -79,6 +77,10 @@ Released under the [MIT](LICENSE.md) license
 >[example/example.primitive.h](example/example.primitive.h)
 >
 >![](screenshots/example.primitive.png)
+
+>[example/example.events.h](example/example.events.h)
+>
+>![](screenshots/example.events.png)
 
 >Etc
 
