@@ -176,25 +176,6 @@ void GLWindow::Impl::error(int code, const char* description)
   utils::log("GLFW -> %d, %s", code, description);
 }
 
-void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
-{
-  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
-  assert(ptr_parent_impl != nullptr);
-
-  ptr_parent_impl->m_width  = width;
-  ptr_parent_impl->m_height = height;
-
-  r4i rect(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
-  ptr_parent_impl->m_ptr_viewport->setup(rect);
-
-  ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
-
-  ptr_parent_impl->display();
-
-  glfwPollEvents();
-  glfwSwapBuffers(ptr_window);
-}
-
 void GLWindow::Impl::mouse_move(GLFWwindow* ptr_window, double, double)
 {
   auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
@@ -473,6 +454,25 @@ int GLWindow::Impl::final()
   m_parent.final();
 
   return 0;
+}
+
+void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
+{
+  auto ptr_parent_impl = reinterpret_cast<GLWindow::Impl*>(glfwGetWindowUserPointer(ptr_window));
+  assert(ptr_parent_impl != nullptr);
+
+  ptr_parent_impl->m_width = width;
+  ptr_parent_impl->m_height = height;
+
+  r4i rect(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
+  ptr_parent_impl->m_ptr_viewport->setup(rect);
+
+  ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
+
+  ptr_parent_impl->display();
+
+  glfwPollEvents();
+  glfwSwapBuffers(ptr_window);
 }
 
 int GLWindow::Impl::display()
