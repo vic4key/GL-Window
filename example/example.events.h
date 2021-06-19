@@ -10,7 +10,7 @@ public:
   GLWindowExampleEvents() : GLWindow() {};
   virtual ~GLWindowExampleEvents() {};
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     LOG("drawing");
   }

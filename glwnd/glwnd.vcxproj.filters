@@ -120,6 +120,12 @@
     <ClInclude Include="include\glwnd\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\view.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glwnd\layout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -183,6 +189,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\view.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\layout.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

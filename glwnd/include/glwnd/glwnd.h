@@ -13,6 +13,8 @@ struct GLFWwindow;
 namespace glwnd
 {
 
+class GLView;
+class GLLayout;
 class GLViewPort;
 class GLPrimitive;
 
@@ -25,7 +27,7 @@ public:
   virtual void initial();
   virtual void final();
 
-  virtual void on_display();
+  virtual void on_display(GLView& view) = 0;
   virtual void on_resize(int width, int height);
 
   virtual void on_mouse_move(int x, int y);
@@ -42,6 +44,7 @@ public:
   void run();
   void clear(color_t* pbg = nullptr);
 
+  void set_layout(std::unique_ptr<GLLayout> ptr_layout);
   void toggle_fullscreen();
 
   void enable_fps(bool state = true);

@@ -10,7 +10,7 @@ public:
   GLWindowExampleInteractive() : GLWindowExampleVDS2A() {}
   virtual ~GLWindowExampleInteractive() {}
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     glMatrixMode(GL_PROJECTION_MATRIX);
     gluPerspective(45, 1.F, 0.1, 100);

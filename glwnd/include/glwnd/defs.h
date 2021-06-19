@@ -7,6 +7,7 @@
  */
 
 #include <gl/glew.h>
+#include <memory>
 
 #include "types.h"
 

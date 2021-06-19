@@ -22,7 +22,7 @@ public:
     // your code here
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     // your code here
   }

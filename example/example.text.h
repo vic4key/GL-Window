@@ -21,7 +21,7 @@ public:
     m_font_id_Trebuchet_MS = m_text_render_2d.add_font("C:\\Windows\\Fonts\\trebucbd.ttf", 32);
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     glColor3f(1.F, 1.F, 1.F);
     m_text_render_2d.render_text("this is a text renderer\nsupported multi-lines\nsupported multi-fonts\n...", p2d(-0.75, +0.75));

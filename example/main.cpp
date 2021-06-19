@@ -14,6 +14,7 @@
 #include "example.events.h"
 #include "example.primitive.h"
 #include "example.interactive.h"
+#include "example.multiview.h"
 
 #include <memory>
 
@@ -39,6 +40,7 @@ int APIENTRY wWinMain(
   // gl.reset(new GLWindowExampleText2D);
   // gl.reset(new GLWindowExamplePrimitive);
   // gl.reset(new GLWindowExampleInteractive);
+  // gl.reset(new GLWindowExampleMultiView);
   gl->run();
 
   return EXIT_SUCCESS;

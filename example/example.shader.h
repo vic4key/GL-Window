@@ -64,7 +64,7 @@ public:
     glDeleteBuffers(1, &m_vbo);
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     m_shader.use();
 

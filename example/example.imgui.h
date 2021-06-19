@@ -19,7 +19,7 @@ public:
     this->enable_dear_imgui(true, &cfg);
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     ImGui::Begin("Dear ImGui");
     {

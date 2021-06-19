@@ -11,7 +11,7 @@ public:
   GLWindowExamplePrimitive() : GLWindow() {}
   virtual ~GLWindowExamplePrimitive() {}
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     // text
 

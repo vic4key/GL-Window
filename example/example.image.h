@@ -15,7 +15,7 @@ public:
     m_tex2d.initialize_from_image_file("assets\\example.png");
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     glEnable(GL_TEXTURE_2D);
 

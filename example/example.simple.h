@@ -8,7 +8,7 @@ public:
   GLWindowExampleSimple() : GLWindow() {}
   virtual ~GLWindowExampleSimple() {}
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     glColor3f(0.0, 1.0, 0.0);
     glBegin(GL_POLYGON);

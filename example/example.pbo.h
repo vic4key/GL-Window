@@ -16,7 +16,7 @@ public:
     m_pbo.initialize_from_image_file("assets\\example.png");
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     GLuint texture = 0;
     glGenTextures(1, &texture);

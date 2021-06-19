@@ -7,6 +7,8 @@
 #include "glwnd/glwnd.h"
 #include "glwnd/utils.h"
 #include "glwnd/text.h"
+#include "glwnd/view.h"
+#include "glwnd/layout.h"
 #include "glwnd/viewport.h"
 #include "glwnd/primitive.h"
 
@@ -38,7 +40,7 @@ public:
   Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg);
   virtual ~Impl();
 
-  void on_display();
+  void on_display(GLView& view);
   void on_resize(int Width, int Height);
 
   void on_mouse_move(int x, int y);
@@ -83,12 +85,15 @@ private:
   void toggle_fullscreen();
   p2i  get_current_mouse_position();
   GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
+  void set_layout(std::unique_ptr<GLLayout> ptr_layout);
 
 private:
   GLWindow&    m_parent;
   GLFWwindow*  m_ptr_window;
   GLViewPort*  m_ptr_viewport;
   GLPrimitive* m_ptr_renderer;
+
+  std::unique_ptr<GLLayout> m_ptr_layout;
 
   int m_width;
   int m_height;
@@ -109,7 +114,8 @@ private:
 };
 
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
-  : m_parent(parent), m_ptr_window(nullptr), m_ptr_viewport(nullptr), m_ptr_renderer(nullptr)
+  : m_parent(parent)
+  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_viewport(nullptr), m_ptr_renderer(nullptr)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_fps_enabled(false), m_fps(0)
   , m_debug_enabled(false)
@@ -126,9 +132,9 @@ GLWindow::Impl::~Impl()
   delete m_ptr_renderer;
 }
 
-void GLWindow::Impl::on_display()
+void GLWindow::Impl::on_display(GLView& view)
 {
-  m_parent.on_display();
+  m_parent.on_display(view);
 }
 
 void GLWindow::Impl::on_resize(int width, int height)
@@ -250,6 +256,11 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
   }
 
   ptr_parent_impl->on_drag_drop(paths);
+}
+
+void GLWindow::Impl::set_layout(std::unique_ptr<GLLayout> ptr_layout)
+{
+  m_ptr_layout.reset(ptr_layout.release());
 }
 
 int GLWindow::Impl::create()
@@ -382,6 +393,10 @@ int GLWindow::Impl::create()
   r4i rect(m_width, m_height);
   m_ptr_viewport->setup(rect);
 
+  // setup layout
+
+  this->set_layout(GLLayout::_1x1(m_parent));
+
   // set text render for fps
 
   m_text_render_fps.initialize(&m_parent);
@@ -486,39 +501,44 @@ int GLWindow::Impl::display()
     display_fps();
   }
 
-  // display drawing coordinates
-
-  if (m_coordiates_enabled)
+  for (auto& ptr_view : m_ptr_layout->views())
   {
-    m_ptr_viewport->display_coordiates();
-  }
+    ptr_view->setup(*m_ptr_viewport, m_width, m_height);
 
-  glPushMatrix();
-  glPushAttrib(GL_ALL_ATTRIB_BITS);
-  {
-    // create a new imgui frame
+    // display drawing coordinates
 
-    if (m_dear_imgui_enabled)
+    if (m_coordiates_enabled)
     {
-      ImGui_ImplOpenGL3_NewFrame();
-      ImGui_ImplGlfw_NewFrame();
-      ImGui::NewFrame();
+      m_ptr_viewport->display_coordiates();
     }
 
-    // display drawing content
-
-    this->on_display();
-
-    // render on the created imgui frame
-
-    if (m_dear_imgui_enabled)
+    glPushMatrix();
+    glPushAttrib(GL_ALL_ATTRIB_BITS);
     {
-      ImGui::Render();
-      ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+      // create a new imgui frame
+
+      if (m_dear_imgui_enabled)
+      {
+        ImGui_ImplOpenGL3_NewFrame();
+        ImGui_ImplGlfw_NewFrame();
+        ImGui::NewFrame();
+      }
+
+      // display drawing content
+
+      this->on_display(*ptr_view);
+
+      // render on the created imgui frame
+
+      if (m_dear_imgui_enabled)
+      {
+        ImGui::Render();
+        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+      }
     }
+    glPopAttrib();
+    glPopMatrix();
   }
-  glPopAttrib();
-  glPopMatrix();
 
   glFlush();
 
@@ -824,6 +844,11 @@ void GLWindow::clear(color_t* pbg)
   m_ptr_impl->clear(pbg);
 }
 
+void GLWindow::set_layout(std::unique_ptr<GLLayout> ptr_layout)
+{
+  m_ptr_impl->set_layout(std::move(ptr_layout));
+}
+
 void GLWindow::toggle_fullscreen()
 {
   m_ptr_impl->toggle_fullscreen();
@@ -866,10 +891,10 @@ void GLWindow::final()
   // OVERRIDABLE
 }
 
-void GLWindow::on_display()
-{
-  // OVERRIDABLE
-}
+// void GLWindow::on_display(GLView& view)
+// {
+//   // OVERRIDABLE
+// }
 
 void GLWindow::on_resize(int width, int height)
 {

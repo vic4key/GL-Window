@@ -10,7 +10,7 @@ public:
   GLWindowExampleVBO() : GLWindow() {}
   virtual ~GLWindowExampleVBO() {}
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     // With VBO
 

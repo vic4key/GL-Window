@@ -34,7 +34,7 @@ public:
     offset += m_vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     glMatrixMode(GL_PROJECTION_MATRIX);
     gluPerspective(45, 1.F, 0.1, 100);
@@ -157,7 +157,7 @@ public:
     attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT, 0);
   }
 
-  virtual void on_display()
+  virtual void on_display(GLView& view)
   {
     glMatrixMode(GL_PROJECTION_MATRIX);
     gluPerspective(45, 1.F, 0.1, 100);
