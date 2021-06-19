@@ -66,7 +66,7 @@ Released under the [MIT](LICENSE.md) license
 
 >[example/example.mesh.h](example/example.mesh.h)
 >
->![](screenshots/example.mesh.png)
+>![](screenshots/example.mesh.png?)
 
 >[example/example.image.h](example/example.image.h)
 >
