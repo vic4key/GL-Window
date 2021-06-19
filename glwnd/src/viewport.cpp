@@ -62,7 +62,7 @@ void GLViewPort::setup(const r4i& rect)
 
   // setup the normalized device coordinate
 
-  const GLdouble aspect = GLdouble(win.width()) / GLdouble(win.height());
+  const GLdouble aspect = win.aspect();
 
   ndc.set(-1.0, +1.0, +1.0, -1.0);
 
