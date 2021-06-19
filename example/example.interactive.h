@@ -29,7 +29,7 @@ public:
 
     // draw cube via vbo
 
-    m_vbo.draw(GL_QUADS);
+    m_vbo.render(GL_QUADS);
   }
 
   virtual void on_mouse_move(int x, int y)

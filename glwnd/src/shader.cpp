@@ -6,19 +6,20 @@
 
 #include "glwnd/shader.h"
 #include "glwnd/utils.h"
+#include "glwnd/defs.h"
 
 #include <glm/gtc/type_ptr.hpp>
 
 namespace glwnd
 {
 
-Shader::Shader() : m_id(-1)
+Shader::Shader() : m_id(GL_INVALID_ID)
 {
 }
 
 Shader::~Shader()
 {
-  if (m_id != -1)
+  if (m_id != GL_INVALID_ID)
   {
     glDeleteProgram(m_id);
   }
@@ -71,7 +72,7 @@ GLuint Shader::compile(const GLchar* source, GLuint shaderType)
 
 void Shader::use() const
 {
-  assert(m_id != -1);
+  assert(m_id != GL_INVALID_ID);
   glUseProgram(m_id);
 }
 

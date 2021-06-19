@@ -6,23 +6,48 @@
 
 #include "glwnd/mesh.h"
 #include "glwnd/utils.h"
+#include "glwnd/defs.h"
 
 #include "TinyObjLoader.h"
 
 namespace glwnd
 {
 
-Mesh::Mesh() : m_vao(-1), m_vbo_positions(-1), m_vbo_texcoords(-1), m_vbo_normals(-1), m_vbo_elements(-1)
+Mesh::Mesh()
+  : m_vao(GL_INVALID_ID)
+  , m_vbo_positions(GL_INVALID_ID)
+  , m_vbo_texcoords(GL_INVALID_ID)
+  , m_vbo_normals(GL_INVALID_ID)
+  , m_vbo_elements(GL_INVALID_ID)
 {
 }
 
 Mesh::~Mesh()
 {
-  glDeleteBuffers(1, &m_vbo_positions);
-  glDeleteBuffers(1, &m_vbo_texcoords);
-  glDeleteBuffers(1, &m_vbo_normals);
-  glDeleteBuffers(1, &m_vbo_elements);
-  glDeleteVertexArrays(1, &m_vao);
+  if (m_vbo_positions != GL_INVALID_ID)
+  {
+    glDeleteBuffers(1, &m_vbo_positions);
+  }
+
+  if (m_vbo_positions != GL_INVALID_ID)
+  {
+    glDeleteBuffers(1, &m_vbo_texcoords);
+  }
+
+  if (m_vbo_positions != GL_INVALID_ID)
+  {
+    glDeleteBuffers(1, &m_vbo_normals);
+  }
+
+  if (m_vbo_positions != GL_INVALID_ID)
+  {
+    glDeleteBuffers(1, &m_vbo_elements);
+  }
+
+  if (m_vbo_positions != GL_INVALID_ID)
+  {
+    glDeleteVertexArrays(1, &m_vao);
+  }
 }
 
 void Mesh::load(const std::string& file_path)

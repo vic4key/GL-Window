@@ -54,7 +54,7 @@ public:
   GLuint declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
   GLuint declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
 
-  void draw(GLenum mode);
+  void render(GLenum mode);
 
   GLuint get_num_elements() const;
 

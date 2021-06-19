@@ -62,7 +62,7 @@ public:
     offset = sizeof(positions);
     vbo.declare_color_format(offset, 3, GL_FLOAT, 0);
 
-    vbo.draw(GL_TRIANGLES);
+    vbo.render(GL_TRIANGLES);
 
     // Without VBO
 

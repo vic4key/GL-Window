@@ -50,7 +50,7 @@ public:
 
     // draw cube via vbo
 
-    m_vbo.draw(GL_QUADS);
+    m_vbo.render(GL_QUADS);
   }
 
 protected:
@@ -177,7 +177,7 @@ public:
 
     // draw cube via vbo
 
-    m_vbo.draw(GL_QUADS);
+    m_vbo.render(GL_QUADS);
   }
 
 protected:
