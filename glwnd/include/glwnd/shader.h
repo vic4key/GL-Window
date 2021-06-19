@@ -28,12 +28,12 @@ public:
   void use() const;
 
   GLint location(const std::string& name) const;
-  void  uniform(const std::string& name, bool value) const;
-  void  uniform(const std::string& name, int32 value) const;
-  void  uniform(const std::string& name, float value) const;
-  void  uniform(const std::string& name, glm::vec2 value) const;
-  void  uniform(const std::string& name, glm::vec3 value) const;
-  void  uniform(const std::string& name, glm::mat4 value) const;
+  void  uniform(const std::string& name, const bool  value) const;
+  void  uniform(const std::string& name, const int   value) const;
+  void  uniform(const std::string& name, const float value) const;
+  void  uniform(const std::string& name, const glm::vec2& value) const;
+  void  uniform(const std::string& name, const glm::vec3& value) const;
+  void  uniform(const std::string& name, const glm::mat4& value) const;
 
 private:
   GLuint compile(const GLchar* source, GLuint shaderType);
