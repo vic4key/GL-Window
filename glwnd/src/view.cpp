@@ -48,7 +48,7 @@ void GLView::setup(GLViewPort& viewport, int width, int height)
 glm::mat4 GLView::get_context_matrix(GLenum type)
 {
   glm::mat4 matrix;
-  glGetFloatv(GL_MODELVIEW_MATRIX, glm::value_ptr(matrix));
+  glGetFloatv(type, glm::value_ptr(matrix));
   return matrix;
 }
 
