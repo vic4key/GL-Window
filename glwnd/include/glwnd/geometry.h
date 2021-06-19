@@ -676,7 +676,7 @@ public:
     return w > h ? w : h;
   }
 
-  float aspect()
+  float aspect() const
   {
     return float(this->width()) / float(this->height());
   }
