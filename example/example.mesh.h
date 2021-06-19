@@ -19,7 +19,7 @@ public:
   {
     // this->set_layout(GLLayout::_2x2(*this));
 
-    // demo 1
+    // // demo 1
     // m_model.n = "assets\\monkey.obj";
     // m_model.t = glm::vec3(0.F);
     // m_model.r = glm::vec3(0.F, 180.F, 0.F);
@@ -39,6 +39,7 @@ public:
 
     m_mesh.load(m_model.n);
     m_shader.build_file("assets\\lighting.vert", "assets\\lighting.frag");
+    // m_shader.build_file("assets\\colorizing.vert", "assets\\colorizing.frag");
   }
 
   virtual void on_display(GLView& view)
