@@ -71,9 +71,8 @@ public:
     mtx_view *= view.get_context_matrix(GL_MODELVIEW_MATRIX);
 
     // projection matrix
-    auto  win = this->viewport().coordinate().win;
-    float ratio = float(win.width()) / float(win.height());
-    glm::mat4 mtx_projection = glm::perspective(15.F, ratio, 0.1F, 20.F);
+    auto win = this->viewport().coordinate().win;
+    glm::mat4 mtx_projection = glm::perspective(15.F, win.aspect(), 0.1F, 20.F);
 
     // model matrix
     if (m_model.r.y++ > 360.F) m_model.r.y = 0.F;

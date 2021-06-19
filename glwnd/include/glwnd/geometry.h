@@ -676,6 +676,11 @@ public:
     return w > h ? w : h;
   }
 
+  float aspect()
+  {
+    return float(this->width()) / float(this->height());
+  }
+
   void flip(flip_t v)
   {
     if (v == flip_t::horizontal)

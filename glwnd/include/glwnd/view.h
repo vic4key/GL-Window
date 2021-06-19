@@ -41,11 +41,10 @@ public:
 	glm::mat4 transform_matrix(const glm::vec3& t, const glm::vec3& r, const glm::vec3& s, glm::mat4* m = nullptr);
 
 private:
-	size_t m_index;
 	GLViewPort* m_ptr_viewport;
-	float l, t, r, b;
-	//const p2f& m_left_bottom;
-	//const p2f& m_top_right;
+	size_t m_index;
+	p2f m_lt;
+	p2f m_rb;
 };
 
 }; // glwnd

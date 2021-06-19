@@ -14,12 +14,10 @@ namespace glwnd
 {
 
 GLView::GLView(const p2f& lt, const p2f& rb, const size_t index)
-  : m_ptr_viewport(nullptr), m_index(index)
+  : m_ptr_viewport(nullptr), m_index(index), m_lt(lt), m_rb(rb)
 {
-  l = lt.x();
-  t = lt.y();
-  r = rb.x();
-  b = rb.y();
+  m_lt = lt;
+  m_rb = rb;
 }
 
 GLView::~GLView()
@@ -33,14 +31,20 @@ GLView::GLView(const GLView& right)
 
 GLView& GLView::operator=(const GLView& right)
 {
-  m_index = right.m_index;
   m_ptr_viewport = m_ptr_viewport;
+  m_index = right.m_index;
+  m_lt = right.m_lt;
+  m_rb = right.m_rb;
   return *this;
 }
 
 void GLView::setup(GLViewPort& viewport, int width, int height)
 {
-  r4i rect(int(width * l), int(height * t), int(width * r), int(height * b));
+  r4i rect(
+    int(width  * m_lt.x()),
+    int(height * m_lt.y()),
+    int(width  * m_rb.x()),
+    int(height * m_rb.y()));
   viewport.setup(rect);
   m_ptr_viewport = &viewport;
 }
