@@ -53,7 +53,7 @@ glm::mat4 GLView::get_context_matrix(GLenum type)
 
 void GLView::display()
 {
-  
+  // DO NOTHING
 }
 
 size_t GLView::index() const
