@@ -21,6 +21,9 @@ static GLuint GL_INVALID_ID = -1;
 
 }; // glwnd
 
+#define glwnd_max(a,b) (((a) > (b)) ? (a) : (b))
+#define glwnd_min(a,b) (((a) < (b)) ? (a) : (b))
+
 #define glwnd_3rd_stringize_ex(s) #s
 #define glwnd_3rd_stringize(s) glwnd_3rd_stringize_ex(s)
 #define glwnd_3rd_include(s)   glwnd_3rd_stringize(../3rdparty/s)

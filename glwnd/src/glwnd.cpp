@@ -722,8 +722,8 @@ GLFWmonitor* GLWindow::Impl::get_ptr_current_monitor(GLFWwindow* ptr_window)
       mh = ptr_video_mode->height;
 
       int overlap =\
-        max(0, min(wx + ww, mx + mw) - max(wx, mx)) *
-        max(0, min(wy + wh, my + mh) - max(wy, my));
+        glwnd_max(0, glwnd_min(wx + ww, mx + mw) - glwnd_max(wx, mx)) *
+        glwnd_max(0, glwnd_min(wy + wh, my + mh) - glwnd_max(wy, my));
 
       if (best_overlap < overlap)
       {
