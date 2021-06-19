@@ -3,6 +3,11 @@
 #include "example.h"
 
 #include <glwnd/mesh.h>
+#include <glwnd/shader.h>
+#include <glwnd/viewport.h>
+#include <glwnd/geometry.h>
+
+#include <glm/gtc/matrix_transform.hpp>
 
 class GLWindowExampleMesh : public GLWindow
 {
@@ -13,62 +18,54 @@ public:
   virtual void initial()
   {
     m_mesh.load("assets\\monkey.obj");
-    m_tex.initialize_from_image_file("assets\\128x128.bmp");
-
-    // enable lighting
-
-    glEnable(GL_LIGHTING);
-
-    // enable tracking material ambient and diffuse from surface color
-
-    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
-    glEnable(GL_COLOR_MATERIAL);
-
-    // set-up the lighting colors (ambient, diffuse, specular)
-
-    GLfloat light_ambient[]  = { 0.2F, 0.23F, 0.25F };
-    GLfloat light_diffuse[]  = { 0.6F, 0.63F, 0.65F };
-    GLfloat light_specular[] = { 1.F, 1.F, 1.F, 1.F };
-    glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
-    glLightfv(GL_LIGHT0, GL_SPECULAR, light_specular);
-
-    // set-up the position of the light
-
-    float light_position[4] = { 0.F, 0.F, -1.F, 0.F };
-    glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-    glEnable(GL_LIGHT0); // MUST enable each light source after configuration
-
-    // set-up others
-
-    // glDisable(GL_BLEND);
-
-    // glEnable(GL_TEXTURE_2D);
-    // glEnable(GL_CULL_FACE);
-
-    glMatrixMode(GL_PROJECTION_MATRIX);
-    gluPerspective(45, 1., 0.1, 10.);
-
-    glMatrixMode(GL_MODELVIEW_MATRIX);
-    glTranslatef(0., 0., -4.);
+    m_shader.build_file("assets\\lighting.vert", "assets\\lighting.frag");
   }
 
   virtual void on_display()
   {
-    // rotate cube by Y-axis
+    glm::vec3 target_color(0.F, 1.F, 0.F);
+    glm::vec3 target_position(0.F, 0.F, 0.F);
+    glm::vec3 light_position(-3.F, 6.F, -3.F);
 
-    static float rotate_angle = 0;
-    if (rotate_angle++ > 360.) rotate_angle = 0;
-    glRotatef(rotate_angle, 0, 1, 0);
+    // view matrix
+    glm::vec3 eye(0.F, 0.F, -15.F);
+    glm::vec3 up(0.F, 1.F, 0.F);
+    glm::mat4 mtx_view = glm::lookAt(eye, target_position, up);
 
-    // map texture and render mesh
+    // projection matrix
+    auto  win = this->viewport().coordinate().win;
+    float ratio = float(win.width()) / float(win.height());
+    glm::mat4 mtx_projection = glm::perspective(15.F, ratio, 0.1F, 20.F);
 
-    // m_tex.use();
+    // model matrix
+    static float angle = 180.F;
+    if (angle++ > 360.F) angle = 0.F;
+    glm::mat4 mtx_model(1.F);
+    mtx_model *= glm::rotate(mtx_model, angle, glm::vec3(0.F, 1.F, 0.F));
+
+    // setup mesh
+    m_shader.uniform("color", target_color);
+    m_shader.uniform("target", target_position);
+
+    // setup camera and mvp matrix
+    m_shader.uniform("model", mtx_model);
+    m_shader.uniform("view", mtx_view);
+    m_shader.uniform("projection", mtx_projection);
+
+    // setup lighting
+    m_shader.uniform("light.direction", light_position);
+    m_shader.uniform("light.ambient", glm::vec3(0.2f, 0.23f, 0.25f));
+    m_shader.uniform("light.diffuse", glm::vec3(0.6f, 0.63f, 0.65f));
+    m_shader.uniform("light.specular", glm::vec3(0.0f));
+
+    // using lighting shader
+    m_shader.use();
+
+    // render mesh
     m_mesh.render();
   }
 
 private:
   Mesh m_mesh;
-  Tex2D m_tex;
+  Shader m_shader;
 };
