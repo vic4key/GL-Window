@@ -26,17 +26,61 @@ public:
     auto color = glcolor_t<GLfloat>(colors[view.index()]);
 
     glColor3f(color.r, color.g, color.b);
-    glBegin(GL_POLYGON);
+
+    switch (view.index())
     {
-      glVertex3f(+0.0F, +0.5F, +0.0F);
-      glVertex3f(-0.5F, +0.2F, +0.0F);
-      glVertex3f(-0.5F, -0.2F, +0.0F);
-      glVertex3f(+0.0F, -0.5F, +0.0F);
-      glVertex3f(+0.0F, +0.5F, +0.0F);
-      glVertex3f(+0.5F, +0.2F, +0.0F);
-      glVertex3f(+0.5F, -0.2F, +0.0F);
-      glVertex3f(+0.0F, -0.5F, +0.0F);
+    case 0:
+      {
+        glBegin(GL_TRIANGLES);
+        {
+          glVertex2f(-0.5, 0.5);
+          glVertex2f(-0.5, -0.5);
+          glVertex2f(0.5, 0.5);
+          glVertex2f(0.5, 0.5);
+          glVertex2f(-0.5, -0.5);
+          glVertex2f(0.5, -0.5);
+        }
+        glEnd();
+      }
+      break;
+
+    case 1:
+      {
+        glBegin(GL_POLYGON);
+        {
+          glVertex2f(+0.0F, +0.5F);
+          glVertex2f(-0.5F, +0.2F);
+          glVertex2f(-0.5F, -0.2F);
+          glVertex2f(+0.0F, -0.5F);
+          glVertex2f(+0.0F, +0.5F);
+          glVertex2f(+0.5F, +0.2F);
+          glVertex2f(+0.5F, -0.2F);
+          glVertex2f(+0.0F, -0.5F);
+        }
+        glEnd();
+      }
+      break;
+
+    case 2:
+      {
+        renderer().circle(p2d(0., 0.), 0.5, GLPrimitive::circle_t::fill);
+      }
+      break;
+
+    case 3:
+      {
+        glBegin(GL_TRIANGLES);
+        {
+          glVertex2f(-0.5F, -0.5F);
+          glVertex2f(+0.5F, -0.5F);
+          glVertex2f(+0.0F, +0.5F);
+        }
+        glEnd();
+      }
+      break;
+
+    default:
+      break;
     }
-    glEnd();
   }
 };

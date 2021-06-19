@@ -68,9 +68,9 @@ Released under the [MIT](LICENSE.md) license
 
 >[example/example.multiview.h](example/example.multiview.h)
 >
->![](screenshots/example.multiview-2x2.png?)
->![](screenshots/example.multiview-2x1.png?)
->![](screenshots/example.multiview-1x2.png?)
+>![](screenshots/example.multiview-2x2.png)
+>![](screenshots/example.multiview-2x1.png)
+>![](screenshots/example.multiview-1x2.png)
 
 >[example/example.shader.h](example/example.shader.h)
 >
