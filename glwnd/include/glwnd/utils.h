@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "types.h"
+#include "geometry.h"
 
 namespace glwnd
 {
@@ -70,6 +71,8 @@ std::string log(const std::string format, ...);
 GLuint gl_sizeof_type(GLenum type);
 
 void image_channel_to_format_types(int channel, GLint& iformat, GLint& format);
+
+bool is_point_inside_rect(const p2i& point, const r4i& rect);
 
 }; // utils
 

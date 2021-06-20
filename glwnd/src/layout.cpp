@@ -6,6 +6,7 @@
 
 #include "glwnd/layout.h"
 #include "glwnd/view.h"
+#include "glwnd/utils.h"
 
 namespace glwnd
 {
@@ -32,6 +33,11 @@ GLLayout& GLLayout::operator=(const GLLayout& right)
   return *this;
 }
 
+std::vector<GLView*>& GLLayout::views()
+{
+  return m_ptr_views;
+}
+
 void GLLayout::remove_all_views()
 {
   for (auto& ptr_view : m_ptr_views)
@@ -45,9 +51,21 @@ void GLLayout::add_view(const p2f& left_bottom, const p2f& top_left)
   m_ptr_views.push_back(new GLView(left_bottom, top_left, m_ptr_views.size()));
 }
 
-std::vector<GLView*>& GLLayout::views()
+GLView* GLLayout::get_active_view_from_mouse_position(const p2i& point)
 {
-  return m_ptr_views;
+  GLView* result = nullptr;
+
+  for (auto& ptr_view : m_ptr_views)
+  {
+    const auto& win = ptr_view->viewport().coordinate().win;
+    if (utils::is_point_inside_rect(point, win))
+    {
+      result = ptr_view;
+      break;
+    }
+  }
+
+  return result;
 }
 
 std::unique_ptr<GLLayout> GLLayout::_1x1(GLWindow& parent)

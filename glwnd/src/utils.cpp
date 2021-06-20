@@ -121,6 +121,16 @@ void image_channel_to_format_types(int channel, GLint& iformat, GLint& format)
   }
 }
 
+bool is_point_inside_rect(const p2i& point, const r4i& rect)
+{
+  bool result = \
+    point.x() >= rect.left() &&
+    point.x() <= rect.right() &&
+    point.y() >= rect.bottom() &&
+    point.y() <= rect.top();
+  return result;
+}
+
 }; // utils
 
 }; // glwnd
