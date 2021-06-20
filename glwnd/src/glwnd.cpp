@@ -91,7 +91,7 @@ private:
 private:
   GLWindow&    m_parent;
   GLFWwindow*  m_ptr_window;
-  GLViewPort*  m_ptr_viewport;
+  GLViewPort*  m_ptr_main_viewport;
   GLPrimitive* m_ptr_renderer;
 
   std::unique_ptr<GLLayout> m_ptr_layout;
@@ -116,20 +116,20 @@ private:
 
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
   : m_parent(parent)
-  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_viewport(nullptr), m_ptr_renderer(nullptr)
+  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_main_viewport(nullptr), m_ptr_renderer(nullptr)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_fps_enabled(false), m_fps(0)
   , m_debug_enabled(false)
   , m_dear_imgui_enabled(false)
   , m_coordiates_enabled(false)
 {
-  m_ptr_viewport = new GLViewPort();
+  m_ptr_main_viewport = new GLViewPort();
   m_ptr_renderer = new GLPrimitive();
 }
 
 GLWindow::Impl::~Impl()
 {
-  delete m_ptr_viewport;
+  delete m_ptr_main_viewport;
   delete m_ptr_renderer;
 }
 
@@ -397,7 +397,7 @@ int GLWindow::Impl::create()
   // setup window view-port
 
   r4i rect(m_width, m_height);
-  m_ptr_viewport->setup(rect);
+  m_ptr_main_viewport->setup(rect);
 
   // setup layout
 
@@ -486,7 +486,7 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   ptr_parent_impl->m_height = height;
 
   r4i rect(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
-  ptr_parent_impl->m_ptr_viewport->setup(rect);
+  ptr_parent_impl->m_ptr_main_viewport->setup(rect);
 
   ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
 
@@ -509,13 +509,13 @@ int GLWindow::Impl::display()
 
   for (auto& ptr_view : m_ptr_layout->views())
   {
-    ptr_view->setup(*m_ptr_viewport, m_width, m_height);
+    ptr_view->setup(*m_ptr_main_viewport, m_width, m_height);
 
     // display drawing coordinates
 
     if (m_coordiates_enabled)
     {
-      m_ptr_viewport->display_coordiates();
+      m_ptr_main_viewport->display_coordiates();
     }
 
     glPushMatrix();
@@ -660,7 +660,7 @@ void GLWindow::Impl::display_fps()
   sprintf_s(fps_text, "FPS : %d\0", m_fps);
 
   const int padding = 10;
-  const auto& win = m_ptr_viewport->coordinate().win;
+  const auto& win = m_ptr_main_viewport->coordinate().win;
   m_text_render_fps.render_text(fps_text, p2i(padding, win.top() - 35 + padding));
 }
 
@@ -830,7 +830,7 @@ GLFWwindow& GLWindow::window()
 
 GLViewPort& GLWindow::viewport()
 {
-  return *(m_ptr_impl->m_ptr_viewport);
+  return *(m_ptr_impl->m_ptr_main_viewport);
 }
 
 GLPrimitive& glwnd::GLWindow::renderer()
