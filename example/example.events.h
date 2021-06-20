@@ -20,19 +20,19 @@ public:
     LOG("%d %d", width, height);
   }
 
-  virtual void on_mouse_move(int X, int Y)
+  virtual void on_mouse_move(int x, int y)
   {
-    LOG("%d %d", X, Y);
+    LOG("%d %d", x, y);
   }
 
-  virtual void on_mouse_enter_leave(bool entered, int X, int Y)
+  virtual void on_mouse_enter_leave(bool entered, int x, int y)
   {
-    LOG("%s %d %d", entered ? "enter" : "leave", X, Y);
+    LOG("%s %d %d", entered ? "enter" : "leave", x, y);
   }
 
-  virtual void on_mouse_click(int button, int action, int mods)
+  virtual void on_mouse_click(int button, int action, int mods, int x, int y)
   {
-    LOG("%d %d %d", button, action, mods);
+    LOG("%d %d %d %d %d", button, action, mods, x, y);
   }
 
   virtual void on_mouse_wheel(int dx, int dy)
