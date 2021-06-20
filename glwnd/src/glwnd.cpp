@@ -83,9 +83,10 @@ private:
 
   void display_fps();
   void toggle_fullscreen();
-  p2i  get_current_mouse_position();
+  p2i  get_current_mouse_position(bool* ptr_outside = nullptr);
   GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
   void set_layout(std::unique_ptr<GLLayout> ptr_layout);
+  GLLayout& get_layout();
 
 private:
   GLWindow&    m_parent;
@@ -122,7 +123,7 @@ GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int h
   , m_dear_imgui_enabled(false)
   , m_coordiates_enabled(false)
 {
-  m_ptr_viewport = new GLViewPort(m_parent);
+  m_ptr_viewport = new GLViewPort();
   m_ptr_renderer = new GLPrimitive();
 }
 
@@ -261,6 +262,11 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
 void GLWindow::Impl::set_layout(std::unique_ptr<GLLayout> ptr_layout)
 {
   m_ptr_layout.reset(ptr_layout.release());
+}
+
+GLLayout& GLWindow::Impl::get_layout()
+{
+  return *(m_ptr_layout.get());
 }
 
 int GLWindow::Impl::create()
@@ -756,9 +762,11 @@ GLFWmonitor* GLWindow::Impl::get_ptr_current_monitor(GLFWwindow* ptr_window)
   return ptr_monitor;
 }
 
-p2i GLWindow::Impl::get_current_mouse_position()
+p2i GLWindow::Impl::get_current_mouse_position(bool* ptr_outside)
 {
   assert(m_ptr_window != nullptr);
+
+  bool outside = false;
 
   double x = 0., y = 0.;
 
@@ -772,21 +780,30 @@ p2i GLWindow::Impl::get_current_mouse_position()
   if (x < 0)
   {
     x = 0;
-  }
-
-  if (y < 0)
-  {
-    y = 0;
+    outside = true;
   }
 
   if (x > width)
   {
     x = width;
+    outside = true;
+  }
+
+  if (y < 0)
+  {
+    y = 0;
+    outside = true;
   }
 
   if (y > height)
   {
     y = height;
+    outside = true;
+  }
+
+  if (ptr_outside != nullptr)
+  {
+    *ptr_outside = outside;
   }
 
   return p2i(int(x), int(y));
