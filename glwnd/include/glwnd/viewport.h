@@ -11,6 +11,7 @@
 namespace glwnd
 {
 
+class GLView;
 class GLWindow;
 
 class GLViewPort
@@ -23,8 +24,11 @@ public:
     r4d ndc; // normalized device coordinate - center view port (normalized axises into [-1, +1])
   };
 
-  GLViewPort(GLWindow& parent);
+  GLViewPort();
   virtual ~GLViewPort();
+
+  GLViewPort(const GLViewPort& right);
+  GLViewPort& operator=(const GLViewPort& right);
 
   void setup(const r4i& rect);
 
@@ -38,8 +42,11 @@ public:
 
   void display_coordiates();
 
+  void set_ptr_view(GLView* ptr_view);
+  GLView* get_ptr_view();
+
 private:
-  GLWindow& m_parent;
+  GLView* m_ptr_view;
   coordinate_t m_coordinate;
 };
 

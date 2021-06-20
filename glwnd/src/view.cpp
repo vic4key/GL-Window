@@ -14,7 +14,7 @@ namespace glwnd
 {
 
 GLView::GLView(const p2f& lt, const p2f& rb, const size_t index)
-  : m_ptr_viewport(nullptr), m_index(index), m_lt(lt), m_rb(rb)
+  : m_index(index), m_lt(lt), m_rb(rb)
 {
   m_lt = lt;
   m_rb = rb;
@@ -31,7 +31,7 @@ GLView::GLView(const GLView& right)
 
 GLView& GLView::operator=(const GLView& right)
 {
-  m_ptr_viewport = m_ptr_viewport;
+  m_viewport = m_viewport;
   m_index = right.m_index;
   m_lt = right.m_lt;
   m_rb = right.m_rb;
@@ -46,7 +46,8 @@ void GLView::setup(GLViewPort& viewport, int width, int height)
     int(width  * m_rb.x()),
     int(height * m_rb.y()));
   viewport.setup(rect);
-  m_ptr_viewport = &viewport;
+  viewport.set_ptr_view(this); // points main viewport to current view
+  m_viewport = viewport;
 }
 
 glm::mat4 GLView::get_context_matrix(GLenum type)
@@ -101,6 +102,11 @@ void GLView::display()
 size_t GLView::index() const
 {
   return m_index;
+}
+
+GLViewPort& GLView::viewport()
+{
+  return m_viewport;
 }
 
 }; // glwnd

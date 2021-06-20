@@ -4,17 +4,29 @@
  * @brief  GL View Port
  */
 
-#include "glwnd/viewport.h"
-#include "glwnd/glwnd.h"
+#include <glwnd/viewport.h>
 #include <glwnd/utils.h>
+#include <glwnd/view.h>
 
 #include <gl/glew.h>
 
 namespace glwnd
 {
 
-GLViewPort::GLViewPort(GLWindow& parent) : m_parent(parent)
+GLViewPort::GLViewPort() : m_ptr_view(nullptr)
 {
+}
+
+GLViewPort::GLViewPort(const GLViewPort& right)
+{
+  *this = right;
+}
+
+GLViewPort& GLViewPort::operator=(const GLViewPort& right)
+{
+  m_ptr_view = right.m_ptr_view;
+  m_coordinate = right.m_coordinate;
+  return *this;
 }
 
 GLViewPort::~GLViewPort()
@@ -234,6 +246,16 @@ void GLViewPort::display_coordiates()
   glEnd();
 
   glPopAttrib();
+}
+
+void GLViewPort::set_ptr_view(GLView* ptr_view)
+{
+  m_ptr_view = ptr_view;
+}
+
+GLView* GLViewPort::get_ptr_view()
+{
+  return m_ptr_view;
 }
 
 }; // glwnd
