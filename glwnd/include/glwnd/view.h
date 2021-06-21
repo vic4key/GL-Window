@@ -33,11 +33,11 @@ public:
 public:
 	void setup(GLViewPort& viewport, int width, int height);
 
-	glm::mat4 get_context_matrix(GLenum type);
-	void set_context_matrix(GLenum mode, const glm::mat4& matrix);
-	glm::mat4 transform_context_matrix(GLenum type, const glm::vec3& t, const glm::vec3& r, const glm::vec3& s);
-
 	glm::mat4 transform_matrix(const glm::vec3& t, const glm::vec3& r, const glm::vec3& s, glm::mat4* m = nullptr);
+
+	glm::mat4 transform_context_matrix(GLenum type, const glm::vec3& t, const glm::vec3& r, const glm::vec3& s);
+	void set_context_matrix(GLenum mode, const glm::mat4& matrix);
+	glm::mat4 get_context_matrix(GLenum type);
 
 private:
 	GLViewPort m_viewport;

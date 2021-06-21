@@ -50,32 +50,6 @@ void GLView::setup(GLViewPort& viewport, int width, int height)
   m_viewport = viewport;
 }
 
-glm::mat4 GLView::get_context_matrix(GLenum type)
-{
-  glm::mat4 matrix;
-  glGetFloatv(type, glm::value_ptr(matrix));
-  return matrix;
-}
-
-void GLView::set_context_matrix(GLenum type, const glm::mat4& matrix)
-{
-  GLint prev_mtx_mode = 0;
-  glGetIntegerv(GL_MATRIX_MODE, &prev_mtx_mode);
-  {
-    glMatrixMode(type);
-    glLoadMatrixf(glm::value_ptr(matrix));
-  }
-  glMatrixMode(prev_mtx_mode);
-}
-
-glm::mat4 GLView::transform_context_matrix(GLenum type, const glm::vec3& t, const glm::vec3& r, const glm::vec3& s)
-{
-  auto mtx = this->get_context_matrix(type);
-  mtx = this->transform_matrix(t, r, s, &mtx);
-  this->set_context_matrix(type, mtx);
-  return mtx;
-}
-
 glm::mat4 GLView::transform_matrix(const glm::vec3& t, const glm::vec3& r, const glm::vec3& s, glm::mat4* m)
 {
   glm::mat4 mtx = glm::mat4(1.F);
@@ -94,9 +68,35 @@ glm::mat4 GLView::transform_matrix(const glm::vec3& t, const glm::vec3& r, const
   return mtx;
 }
 
+glm::mat4 GLView::transform_context_matrix(GLenum type, const glm::vec3& t, const glm::vec3& r, const glm::vec3& s)
+{
+  auto mtx = this->get_context_matrix(type);
+  mtx = this->transform_matrix(t, r, s, &mtx);
+  this->set_context_matrix(type, mtx);
+  return mtx;
+}
+
+void GLView::set_context_matrix(GLenum type, const glm::mat4& matrix)
+{
+  GLint prev_mtx_mode = 0;
+  glGetIntegerv(GL_MATRIX_MODE, &prev_mtx_mode);
+  {
+    glMatrixMode(type);
+    glLoadMatrixf(glm::value_ptr(matrix));
+  }
+  glMatrixMode(prev_mtx_mode);
+}
+
+glm::mat4 GLView::get_context_matrix(GLenum type)
+{
+  glm::mat4 matrix;
+  glGetFloatv(type, glm::value_ptr(matrix));
+  return matrix;
+}
+
 void GLView::display()
 {
-  // DO NOTHING
+  assert(0);
 }
 
 size_t GLView::index() const

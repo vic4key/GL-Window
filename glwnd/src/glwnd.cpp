@@ -24,6 +24,7 @@
 #include <Windows.h>
 #include <cassert>
 #include <chrono>
+#include <functional>
 
 /**
  * CGLWindow - Implementation
@@ -83,10 +84,11 @@ private:
 
   void display_fps();
   void toggle_fullscreen();
+  GLLayout& get_layout();
+  void set_layout(std::unique_ptr<GLLayout> ptr_layout);
   p2i  get_current_mouse_position(bool* ptr_outside = nullptr);
   GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
-  void set_layout(std::unique_ptr<GLLayout> ptr_layout);
-  GLLayout& get_layout();
+  void iterate_views(std::function<void(GLView& view)> fn);
 
 private:
   GLWindow&    m_parent;
@@ -507,9 +509,9 @@ int GLWindow::Impl::display()
     display_fps();
   }
 
-  for (auto& ptr_view : m_ptr_layout->views())
+  this->iterate_views([&](GLView& view)
   {
-    ptr_view->setup(*m_ptr_main_viewport, m_width, m_height);
+    view.setup(*m_ptr_main_viewport, m_width, m_height);
 
     // display drawing coordinates
 
@@ -532,7 +534,7 @@ int GLWindow::Impl::display()
 
       // display drawing content
 
-      this->on_display(*ptr_view);
+      this->on_display(view);
 
       // render on the created imgui frame
 
@@ -544,7 +546,7 @@ int GLWindow::Impl::display()
     }
     glPopAttrib();
     glPopMatrix();
-  }
+  });
 
   glFlush();
 
@@ -807,6 +809,15 @@ p2i GLWindow::Impl::get_current_mouse_position(bool* ptr_outside)
   }
 
   return p2i(int(x), int(y));
+}
+
+void GLWindow::Impl::iterate_views(std::function<void(GLView& view)> fn)
+{
+  for (auto& ptr_view : m_ptr_layout->views())
+  {
+    ptr_view->setup(*m_ptr_main_viewport, m_width, m_height);
+    fn(*ptr_view);
+  }
 }
 
 /**
