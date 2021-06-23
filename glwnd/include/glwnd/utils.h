@@ -74,6 +74,11 @@ void image_channel_to_format_types(int channel, GLint& iformat, GLint& format);
 
 bool is_point_inside_rect(const p2i& point, const r4i& rect);
 
+int msg(const char* text, const char* title, int type);
+int msg_info(const  char* text, const char* title = nullptr);
+int msg_warn(const  char* text, const char* title = nullptr);
+int msg_error(const char* text, const char* title = nullptr);
+
 }; // utils
 
 }; // glwnd

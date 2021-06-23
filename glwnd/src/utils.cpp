@@ -131,6 +131,40 @@ bool is_point_inside_rect(const p2i& point, const r4i& rect)
   return result;
 }
 
+int msg(const char* text, const char* title, int type)
+{
+  std::string s;
+
+  if (title == nullptr)
+  {
+    char file_path[MAX_PATH] = { 0 };
+    GetModuleFileNameA(nullptr, file_path, sizeof(file_path));
+    s = file_path;
+    s = s.substr(s.find_last_of("/\\") + 1);
+  }
+  else
+  {
+    s = title;
+  }
+
+  return MessageBoxA(GetActiveWindow(), text, s.c_str(), type);
+}
+
+int msg_info(const char* text, const char* title)
+{
+  return msg(text, title, MB_OK | MB_ICONINFORMATION);
+}
+
+int msg_warn(const char* text, const char* title)
+{
+  return msg(text, title, MB_OK | MB_ICONWARNING);
+}
+
+int msg_error(const char* text, const char* title)
+{
+  return msg(text, title, MB_OK | MB_ICONERROR);
+}
+
 }; // utils
 
 }; // glwnd

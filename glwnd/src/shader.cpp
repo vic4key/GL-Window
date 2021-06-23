@@ -51,7 +51,13 @@ void Shader::build_code(const char* vertex_source_code, const char* fragment_sou
 
   GLint success = 0;
   glGetProgramiv(m_id, GL_LINK_STATUS, &success);
-  assert(success);
+  if (!success)
+  {
+    char s[1024] = { 0 };
+    glGetShaderInfoLog(m_id, sizeof(s), nullptr, s);
+    utils::msg_error(s, "Link Shader Failed");
+    throw nullptr;
+  }
 
   glDeleteShader(vertex_compiled);
   glDeleteShader(fragment_compiled);
@@ -65,7 +71,13 @@ GLuint Shader::compile(const GLchar* source, GLuint shaderType)
 
   GLint success = 0;
   glGetShaderiv(shader, GL_COMPILE_STATUS, &success);
-  assert(success);
+  if (!success)
+  {
+    char s[1024] = { 0 };
+    glGetShaderInfoLog(shader, sizeof(s), nullptr, s);
+    utils::msg_error(s, "Compile Shader Failed");
+    throw nullptr;
+  }
 
   return shader;
 }
