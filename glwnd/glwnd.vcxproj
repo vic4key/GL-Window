@@ -170,7 +170,9 @@
     <ClInclude Include="3rdparty\imgui-1.82\imstb_truetype.h" />
     <ClInclude Include="3rdparty\tinyobjloader\TinyObjLoader.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="include\glwnd\base.h" />
     <ClInclude Include="include\glwnd\defs.h" />
+    <ClInclude Include="include\glwnd\event.h" />
     <ClInclude Include="include\glwnd\geometry.h" />
     <ClInclude Include="include\glwnd\glwnd.h" />
     <ClInclude Include="include\glwnd\layout.h" />
@@ -204,7 +206,9 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\base.cpp" />
     <ClCompile Include="src\debug.inl" />
+    <ClCompile Include="src\event.cpp" />
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\layout.cpp" />
     <ClCompile Include="src\mesh.cpp" />

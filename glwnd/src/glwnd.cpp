@@ -824,7 +824,7 @@ void GLWindow::Impl::iterate_views(std::function<void(GLView& view)> fn)
  * CGLWindow
  */
 
-GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg)
+GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg) : GLBase()
 {
   m_ptr_impl = new GLWindow::Impl(*this, name, width, height, bg);
 }
@@ -907,61 +907,6 @@ void GLWindow::enable_dear_imgui(bool state, dear_imgui_cfg* ptr_dear_imgui_cfg)
     m_ptr_impl->m_dear_imgui_cfg.font_path = ptr_dear_imgui_cfg->font_path;
     m_ptr_impl->m_dear_imgui_cfg.font_size = ptr_dear_imgui_cfg->font_size;
   }
-}
-
-void GLWindow::initial()
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::final()
-{
-  // OVERRIDABLE
-}
-
-// void GLWindow::on_display(GLView& view)
-// {
-//   // OVERRIDABLE
-// }
-
-void GLWindow::on_resize(int width, int height)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_mouse_move(int x, int y)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_mouse_enter_leave(bool entered, int x, int y)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_mouse_click(int button, int action, int mods, int x, int y)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_mouse_wheel(int dx, int dy)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_keyboard_key(int key, int code, int action, int mods)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_keyboard_char(unsigned int code)
-{
-  // OVERRIDABLE
-}
-
-void GLWindow::on_drag_drop(const std::vector<std::string>& paths)
-{
-  // OVERRIDABLE
 }
 
 }; // glwnd

@@ -7,6 +7,7 @@
  */
 
 #include "defs.h"
+#include "base.h"
 
 struct GLFWwindow;
 
@@ -18,29 +19,12 @@ class GLLayout;
 class GLViewPort;
 class GLPrimitive;
 
-class GLWindow
+class GLWindow : public GLBase
 {
 public:
   GLWindow(const std::string& name = "GL Window", int width = 500, int height = 500, color_t bg = COLOR_GRAY);
   virtual ~GLWindow();
 
-  virtual void initial();
-  virtual void final();
-
-  virtual void on_display(GLView& view) = 0;
-  virtual void on_resize(int width, int height);
-
-  virtual void on_mouse_move(int x, int y);
-  virtual void on_mouse_enter_leave(bool entered, int x, int y);
-  virtual void on_mouse_click(int button, int action, int mods, int x, int y);
-  virtual void on_mouse_wheel(int dx, int dy);
-
-  virtual void on_keyboard_key(int key, int code, int action, int mods);
-  virtual void on_keyboard_char(unsigned int code);
-
-  virtual void on_drag_drop(const std::vector<std::string>& paths);
-
-public:
   void run();
   void clear(color_t* pbg = nullptr);
 

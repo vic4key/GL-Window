@@ -126,6 +126,12 @@
     <ClInclude Include="include\glwnd\layout.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glwnd\base.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -195,6 +201,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\layout.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\base.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
