@@ -25,7 +25,7 @@ public:
   void build_file(const std::string& vertex_file_path, const std::string& fragment_file_path);
   void build_code(const char* vertex_source_code, const char* fragment_source_code);
 
-  void use() const;
+  void use(bool state = true) const;
 
   GLint location(const std::string& name) const;
   void  uniform(const std::string& name, const bool  value) const;

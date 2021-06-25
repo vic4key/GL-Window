@@ -25,11 +25,10 @@ public:
 
     const char* fragment_shader_source = R"(
       #version 330 core
-      in  vec3 vertexColor;
-      out vec4 fragColor;
+      in vec3 vertexColor;
       void main()
       {
-        fragColor = vec4(vertexColor, 1.0f);
+        gl_FragColor = vec4(vertexColor, 1.0);
       };)";
 
     m_shader.build_code(vertex_shader_source, fragment_shader_source);
@@ -66,10 +65,10 @@ public:
 
   virtual void on_display(GLView& view)
   {
-    m_shader.use();
-
+    m_shader.use(true);
     glBindVertexArray(m_vao);
     glDrawArrays(GL_TRIANGLES, 0, 3);
+    m_shader.use(false);
   }
 
 private:

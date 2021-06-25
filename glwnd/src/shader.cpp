@@ -82,10 +82,10 @@ GLuint Shader::compile(const GLchar* source, GLuint shaderType)
   return shader;
 }
 
-void Shader::use() const
+void Shader::use(bool state) const
 {
   assert(m_id != GL_INVALID_ID);
-  glUseProgram(m_id);
+  glUseProgram(state ? m_id : 0);
 }
 
 GLint Shader::location(const std::string& name) const
