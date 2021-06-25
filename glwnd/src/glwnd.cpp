@@ -91,9 +91,9 @@ private:
   void iterate_views(std::function<void(GLView& view)> fn);
 
 private:
-  GLWindow&    m_parent;
-  GLFWwindow*  m_ptr_window;
-  GLViewPort*  m_ptr_main_viewport;
+  GLWindow&   m_parent;
+  GLFWwindow* m_ptr_window;
+  GLViewPort* m_ptr_main_viewport;
   GLPrimitive* m_ptr_renderer;
 
   std::unique_ptr<GLLayout> m_ptr_layout;
@@ -403,7 +403,10 @@ int GLWindow::Impl::create()
 
   // setup default layout
 
-  this->set_layout(GLLayout::_1x1(m_parent));
+  if (m_ptr_layout == nullptr || m_ptr_layout->views().empty())
+  {
+    this->set_layout(GLLayout::_1x1(m_parent));
+  }
 
   // set text render for fps
 
@@ -875,6 +878,11 @@ void GLWindow::clear(color_t* pbg)
 void GLWindow::set_layout(std::unique_ptr<GLLayout> ptr_layout)
 {
   m_ptr_impl->set_layout(std::move(ptr_layout));
+}
+
+GLLayout& GLWindow::layout()
+{
+  return m_ptr_impl->layout();
 }
 
 void GLWindow::toggle_fullscreen()

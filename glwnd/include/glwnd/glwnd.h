@@ -29,6 +29,8 @@ public:
   void clear(color_t* pbg = nullptr);
 
   void set_layout(std::unique_ptr<GLLayout> ptr_layout);
+  GLLayout& layout();
+
   void toggle_fullscreen();
 
   void enable_fps(bool state = true);
