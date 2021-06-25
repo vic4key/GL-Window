@@ -78,6 +78,9 @@ public:
     if (m_model.r.y++ > 360.F) m_model.r.y = 0.F;
     glm::mat4 mtx_model = view.transform_matrix(m_model.t, m_model.r, m_model.s);
 
+    // enable lighting shader
+    m_shader.use(true);
+
     // setup mesh
     m_shader.uniform("color", m_model.c);
     m_shader.uniform("target", m_model.p);
@@ -93,11 +96,11 @@ public:
     m_shader.uniform("light.diffuse", glm::vec3(0.6f, 0.63f, 0.65f));
     m_shader.uniform("light.specular", glm::vec3(0.0f));
 
-    // using lighting shader
-    m_shader.use();
-
     // render mesh
     m_mesh.render();
+
+    // disable lighting shader
+    m_shader.use(false);
   }
 
 private:
