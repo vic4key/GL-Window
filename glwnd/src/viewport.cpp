@@ -149,9 +149,6 @@ void GLViewPort::display_coordiates()
     int l = rect.left();
     int b = rect.bottom();
 
-    l += 1;
-    t -= 1;
-
     p2d v;
     p2i p;
 

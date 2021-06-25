@@ -42,7 +42,10 @@ void GLLayout::remove_all_views()
 {
   for (auto& ptr_view : m_ptr_views)
   {
-    delete ptr_view;
+    if (ptr_view != nullptr)
+    {
+      delete ptr_view;
+    }
   }
 }
 
@@ -65,6 +68,13 @@ GLView* GLLayout::get_active_view_from_mouse_position(const p2i& point)
     }
   }
 
+  return result;
+}
+
+std::unique_ptr<GLLayout> GLLayout::_empty(GLWindow& parent)
+{
+  std::unique_ptr<GLLayout> result(new GLLayout(parent));
+  // no any view
   return result;
 }
 

@@ -31,6 +31,7 @@ public:
 	void add_view(const p2f& left_bottom, const p2f& top_left);
 	GLView* get_active_view_from_mouse_position(const p2i& point);
 
+  static std::unique_ptr<GLLayout> _empty(GLWindow& parent);
   static std::unique_ptr<GLLayout> _1x1(GLWindow& parent);
   static std::unique_ptr<GLLayout> _1x2(GLWindow& parent);
   static std::unique_ptr<GLLayout> _2x1(GLWindow& parent);
