@@ -84,7 +84,7 @@ private:
 
   void display_fps();
   void toggle_fullscreen();
-  GLLayout& get_layout();
+  GLLayout& layout();
   void set_layout(std::unique_ptr<GLLayout> ptr_layout);
   p2i  get_current_mouse_position(bool* ptr_outside = nullptr);
   GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
@@ -266,7 +266,7 @@ void GLWindow::Impl::set_layout(std::unique_ptr<GLLayout> ptr_layout)
   m_ptr_layout.reset(ptr_layout.release());
 }
 
-GLLayout& GLWindow::Impl::get_layout()
+GLLayout& GLWindow::Impl::layout()
 {
   return *(m_ptr_layout.get());
 }
@@ -401,7 +401,7 @@ int GLWindow::Impl::create()
   r4i rect(m_width, m_height);
   m_ptr_main_viewport->setup(rect);
 
-  // setup layout
+  // setup default layout
 
   this->set_layout(GLLayout::_1x1(m_parent));
 
