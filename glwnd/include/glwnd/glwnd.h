@@ -25,6 +25,9 @@ public:
   GLWindow(const std::string& name = "GL Window", int width = 500, int height = 500, color_t bg = COLOR_GRAY);
   virtual ~GLWindow();
 
+  virtual void initial();
+  virtual void final();
+
   void run();
   void clear(color_t* pbg = nullptr);
 

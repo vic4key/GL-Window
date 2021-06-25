@@ -917,4 +917,14 @@ void GLWindow::enable_dear_imgui(bool state, dear_imgui_cfg* ptr_dear_imgui_cfg)
   }
 }
 
+void GLWindow::initial()
+{
+  // OVERRIDABLE
+}
+
+void GLWindow::final()
+{
+  // OVERRIDABLE
+}
+
 }; // glwnd

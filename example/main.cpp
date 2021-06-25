@@ -26,21 +26,21 @@ int APIENTRY wWinMain(
 )
 {
   std::unique_ptr<GLWindow> app(new GLWindow);
-  // app->reset(new GLWindowExample);
-  // app->reset(new GLWindowExampleSimple);
-  // app->reset(new GLWindowExampleEvents);
-  // app->reset(new GLWindowExampleShader);
-  // app->reset(new GLWindowExampleImage);
-  // app->reset(new GLWindowExampleMesh);
-  // app->reset(new GLWindowExampleVBO);
-  // app->reset(new GLWindowExamplePBO);
-  // app->reset(new GLWindowExampleVDS2A);
-  // app->reset(new GLWindowExampleVDS4A);
-  // app->reset(new GLWindowDearImGUI);
-  // app->reset(new GLWindowExampleText2D);
-  // app->reset(new GLWindowExamplePrimitive);
-  // app->reset(new GLWindowExampleInteractive);
-  // app->reset(new GLWindowExampleMultiView);
+  // app.reset(new GLWindowExample);
+  // app.reset(new GLWindowExampleSimple);
+  // app.reset(new GLWindowExampleEvents);
+  // app.reset(new GLWindowExampleShader);
+  // app.reset(new GLWindowExampleImage);
+  // app.reset(new GLWindowExampleMesh);
+  // app.reset(new GLWindowExampleVBO);
+  // app.reset(new GLWindowExamplePBO);
+  // app.reset(new GLWindowExampleVDS2A);
+  // app.reset(new GLWindowExampleVDS4A);
+  // app.reset(new GLWindowDearImGUI);
+  // app.reset(new GLWindowExampleText2D);
+  // app.reset(new GLWindowExamplePrimitive);
+  // app.reset(new GLWindowExampleInteractive);
+  // app.reset(new GLWindowExampleMultiView);
   app->run();
 
   return EXIT_SUCCESS;
