@@ -91,7 +91,7 @@ private:
 private:
   GLWindow&   m_parent;
   GLFWwindow* m_ptr_window;
-  GLViewPort* m_ptr_main_viewport;
+  GLViewPort* m_ptr_current_viewport;
 
   std::unique_ptr<GLLayout> m_ptr_layout;
 
@@ -110,18 +110,18 @@ private:
 
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
   : m_parent(parent)
-  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_main_viewport(nullptr)
+  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_current_viewport(nullptr)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
   , m_debug_enabled(false)
   , m_dear_imgui_enabled(false)
 {
-  m_ptr_main_viewport = new GLViewPort();
+  m_ptr_current_viewport = new GLViewPort();
   m_ptr_layout = GLLayout::_empty(parent);
 }
 
 GLWindow::Impl::~Impl()
 {
-  delete m_ptr_main_viewport;
+  delete m_ptr_current_viewport;
 }
 
 void GLWindow::Impl::on_display()
@@ -426,17 +426,19 @@ int GLWindow::Impl::create()
   const auto s = wglGetExtensionsStringARB(wglGetCurrentDC());
   m_arb_extensions = utils::split_string_t<std::string>(s, " ");
 
-  // setup window view-port
-
-  r4i rect(m_width, m_height);
-  m_ptr_main_viewport->setup(rect);
-
   // setup default layout
 
   if (m_ptr_layout == nullptr || m_ptr_layout->views().empty())
   {
     this->set_layout(GLLayout::_1x1(m_parent).release());
   }
+
+  // setup window view-port
+
+  this->iterate_views([&](GLView& view)
+  {
+    view.setup(*m_ptr_current_viewport, m_width, m_height);
+  });
 
   // setup render for primitive
 
@@ -519,12 +521,7 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
   ptr_parent_impl->m_width = width;
   ptr_parent_impl->m_height = height;
 
-  r4i rect(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
-  ptr_parent_impl->m_ptr_main_viewport->setup(rect);
-
   ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
-
-  ptr_parent_impl->display();
 
   glfwPollEvents();
   glfwSwapBuffers(ptr_window);
@@ -536,7 +533,7 @@ int GLWindow::Impl::display()
 
   this->iterate_views([&](GLView& view)
   {
-    view.setup(*m_ptr_main_viewport, m_width, m_height);
+    view.setup(*m_ptr_current_viewport, m_width, m_height);
 
     // display fps if enabled
      
@@ -832,7 +829,7 @@ void GLWindow::Impl::iterate_views(std::function<void(GLView& view)> fn)
 {
   for (auto& ptr_view : m_ptr_layout->views())
   {
-    ptr_view->setup(*m_ptr_main_viewport, m_width, m_height);
+    ptr_view->setup(*m_ptr_current_viewport, m_width, m_height);
     fn(*ptr_view);
   }
 }
