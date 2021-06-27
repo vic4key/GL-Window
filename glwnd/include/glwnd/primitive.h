@@ -15,7 +15,7 @@
 namespace glwnd
 {
 
-class GLWindow;
+class GLView;
 class GLViewPort;
 
 class TextRender2D;
@@ -26,7 +26,9 @@ public:
 	GLPrimitive();
 	virtual ~GLPrimitive();
 
-	void initialize(GLWindow* ptr_parent);
+  virtual GLViewPort& viewport() = 0;
+
+	void initialize(GLView* ptr_parent);
 
   enum class circle_t : int
   {
@@ -55,7 +57,7 @@ public:
 	TextRender2D& text();
 
 private:
-	GLWindow* m_ptr_parent;
+	GLView* m_ptr_parent;
 	TextRender2D* m_ptr_text_render; // default text renderer 2D
 };
 

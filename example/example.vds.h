@@ -7,11 +7,11 @@
 
 // Example VDS with 2 attributes : position + color
 
-class GLWindowExampleVDS2A : public GLWindow
+class GLViewExampleVDS2A : public GLView
 {
 public:
-  GLWindowExampleVDS2A() : GLWindow() {}
-  virtual ~GLWindowExampleVDS2A() {}
+  GLViewExampleVDS2A() : GLView() {}
+  virtual ~GLViewExampleVDS2A() {}
 
   virtual void initial()
   {
@@ -34,7 +34,7 @@ public:
     offset += m_vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     glMatrixMode(GL_PROJECTION_MATRIX);
     gluPerspective(45, 1.F, 0.1, 100);
@@ -59,11 +59,11 @@ protected:
 
 // Example VDS with fully 4 attributes : position + normal + color + texcoord
 
-class GLWindowExampleVDS4A : public GLWindow
+class GLViewExampleVDS4A : public GLView
 {
 public:
-  GLWindowExampleVDS4A() : GLWindow() {}
-  virtual ~GLWindowExampleVDS4A() {}
+  GLViewExampleVDS4A() : GLView() {}
+  virtual ~GLViewExampleVDS4A() {}
 
   virtual void initial()
   {
@@ -157,7 +157,7 @@ public:
     attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT, 0);
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     glMatrixMode(GL_PROJECTION_MATRIX);
     gluPerspective(45, 1.F, 0.1, 100);
@@ -183,4 +183,15 @@ public:
 protected:
   VBO m_vbo;
   Tex2D m_tex2d;
+
+//public:
+//  static void test(GLWindow& parent)
+//  {
+//    parent.enable_coordiates();
+//    parent.set_layout(GLLayout::_2x2(parent));
+//    parent.layout().replace_view(new GLViewExampleVDS4A, 0);
+//    parent.layout().replace_view(new GLViewExampleVDS4A, 1);
+//    parent.layout().replace_view(new GLViewExampleVDS4A, 2);
+//    parent.layout().replace_view(new GLViewExampleVDS4A, 3);
+//  }
 };

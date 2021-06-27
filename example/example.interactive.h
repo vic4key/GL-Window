@@ -4,13 +4,13 @@
 
 #include <glfw/glfw3.h>
 
-class GLWindowExampleInteractive : public GLWindowExampleVDS2A
+class GLViewExampleInteractive : public GLViewExampleVDS2A
 {
 public:
-  GLWindowExampleInteractive() : GLWindowExampleVDS2A() {}
-  virtual ~GLWindowExampleInteractive() {}
+  GLViewExampleInteractive() : GLViewExampleVDS2A() {}
+  virtual ~GLViewExampleInteractive() {}
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     glMatrixMode(GL_PROJECTION_MATRIX);
     gluPerspective(45, 1.F, 0.1, 100);
@@ -70,7 +70,7 @@ public:
   {
     if (action == GLFW_PRESS && key == GLFW_KEY_F11)
     {
-      this->toggle_fullscreen();
+      m_ptr_parent->toggle_fullscreen();
     }
 
     p2i v(0, 0);

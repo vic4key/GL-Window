@@ -5,7 +5,7 @@
  */
 
 #include "glwnd/text.h"
-#include "glwnd/glwnd.h"
+#include "glwnd/view.h"
 #include "glwnd/viewport.h"
 
 #include "glfreetype/TextRenderer.hpp"
@@ -27,7 +27,7 @@ TextRender2D::~TextRender2D()
   }
 }
 
-bool TextRender2D::initialize(GLWindow* ptr_parent, const std::string& name, const int size)
+bool TextRender2D::initialize(GLView* ptr_parent, const std::string& name, const int size)
 {
   assert(ptr_parent != nullptr);
 

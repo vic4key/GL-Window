@@ -4,18 +4,18 @@
 
 #include <glwnd/tex2d.h>
 
-class GLWindowExampleImage : public GLWindow
+class GLViewExampleImage : public GLView
 {
 public:
-  GLWindowExampleImage() : GLWindow() {}
-  virtual ~GLWindowExampleImage() {}
+  GLViewExampleImage() : GLView() {}
+  virtual ~GLViewExampleImage() {}
 
   virtual void initial()
   {
     m_tex2d.initialize_from_image_file("assets\\example.png");
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     glEnable(GL_TEXTURE_2D);
 

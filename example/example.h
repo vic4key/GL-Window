@@ -4,13 +4,14 @@
 
 #include <gl/glew.h>
 #include <glwnd/glwnd>
+#include <glwnd/view.h>
 using namespace glwnd;
 
-class GLWindowExample : public GLWindow
+class GLViewExample : public GLView
 {
 public:
-  GLWindowExample() : GLWindow() {}
-  virtual ~GLWindowExample() {}
+  GLViewExample() : GLView() {}
+  virtual ~GLViewExample() {}
 
   virtual void initial()
   {
@@ -22,7 +23,7 @@ public:
     // your code here
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     // your code here
   }

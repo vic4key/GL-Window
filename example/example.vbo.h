@@ -4,13 +4,13 @@
 
 #include <glwnd/vbo.h>
 
-class GLWindowExampleVBO : public GLWindow
+class GLViewExampleVBO : public GLView
 {
 public:
-  GLWindowExampleVBO() : GLWindow() {}
-  virtual ~GLWindowExampleVBO() {}
+  GLViewExampleVBO() : GLView() {}
+  virtual ~GLViewExampleVBO() {}
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     // With VBO
 

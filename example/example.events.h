@@ -4,13 +4,13 @@
 
 #include <glwnd/utils.h>
 
-class GLWindowExampleEvents : public GLWindow
+class GLViewExampleEvents : public GLView
 {
 public:
-  GLWindowExampleEvents() : GLWindow() {};
-  virtual ~GLWindowExampleEvents() {};
+  GLViewExampleEvents() : GLView() {};
+  virtual ~GLViewExampleEvents() {};
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     LOG("drawing");
   }

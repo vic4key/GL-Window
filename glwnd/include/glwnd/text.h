@@ -22,7 +22,7 @@ namespace glfreetype
 namespace glwnd
 {
 
-class  GLWindow;
+class GLView;
 
 static const int   INVALID_FONT_ID = -1;
 static const int   DEFAULT_FONT_SIZE = 14;
@@ -34,14 +34,14 @@ public:
 	TextRender2D();
 	virtual ~TextRender2D();
 
-	bool initialize(GLWindow* ptr_parent, const std::string& name = DEFAULT_FONT_NAME, int size = DEFAULT_FONT_SIZE);
+	bool initialize(GLView* ptr_parent, const std::string& name = DEFAULT_FONT_NAME, int size = DEFAULT_FONT_SIZE);
 	int  add_font(const std::string& name, const int size);
 	void render_text(const std::string& text, const p2i& position, int* ptr_font_id = nullptr);
 	void render_text(const std::string& text, const p2d& position, int* ptr_font_id = nullptr);
 	size_t get_num_added_fonts();
 
 private:
-	GLWindow* m_ptr_parent;
+	GLView* m_ptr_parent;
 	int m_current_font_id;
 	std::map<int, glfreetype::font_data*> m_fonts;
 };

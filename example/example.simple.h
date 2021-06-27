@@ -2,13 +2,13 @@
 
 #include "example.h"
 
-class GLWindowExampleSimple : public GLWindow
+class GLViewExampleSimple : public GLView
 {
 public:
-  GLWindowExampleSimple() : GLWindow() {}
-  virtual ~GLWindowExampleSimple() {}
+  GLViewExampleSimple() : GLView() {}
+  virtual ~GLViewExampleSimple() {}
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     glColor3f(0.0, 1.0, 0.0);
     glBegin(GL_POLYGON);

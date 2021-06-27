@@ -27,7 +27,7 @@ void GLEvent::final()
   // OVERRIDABLE
 }
 
-void GLEvent::on_display(GLView& view)
+void GLEvent::on_display()
 {
   // OVERRIDABLE
 }

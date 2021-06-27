@@ -5,18 +5,18 @@
 #include <glwnd/pbo.h>
 #include <SOIL2/SOIL2.h>
 
-class GLWindowExamplePBO : public GLWindow
+class GLViewExamplePBO : public GLView
 {
 public:
-  GLWindowExamplePBO() : GLWindow() {}
-  virtual ~GLWindowExamplePBO() {}
+  GLViewExamplePBO() : GLView() {}
+  virtual ~GLViewExamplePBO() {}
 
   virtual void initial()
   {
     m_pbo.initialize_from_image_file("assets\\example.png");
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     GLuint texture = 0;
     glGenTextures(1, &texture);

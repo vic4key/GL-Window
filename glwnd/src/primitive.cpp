@@ -24,7 +24,7 @@ GLPrimitive::~GLPrimitive()
   delete m_ptr_text_render;
 }
 
-void GLPrimitive::initialize(GLWindow* ptr_parent)
+void GLPrimitive::initialize(GLView* ptr_parent)
 {
   assert(ptr_parent != nullptr);
 
@@ -54,8 +54,8 @@ void GLPrimitive::circle(const p2i& center, int radius, circle_t type, int nsegm
 {
   assert(m_ptr_parent != nullptr);
 
-  auto c = m_ptr_parent->viewport().win_to_ndc(center);
-  auto p = m_ptr_parent->viewport().win_to_ndc(p2i(center.x() + radius, center.y()));
+  auto c = this->viewport().win_to_ndc(center);
+  auto p = this->viewport().win_to_ndc(p2i(center.x() + radius, center.y()));
   auto r = c.distance(p); // TODO: Vic. Temporary. For case viewport width == height, then r.x == r.y
 
   this->circle(c, r, type, nsegments);
@@ -91,8 +91,8 @@ void GLPrimitive::line(const p2i& p1, const p2i& p2, line_t type)
 {
   assert(m_ptr_parent != nullptr);
 
-  auto p_1 = m_ptr_parent->viewport().win_to_ndc(p1);
-  auto p_2 = m_ptr_parent->viewport().win_to_ndc(p2);
+  auto p_1 = this->viewport().win_to_ndc(p1);
+  auto p_2 = this->viewport().win_to_ndc(p2);
 
   this->line(p_1, p_2, type);
 }
@@ -117,7 +117,7 @@ void GLPrimitive::scatter(const std::initializer_list<p2i>& points)
   {
     for (const auto& point : points)
     {
-      auto p = m_ptr_parent->viewport().win_to_ndc(point);
+      auto p = this->viewport().win_to_ndc(point);
       glVertex2d(p.x(), p.y());
     }
   }

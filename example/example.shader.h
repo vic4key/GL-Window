@@ -4,11 +4,11 @@
 
 #include <glwnd/shader.h>
 
-class GLWindowExampleShader : public GLWindow
+class GLViewExampleShader : public GLView
 {
 public:
-  GLWindowExampleShader() : GLWindow(), m_vbo(0), m_vao(0) {}
-  virtual ~GLWindowExampleShader() {}
+  GLViewExampleShader() : GLView(), m_vbo(0), m_vao(0) {}
+  virtual ~GLViewExampleShader() {}
 
   virtual void initial()
   {
@@ -63,7 +63,7 @@ public:
     glDeleteBuffers(1, &m_vbo);
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     m_shader.use(true);
     glBindVertexArray(m_vao);

@@ -28,7 +28,10 @@ public:
 
 	std::vector<GLView*>& views();
 
-	void add_view(const p2f& left_bottom, const p2f& top_left);
+	GLLayout& add_view(GLView* ptr_view);
+	GLLayout& replace_view(GLView* ptr_view, size_t index);
+	GLLayout& remove_all_views();
+
 	GLView* get_active_view_from_mouse_position(const p2i& point);
 
   static std::unique_ptr<GLLayout> _empty(GLWindow& parent);
@@ -36,9 +39,6 @@ public:
   static std::unique_ptr<GLLayout> _1x2(GLWindow& parent);
   static std::unique_ptr<GLLayout> _2x1(GLWindow& parent);
   static std::unique_ptr<GLLayout> _2x2(GLWindow& parent);
-
-private:
-	void remove_all_views();
 
 private:
 	GLWindow* m_ptr_parent;

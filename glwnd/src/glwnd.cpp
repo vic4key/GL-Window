@@ -41,7 +41,7 @@ public:
   Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg);
   virtual ~Impl();
 
-  void on_display(GLView& view);
+  void on_display();
   void on_resize(int width, int height);
 
   void on_mouse_move(int x, int y);
@@ -81,11 +81,9 @@ private:
 
   void imgui_create();
   void imgui_destroy();
-
-  void display_fps();
   void toggle_fullscreen();
   GLLayout& layout();
-  void set_layout(std::unique_ptr<GLLayout> ptr_layout);
+  void set_layout(GLLayout* ptr_layout);
   p2i  get_current_mouse_position(bool* ptr_outside = nullptr);
   GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
   void iterate_views(std::function<void(GLView& view)> fn);
@@ -94,7 +92,6 @@ private:
   GLWindow&   m_parent;
   GLFWwindow* m_ptr_window;
   GLViewPort* m_ptr_main_viewport;
-  GLPrimitive* m_ptr_renderer;
 
   std::unique_ptr<GLLayout> m_ptr_layout;
 
@@ -103,81 +100,113 @@ private:
   color_t m_bg;
   std::string m_name;
 
-  int m_fps;
-  TextRender2D m_text_render_fps;
-
   std::vector<std::string> m_extensions;
   std::vector<std::string> m_arb_extensions;
 
   bool m_debug_enabled;
-  bool m_fps_enabled;
-  bool m_coordiates_enabled;
   bool m_dear_imgui_enabled;
   dear_imgui_cfg m_dear_imgui_cfg;
 };
 
 GLWindow::Impl::Impl(GLWindow& parent, const std::string& name, int width, int height, color_t bg)
   : m_parent(parent)
-  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_main_viewport(nullptr), m_ptr_renderer(nullptr)
+  , m_ptr_window(nullptr), m_ptr_layout(nullptr), m_ptr_main_viewport(nullptr)
   , m_name(name), m_width(width), m_height(height), m_bg(bg)
-  , m_fps_enabled(false), m_fps(0)
   , m_debug_enabled(false)
   , m_dear_imgui_enabled(false)
-  , m_coordiates_enabled(false)
 {
   m_ptr_main_viewport = new GLViewPort();
-  m_ptr_renderer = new GLPrimitive();
+  m_ptr_layout = GLLayout::_empty(parent);
 }
 
 GLWindow::Impl::~Impl()
 {
   delete m_ptr_main_viewport;
-  delete m_ptr_renderer;
 }
 
-void GLWindow::Impl::on_display(GLView& view)
+void GLWindow::Impl::on_display()
 {
-  m_parent.on_display(view);
+  this->iterate_views([&](GLView& view)
+  {
+    view.on_display();
+  });
 }
 
 void GLWindow::Impl::on_resize(int width, int height)
 {
-  m_parent.on_resize(width, height);
+  this->iterate_views([&](GLView& view)
+  {
+    auto& win = view.viewport().coordinate().win;
+    view.on_resize(win.width(), win.height());
+  });
 }
 
 void GLWindow::Impl::on_mouse_move(int x, int y)
 {
-  m_parent.on_mouse_move(x, y);
+  this->iterate_views([&](GLView& view)
+  {
+    auto& win = view.viewport().coordinate().win;
+    if (utils::is_point_inside_rect(p2i(x, y), win))
+    {
+      view.on_mouse_move(x, y);
+    }
+  });
 }
 
 void GLWindow::Impl::on_mouse_enter_leave(bool entered, int x, int y)
 {
-  m_parent.on_mouse_enter_leave(entered, x, y);
+  this->iterate_views([&](GLView& view)
+  {
+    auto& win = view.viewport().coordinate().win;
+    if (utils::is_point_inside_rect(p2i(x, y), win))
+    {
+      view.on_mouse_enter_leave(entered, x, y);
+    }
+  });
 }
 
 void GLWindow::Impl::on_mouse_click(int button, int action, int mods, int x, int y)
 {
-  m_parent.on_mouse_click(button, action, mods, x, y);
+  this->iterate_views([&](GLView& view)
+  {
+    auto& win = view.viewport().coordinate().win;
+    if (utils::is_point_inside_rect(p2i(x, y), win))
+    {
+      view.on_mouse_click(button, action, mods, x, y);
+    }
+  });
 }
 
 void GLWindow::Impl::on_mouse_wheel(int dx, int dy)
 {
-  m_parent.on_mouse_wheel(dx, dy);
+  this->iterate_views([&](GLView& view)
+  {
+    view.on_mouse_wheel(dx, dy);
+  });
 }
 
 void GLWindow::Impl::on_keyboard_key(int key, int code, int action, int mods)
 {
-  m_parent.on_keyboard_key(key, code, action, mods);
+  this->iterate_views([&](GLView& view)
+  {
+    view.on_keyboard_key(key, code, action, mods);
+  });
 }
 
 void GLWindow::Impl::on_keyboard_char(unsigned int code)
 {
-  m_parent.on_keyboard_char(code);
+  this->iterate_views([&](GLView& view)
+  {
+    view.on_keyboard_char(code);
+  });
 }
 
 void GLWindow::Impl::on_drag_drop(const std::vector<std::string>& paths)
 {
-  m_parent.on_drag_drop(paths);
+  this->iterate_views([&](GLView& view)
+  {
+    view.on_drag_drop(paths);
+  });
 }
 
 void GLWindow::Impl::error(int code, const char* description)
@@ -261,9 +290,10 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
   ptr_parent_impl->on_drag_drop(paths);
 }
 
-void GLWindow::Impl::set_layout(std::unique_ptr<GLLayout> ptr_layout)
+void GLWindow::Impl::set_layout(GLLayout* ptr_layout)
 {
-  m_ptr_layout.reset(ptr_layout.release());
+  assert(ptr_layout != nullptr);
+  m_ptr_layout.reset(ptr_layout);
 }
 
 GLLayout& GLWindow::Impl::layout()
@@ -405,16 +435,15 @@ int GLWindow::Impl::create()
 
   if (m_ptr_layout == nullptr || m_ptr_layout->views().empty())
   {
-    this->set_layout(GLLayout::_1x1(m_parent));
+    this->set_layout(GLLayout::_1x1(m_parent).release());
   }
-
-  // set text render for fps
-
-  m_text_render_fps.initialize(&m_parent);
 
   // setup render for primitive
 
-  m_ptr_renderer->initialize(&m_parent);
+  this->iterate_views([&](GLView& view)
+  {
+    view.initialize(&view);
+  });
 
   return 0;
 }
@@ -505,22 +534,22 @@ int GLWindow::Impl::display()
 {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 
-  // display fps if enabled
-
-  if (m_fps_enabled)
-  {
-    display_fps();
-  }
-
   this->iterate_views([&](GLView& view)
   {
     view.setup(*m_ptr_main_viewport, m_width, m_height);
 
+    // display fps if enabled
+     
+    if (view.m_fps_enabled)
+    {
+      view.display_fps();
+    }
+
     // display drawing coordinates
 
-    if (m_coordiates_enabled)
+    if (view.m_coordiates_enabled)
     {
-      m_ptr_main_viewport->display_coordiates();
+      view.viewport().display_coordiates();
     }
 
     glPushMatrix();
@@ -537,7 +566,7 @@ int GLWindow::Impl::display()
 
       // display drawing content
 
-      this->on_display(view);
+      view.on_display();
 
       // render on the created imgui frame
 
@@ -569,6 +598,11 @@ int GLWindow::Impl::run()
 
   this->initial();
 
+  this->iterate_views([&](GLView& view)
+  {
+    view.initial();
+  });
+
   while (glfwWindowShouldClose(m_ptr_window) == GLFW_FALSE)
   {
     // display drawing content
@@ -583,9 +617,14 @@ int GLWindow::Impl::run()
 
   // finalize after drawing
 
-  this->final();
-
   // destroy the context and clean-up the resources of drawing
+
+  this->iterate_views([&](GLView& view)
+  {
+    view.final();
+  });
+
+  this->final();
 
   if (this->destroy() != 0)
   {
@@ -644,31 +683,6 @@ void GLWindow::Impl::imgui_destroy()
   ImGui_ImplGlfw_Shutdown();
   ImGui::DestroyContext();
 }
-
-void GLWindow::Impl::display_fps()
-{
-  static int fps = 0;
-  fps += 1;
-
-  static auto beg_time = std::chrono::high_resolution_clock::now();
-  auto end_time = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double, std::milli> delta_time = end_time - beg_time;
-
-  if (delta_time.count() > 1000.0) // 1000ms
-  {
-    m_fps = fps;
-    fps = 0;
-    beg_time = std::chrono::high_resolution_clock::now();
-  }
-
-  static char fps_text[MAXBYTE] = { 0 };
-  sprintf_s(fps_text, "FPS : %d\0", m_fps);
-
-  const int padding = 10;
-  const auto& win = m_ptr_main_viewport->coordinate().win;
-  m_text_render_fps.render_text(fps_text, p2i(padding, win.top() - 35 + padding));
-}
-
 void GLWindow::Impl::clear(color_t* pbg)
 {
   glcolor_t<GLclampf> bg(pbg != nullptr ? *pbg : m_bg);
@@ -827,7 +841,7 @@ void GLWindow::Impl::iterate_views(std::function<void(GLView& view)> fn)
  * CGLWindow
  */
 
-GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg) : GLBase()
+GLWindow::GLWindow(const std::string& name, int width, int height, color_t bg)
 {
   m_ptr_impl = new GLWindow::Impl(*this, name, width, height, bg);
 }
@@ -840,16 +854,6 @@ GLWindow::~GLWindow()
 GLFWwindow& GLWindow::window()
 {
   return *(m_ptr_impl->m_ptr_window);
-}
-
-GLViewPort& GLWindow::viewport()
-{
-  return *(m_ptr_impl->m_ptr_main_viewport);
-}
-
-GLPrimitive& glwnd::GLWindow::renderer()
-{
-  return *(m_ptr_impl->m_ptr_renderer);
 }
 
 const std::vector<std::string>& GLWindow::extensions() const
@@ -875,9 +879,10 @@ void GLWindow::clear(color_t* pbg)
   m_ptr_impl->clear(pbg);
 }
 
-void GLWindow::set_layout(std::unique_ptr<GLLayout> ptr_layout)
+GLLayout& GLWindow::set_layout(GLLayout* ptr_layout)
 {
-  m_ptr_impl->set_layout(std::move(ptr_layout));
+  m_ptr_impl->set_layout(ptr_layout);
+  return this->layout();
 }
 
 GLLayout& GLWindow::layout()
@@ -890,19 +895,9 @@ void GLWindow::toggle_fullscreen()
   m_ptr_impl->toggle_fullscreen();
 }
 
-void GLWindow::enable_fps(bool state)
-{
-  m_ptr_impl->m_fps_enabled = state;
-}
-
 void GLWindow::enable_debug(bool state)
 {
   m_ptr_impl->m_debug_enabled = state;
-}
-
-void GLWindow::enable_coordiates(bool state)
-{
-  m_ptr_impl->m_coordiates_enabled = state;
 }
 
 void GLWindow::enable_dear_imgui(bool state, dear_imgui_cfg* ptr_dear_imgui_cfg)

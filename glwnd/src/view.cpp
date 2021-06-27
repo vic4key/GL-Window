@@ -6,15 +6,29 @@
 
 #include "glwnd/view.h"
 #include "glwnd/viewport.h"
+#include "glwnd/text.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
+#include <windows.h>
+#include <chrono>
+
 namespace glwnd
 {
 
-GLView::GLView(const p2f& lt, const p2f& rb, const size_t index)
-  : m_index(index), m_lt(lt), m_rb(rb)
+GLView::GLView()
+  : GLEvent(), GLPrimitive(), m_ptr_parent(nullptr), m_index(-1)
+  , m_fps_enabled(false), m_fps(0)
+  , m_coordiates_enabled(false)
+{
+}
+
+GLView::GLView(const p2f& lt, const p2f& rb)
+  : GLEvent(), GLPrimitive(), m_ptr_parent(nullptr), m_index(-1)
+  , m_lt(lt), m_rb(rb)
+  , m_fps_enabled(false), m_fps(0)
+  , m_coordiates_enabled(false)
 {
   m_lt = lt;
   m_rb = rb;
@@ -31,11 +45,32 @@ GLView::GLView(const GLView& right)
 
 GLView& GLView::operator=(const GLView& right)
 {
+  m_ptr_parent = right.m_ptr_parent;
   m_viewport = m_viewport;
   m_index = right.m_index;
   m_lt = right.m_lt;
   m_rb = right.m_rb;
   return *this;
+}
+
+void GLView::set_parent(GLWindow& parent)
+{
+  m_ptr_parent = &parent;
+}
+
+void GLView::set_index(const size_t index)
+{
+  m_index = index;
+}
+
+size_t GLView::index() const
+{
+  return m_index;
+}
+
+GLViewPort& GLView::viewport()
+{
+  return m_viewport;
 }
 
 void GLView::setup(GLViewPort& viewport, int width, int height)
@@ -94,19 +129,38 @@ glm::mat4 GLView::get_context_matrix(GLenum type)
   return matrix;
 }
 
-void GLView::display()
+void GLView::enable_fps(bool state)
 {
-  assert(0);
+  m_fps_enabled = state;
 }
 
-size_t GLView::index() const
+void GLView::enable_coordiates(bool state)
 {
-  return m_index;
+  m_coordiates_enabled = state;
 }
 
-GLViewPort& GLView::viewport()
+void GLView::display_fps()
 {
-  return m_viewport;
+  static int fps = 0;
+  fps += 1;
+
+  static auto beg_time = std::chrono::high_resolution_clock::now();
+  auto end_time = std::chrono::high_resolution_clock::now();
+  std::chrono::duration<double, std::milli> delta_time = end_time - beg_time;
+
+  if (delta_time.count() > 1000.0) // 1000ms
+  {
+    m_fps = fps;
+    fps = 0;
+    beg_time = std::chrono::high_resolution_clock::now();
+  }
+
+  static char fps_text[MAXBYTE] = { 0 };
+  sprintf_s(fps_text, "FPS : %d\0", m_fps);
+
+  const int padding = 10;
+  const auto& win = m_viewport.coordinate().win;
+  this->text().render_text(fps_text, p2i(padding, win.top() - 35 + padding));
 }
 
 }; // glwnd

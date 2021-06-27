@@ -25,23 +25,37 @@ int APIENTRY wWinMain(
   _In_ int nShowCmd
 )
 {
-  std::unique_ptr<GLWindow> app(new GLWindow);
-  // app.reset(new GLWindowExample);
-  // app.reset(new GLWindowExampleSimple);
-  // app.reset(new GLWindowExampleEvents);
-  // app.reset(new GLWindowExampleShader);
-  // app.reset(new GLWindowExampleImage);
-  // app.reset(new GLWindowExampleMesh);
-  // app.reset(new GLWindowExampleVBO);
-  // app.reset(new GLWindowExamplePBO);
-  // app.reset(new GLWindowExampleVDS2A);
-  // app.reset(new GLWindowExampleVDS4A);
-  // app.reset(new GLWindowDearImGUI);
-  // app.reset(new GLWindowExampleText2D);
-  // app.reset(new GLWindowExamplePrimitive);
-  // app.reset(new GLWindowExampleInteractive);
-  // app.reset(new GLWindowExampleMultiView);
-  app->run();
+  GLWindow app;
+  app.set_layout(GLLayout::_1x1(app).release());
+
+  // app.layout().replace_view(new GLViewExample, 0);
+  // app.layout().replace_view(new GLViewExampleSimple, 0);
+  // app.layout().replace_view(new GLViewExampleEvents, 0);
+  // app.layout().replace_view(new GLViewExampleShader, 0);
+  // app.layout().replace_view(new GLViewExampleImage, 0);
+  // app.layout().replace_view(new GLViewExampleMesh, 0);
+  // app.layout().replace_view(new GLViewExampleVBO, 0);
+  // app.layout().replace_view(new GLViewExamplePBO, 0);
+  // app.layout().replace_view(new GLViewExampleVDS2A, 0);
+  // app.layout().replace_view(new GLViewExampleVDS4A, 0);
+
+  // app.layout().replace_view(new GLWindowDearImGUI, 0);
+
+  // app.set_layout(GLLayout::_2x2(app).release());
+  //   app.layout().replace_view(new GLViewExampleText2D, 0);
+  //   app.layout().replace_view(new GLViewExampleText2D, 1);
+  //   app.layout().replace_view(new GLViewExampleText2D, 2);
+  //   app.layout().replace_view(new GLViewExampleText2D, 3);
+
+  // app.layout().replace_view(new GLViewExamplePrimitive, 0);
+  // app.layout().replace_view(new GLViewExampleInteractive, 0)
+  // app.set_layout(GLLayout::_2x2(app).release());
+  //   app.layout().replace_view(new GLViewExampleMultiView, 0);
+  //   app.layout().replace_view(new GLViewExampleMultiView, 1);
+  //   app.layout().replace_view(new GLViewExampleMultiView, 2);
+  //   app.layout().replace_view(new GLViewExampleMultiView, 3);
+
+  app.run();
 
   return EXIT_SUCCESS;
 }

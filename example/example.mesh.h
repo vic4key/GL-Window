@@ -9,11 +9,11 @@
 #include <glwnd/view.h>
 #include <glwnd/layout.h>
 
-class GLWindowExampleMesh : public GLWindow
+class GLViewExampleMesh : public GLView
 {
 public:
-  GLWindowExampleMesh() : GLWindow() {}
-  virtual ~GLWindowExampleMesh() {}
+  GLViewExampleMesh() : GLView() {}
+  virtual ~GLViewExampleMesh() {}
 
   virtual void initial()
   {
@@ -42,7 +42,7 @@ public:
     // m_shader.build_file("assets\\colorizing.vert", "assets\\colorizing.frag");
   }
 
-  virtual void on_display(GLView& view)
+  virtual void on_display()
   {
     glm::vec3 light_position(-3.F, 6.F, -3.F);
 
@@ -56,7 +56,7 @@ public:
         {-.5F, 0.F, +0.F}, // turn right
       };
 
-      const auto& eye = eyes[view.index()];
+      const auto& eye = eyes[this->index()];
       const auto& pos = m_model.p;
       const auto& dir = m_model.d;
 
@@ -68,7 +68,7 @@ public:
     glm::vec3 pos = m_model.p;
     glm::vec3 dir = m_model.d;
     glm::mat4 mtx_view = glm::lookAt(eye, pos, dir);
-    mtx_view *= view.get_context_matrix(GL_MODELVIEW_MATRIX);
+    mtx_view *= this->get_context_matrix(GL_MODELVIEW_MATRIX);
 
     // projection matrix
     auto win = this->viewport().coordinate().win;
@@ -76,7 +76,7 @@ public:
 
     // model matrix
     if (m_model.r.y++ > 360.F) m_model.r.y = 0.F;
-    glm::mat4 mtx_model = view.transform_matrix(m_model.t, m_model.r, m_model.s);
+    glm::mat4 mtx_model = this->transform_matrix(m_model.t, m_model.r, m_model.s);
 
     // enable lighting shader
     m_shader.use(true);

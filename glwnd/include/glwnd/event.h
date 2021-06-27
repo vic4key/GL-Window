@@ -12,8 +12,6 @@
 namespace glwnd
 {
 
-class GLView;
-
 class GLEvent
 {
 public:
@@ -23,7 +21,7 @@ public:
   virtual void initial();
   virtual void final();
 
-  virtual void on_display(GLView& view);
+  virtual void on_display() = 0;
   virtual void on_resize(int width, int height);
 
   virtual void on_mouse_move(int x, int y);
