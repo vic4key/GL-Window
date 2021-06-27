@@ -38,7 +38,6 @@ int APIENTRY wWinMain(
   // app.layout().replace_view(new GLViewExamplePBO, 0);
   // app.layout().replace_view(new GLViewExampleVDS2A, 0);
   // app.layout().replace_view(new GLViewExampleVDS4A, 0);
-
   // app.layout().replace_view(new GLWindowDearImGUI, 0);
 
   // app.set_layout(GLLayout::_2x2(app).release());

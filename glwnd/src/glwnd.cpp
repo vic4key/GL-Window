@@ -489,25 +489,11 @@ int GLWindow::Impl::initial()
 
   m_parent.initial();
 
-  // setup context for the imgui framework
-
-  if (m_dear_imgui_enabled)
-  {
-    this->imgui_create();
-  }
-
   return 0;
 }
 
 int GLWindow::Impl::final()
 {
-  // destroy the imgui framework
-
-  if (m_dear_imgui_enabled)
-  {
-    this->imgui_destroy();
-  }
-
   m_parent.final();
 
   return 0;
@@ -584,7 +570,7 @@ int GLWindow::Impl::display()
 
 int GLWindow::Impl::run()
 {
-  // create context for drawing
+  // create renderer context for drawing
 
   if (this->create() != 0)
   {
@@ -600,6 +586,13 @@ int GLWindow::Impl::run()
     view.initial();
   });
 
+  // install renderer context for imgui framework
+
+  if (m_dear_imgui_enabled)
+  {
+    this->imgui_create();
+  }
+
   while (glfwWindowShouldClose(m_ptr_window) == GLFW_FALSE)
   {
     // display drawing content
@@ -612,9 +605,14 @@ int GLWindow::Impl::run()
     glfwSwapBuffers(m_ptr_window);
   }
 
-  // finalize after drawing
+  // uninstall renderer context for imgui framework
 
-  // destroy the context and clean-up the resources of drawing
+  if (m_dear_imgui_enabled)
+  {
+    this->imgui_destroy();
+  }
+
+  // finalize after drawing
 
   this->iterate_views([&](GLView& view)
   {
@@ -622,6 +620,8 @@ int GLWindow::Impl::run()
   });
 
   this->final();
+
+  // destroy renderer context and clean-up resources of drawing
 
   if (this->destroy() != 0)
   {

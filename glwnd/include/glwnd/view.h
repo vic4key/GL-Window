@@ -35,6 +35,7 @@ public:
 	void set_index(const size_t index);
 	size_t index() const;
 
+	GLWindow& parent();
 	GLViewPort& viewport();
 
 	void setup(GLViewPort& viewport, int width, int height);

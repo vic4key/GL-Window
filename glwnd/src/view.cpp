@@ -68,6 +68,11 @@ size_t GLView::index() const
   return m_index;
 }
 
+GLWindow& GLView::parent()
+{
+  return *m_ptr_parent;
+}
+
 GLViewPort& GLView::viewport()
 {
   return m_viewport;
