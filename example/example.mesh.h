@@ -15,23 +15,30 @@ public:
 
   virtual void initial()
   {
-    // // demo 1
-    // m_model.n = "assets\\monkey.obj";
-    // m_model.t = glm::vec3(0.F);
-    // m_model.r = glm::vec3(0.F, 180.F, 0.F);
-    // m_model.s = glm::vec3(1.F);
-    // m_model.c = glm::vec3(0.F, 1.F, 0.F);
-    // m_model.p = glm::vec3(0.F, 0.F, 0.F);
-    // m_model.d = glm::vec3(0.F, 1.F, 0.F); // (pitch, yaw, roll)
+    // demo model 1
+    static model_t monkey;
+    monkey.n = "assets\\monkey.obj";
+    monkey.t = glm::vec3(0.F);
+    monkey.r = glm::vec3(0.F, 180.F, 0.F);
+    monkey.s = glm::vec3(1.F);
+    monkey.c = glm::vec3(0.F, 1.F, 0.F);
+    monkey.p = glm::vec3(0.F, 0.F, 0.F);
+    monkey.d = glm::vec3(0.F, 1.F, 0.F);
+    monkey.a = false;
 
-    // demo 2
-    m_model.n = "assets\\scene.obj";
-    m_model.t = glm::vec3(0.5F, -0.5F, 0.F);
-    m_model.r = glm::vec3(-10.F, 120.F, 0.F);
-    m_model.s = glm::vec3(0.5F);
-    m_model.c = glm::vec3(1.F, 1.F, 1.F);
-    m_model.p = glm::vec3(0.F, 0.F, 0.F);
-    m_model.d = glm::vec3(0.F, 1.F, 0.F); // (pitch, yaw, roll)
+    // demo model 2
+    static model_t scene;
+    scene.n = "assets\\scene.obj";
+    scene.t = glm::vec3(0.5F, -0.5F, 0.F);
+    scene.r = glm::vec3(-10.F, 120.F, 0.F);
+    scene.s = glm::vec3(0.5F);
+    scene.c = glm::vec3(1.F, 1.F, 1.F);
+    scene.p = glm::vec3(0.F, 0.F, 0.F);
+    scene.d = glm::vec3(0.F, 1.F, 0.F);
+    scene.a = true;
+
+    // select a demo model for loading & rendering
+    m_model = scene; // m_model = monkey;
 
     if (!m_mesh.ready())
     {
@@ -39,7 +46,6 @@ public:
     }
 
     m_shader.build_file("assets\\lighting.vert", "assets\\lighting.frag");
-    // m_shader.build_file("assets\\colorizing.vert", "assets\\colorizing.frag");
   }
 
   virtual void on_display()
@@ -75,7 +81,7 @@ public:
     glm::mat4 mtx_projection = glm::perspective(15.F, win.aspect(), 0.1F, 20.F);
 
     // model matrix
-    if (m_model.r.y++ > 360.F) m_model.r.y = 0.F;
+    if (m_model.a && m_model.r.y++ > 360.F) m_model.r.y = 0.F;
     glm::mat4 mtx_model = this->transform_matrix(m_model.t, m_model.r, m_model.s);
 
     // enable lighting shader
@@ -92,8 +98,8 @@ public:
 
     // setup lighting
     m_shader.uniform("light.direction", light_position);
-    m_shader.uniform("light.ambient", glm::vec3(0.2f, 0.23f, 0.25f));
-    m_shader.uniform("light.diffuse", glm::vec3(0.6f, 0.63f, 0.65f));
+    m_shader.uniform("light.ambient",  glm::vec3(0.2f, 0.23f, 0.25f));
+    m_shader.uniform("light.diffuse",  glm::vec3(0.6f, 0.63f, 0.65f));
     m_shader.uniform("light.specular", glm::vec3(0.0f));
 
     // render mesh
@@ -107,9 +113,12 @@ private:
   // Mesh m_mesh;
   Shader m_shader;
 
-  struct
+  struct model_t
   {
-    std::string n;
-    glm::vec3 t, r, s, c, p, d;
-  } m_model;
+    std::string n; // name
+    glm::vec3 t, r, s, c, p, d; // translate, rotate, scale, color, position, direction (pitch, yaw, roll)
+    bool a; // animate
+  };
+  
+  model_t m_model;
 };
