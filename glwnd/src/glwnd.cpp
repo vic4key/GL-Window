@@ -87,6 +87,7 @@ private:
   p2i  get_current_mouse_position(bool* ptr_outside = nullptr);
   GLFWmonitor* get_ptr_current_monitor(GLFWwindow* ptr_window);
   void iterate_views(std::function<void(GLView& view)> fn);
+  void set_default_icon();
 
 private:
   GLWindow&   m_parent;
@@ -353,6 +354,10 @@ int GLWindow::Impl::create()
     utils::log("GLFW -> glfwCreateWindow");
     return __LINE__;
   }
+
+  // generate and set default icon
+
+  this->set_default_icon();
 
   // store this parent object to the window
 
@@ -843,6 +848,61 @@ void GLWindow::Impl::iterate_views(std::function<void(GLView& view)> fn)
     ptr_view->setup(*m_ptr_current_viewport, m_width, m_height);
     fn(*ptr_view);
   }
+}
+
+void GLWindow::Impl::set_default_icon()
+{
+  assert(m_ptr_window != nullptr);
+
+  const size_t icon_color = 1;
+  const size_t icon_size  = 16;
+  const size_t icon_pixel_format = 4;
+
+  const char* const data[] =
+  {
+      "0000000000000000",
+      "0..............0",
+      "0..00000.0.....0",
+      "0..0.....0.....0",
+      "0..0.000.0.....0",
+      "0..0...0.0.....0",
+      "0..00000.0000..0",
+      "0..............0",
+      "0..............0",
+      "0..0...0.000...0",
+      "0..0...0.0..0..0",
+      "0..0.0.0.0..0..0",
+      "0..0.0.0.0..0..0",
+      "0..00000.000...0",
+      "0..............0",
+      "0000000000000000"
+  };
+
+  const byte_t colors[6][icon_pixel_format] =
+  {
+      { 0x00, 0x00, 0x00, 0x00 }, // transparent
+      { 0xFF, 0xFF, 0xFF, 0xFF }, // white
+      { 0x00, 0x00, 0x00, 0xFF }, // black
+      { 0xFF, 0x00, 0x00, 0xFF }, // red
+      { 0x00, 0xFF, 0x00, 0xFF }, // green
+      { 0x00, 0x00, 0xFF, 0xFF }, // blue
+  };
+
+  byte_t  icon_pixels[icon_size * icon_size * icon_pixel_format];
+  byte_t* ptr = icon_pixels;
+
+  for (size_t row = 0; row < icon_size; row++)
+  {
+    for (size_t col = 0; col < icon_size; col++, ptr += icon_pixel_format)
+    {
+      const auto pixel = data[row][col] == '0' ? colors[icon_color] : colors[0];
+      memcpy(ptr, pixel, icon_pixel_format);
+    }
+  }
+
+  GLFWimage icon = { icon_size, icon_size, icon_pixels };
+
+  glfwSetWindowIcon(m_ptr_window, 1, &icon);
 }
 
 /**
