@@ -509,6 +509,8 @@ void GLWindow::Impl::resize(GLFWwindow* ptr_window, int width, int height)
 
   ptr_parent_impl->on_resize(ptr_parent_impl->m_width, ptr_parent_impl->m_height);
 
+  ptr_parent_impl->display();
+
   glfwPollEvents();
   glfwSwapBuffers(ptr_window);
 }
