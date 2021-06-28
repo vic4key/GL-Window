@@ -5,6 +5,10 @@
 #include <glwnd/mesh.h>
 #include <glwnd/shader.h>
 
+#include <glm/gtc/type_ptr.hpp>
+
+#include glwnd_3rd_include(imgui-1.82/imgui.h)
+
 static Mesh m_mesh; // for sharing between views
 
 class GLViewExampleMesh : public GLView
@@ -15,6 +19,13 @@ public:
 
   virtual void initial()
   {
+    // setup ImGui dialog
+    dear_imgui_cfg cfg;
+    cfg.style = dear_imgui_cfg::styles::IMGUI_CLASSIC;
+    cfg.font_path = "C:\\Windows\\Fonts\\georgia.ttf";
+    cfg.font_size = 16.F;
+    this->parent().enable_dear_imgui(true, &cfg);
+
     // demo model 1
     static model_t monkey;
     monkey.n = "assets\\monkey.obj";
@@ -50,7 +61,14 @@ public:
 
   virtual void on_display()
   {
-    glm::vec3 light_position(-3.F, 6.F, -3.F);
+    // display ImGui dialog - color sider
+    ImGui::Begin("ImGui Color Slider");
+    {
+      static float v[3] = { m_model.c.r, m_model.c.g, m_model.c.b };
+      ImGui::ColorEdit3("RGB", v);
+      m_model.c = glm::make_vec3(v);
+    }
+    ImGui::End();
 
     // demo combine the built-in model-view matrix of the current context with user-defined matrix
     {
@@ -97,6 +115,7 @@ public:
     m_shader.uniform("projection", mtx_projection);
 
     // setup lighting
+    glm::vec3 light_position(-3.F, 6.F, -3.F);
     m_shader.uniform("light.direction", light_position);
     m_shader.uniform("light.ambient",  glm::vec3(0.2f, 0.23f, 0.25f));
     m_shader.uniform("light.diffuse",  glm::vec3(0.6f, 0.63f, 0.65f));
