@@ -1,13 +1,12 @@
 # What is GL Window ?
 
-**GL Window** a.k.a **GLWND** is a GL wrapper library to helps you quickly creating an Modern Open GL application that based on Open GL & GLFW & GLEW library.
+**GL Window** a.k.a **GLWND** is a GL wrapper library to helps you quickly creating an Modern Open GL application that based on Open GL & GLFW & GLEW library
 
 ## Information
 
-- [x] Windows 32-bit & 64-bit
-- [x] MS Visual Studio 2019+
+- Windows 32-bit & 64-bit
 
-## Feature
+## Features
 * Modern Open GL
 * Automatic using highest Open GL version that supported by graphic driver
 * Interactive
@@ -30,9 +29,9 @@
 
 Released under the [MIT](LICENSE.md) license
 
-## Requirement
+## Requirements
 
-* MS Visual C++ 2012 or later
+* MS Visual C++ 2019 or later
 * Open GL & GLEW & GLFW third party installed
 
 ## Installation
@@ -44,7 +43,7 @@ Released under the [MIT](LICENSE.md) license
 * Usage
 	* Take a look at the [examples](example)
 
-## Demo
+## Examples
 
 >[example/example.simple.h](example/example.simple.h)
 >
