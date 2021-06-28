@@ -29,10 +29,12 @@ public:
   Mesh& operator=(const Mesh&) = delete;
   virtual ~Mesh();
 
+  bool ready() const;
   void load(const std::string& file_path);
   void render();
 
 private:
+  bool m_ready;
   GLuint m_vao;
   GLuint m_vbo_positions;
   GLuint m_vbo_texcoords;

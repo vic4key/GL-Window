@@ -5,6 +5,8 @@
 #include <glwnd/mesh.h>
 #include <glwnd/shader.h>
 
+static Mesh m_mesh; // for sharing between views
+
 class GLViewExampleMesh : public GLView
 {
 public:
@@ -31,7 +33,11 @@ public:
     m_model.p = glm::vec3(0.F, 0.F, 0.F);
     m_model.d = glm::vec3(0.F, 1.F, 0.F); // (pitch, yaw, roll)
 
-    m_mesh.load(m_model.n);
+    if (!m_mesh.ready())
+    {
+      m_mesh.load(m_model.n);
+    }
+
     m_shader.build_file("assets\\lighting.vert", "assets\\lighting.frag");
     // m_shader.build_file("assets\\colorizing.vert", "assets\\colorizing.frag");
   }
@@ -98,7 +104,7 @@ public:
   }
 
 private:
-  Mesh m_mesh;
+  // Mesh m_mesh;
   Shader m_shader;
 
   struct

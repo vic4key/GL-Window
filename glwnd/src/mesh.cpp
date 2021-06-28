@@ -14,7 +14,8 @@ namespace glwnd
 {
 
 Mesh::Mesh()
-  : m_vao(GL_INVALID_ID)
+  : m_ready(false)
+  , m_vao(GL_INVALID_ID)
   , m_vbo_positions(GL_INVALID_ID)
   , m_vbo_texcoords(GL_INVALID_ID)
   , m_vbo_normals(GL_INVALID_ID)
@@ -48,6 +49,11 @@ Mesh::~Mesh()
   {
     glDeleteVertexArrays(1, &m_vao);
   }
+}
+
+bool Mesh::ready() const
+{
+  return m_ready;
 }
 
 void Mesh::load(const std::string& file_path)
@@ -172,6 +178,8 @@ void Mesh::load(const std::string& file_path)
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_elements);
 
   glBindVertexArray(0);
+
+  m_ready = true;
 }
 
 void Mesh::render()

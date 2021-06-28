@@ -27,7 +27,6 @@ int APIENTRY wWinMain(
 {
   GLWindow app;
   app.set_layout(GLLayout::_1x1(app).release());
-
   // app.layout().replace_view(new GLViewExample, 0);
   // app.layout().replace_view(new GLViewExampleSimple, 0);
   // app.layout().replace_view(new GLViewExampleEvents, 0);
@@ -39,13 +38,7 @@ int APIENTRY wWinMain(
   // app.layout().replace_view(new GLViewExampleVDS2A, 0);
   // app.layout().replace_view(new GLViewExampleVDS4A, 0);
   // app.layout().replace_view(new GLWindowDearImGUI, 0);
-
-  // app.set_layout(GLLayout::_2x2(app).release());
-  //   app.layout().replace_view(new GLViewExampleText2D, 0);
-  //   app.layout().replace_view(new GLViewExampleText2D, 1);
-  //   app.layout().replace_view(new GLViewExampleText2D, 2);
-  //   app.layout().replace_view(new GLViewExampleText2D, 3);
-
+  // app.layout().replace_view(new GLViewExampleText2D, 0);
   // app.layout().replace_view(new GLViewExamplePrimitive, 0);
   // app.layout().replace_view(new GLViewExampleInteractive, 0)
   // app.set_layout(GLLayout::_2x2(app).release());
@@ -53,7 +46,6 @@ int APIENTRY wWinMain(
   //   app.layout().replace_view(new GLViewExampleMultiView, 1);
   //   app.layout().replace_view(new GLViewExampleMultiView, 2);
   //   app.layout().replace_view(new GLViewExampleMultiView, 3);
-
   app.run();
 
   return EXIT_SUCCESS;
