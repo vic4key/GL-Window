@@ -117,7 +117,7 @@ private:
   {
     std::string n; // name
     glm::vec3 t, r, s, c, p, d; // translate, rotate, scale, color, position, direction (pitch, yaw, roll)
-    bool a; // animate
+    bool a = false; // animate
   };
   
   model_t m_model;
