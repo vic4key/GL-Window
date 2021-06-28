@@ -7,19 +7,17 @@
 #include "glwnd/view.h"
 #include "glwnd/viewport.h"
 #include "glwnd/text.h"
+#include "fps.h"
 
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-#include <windows.h>
-#include <chrono>
 
 namespace glwnd
 {
 
 GLView::GLView()
   : GLEvent(), GLPrimitive(), m_ptr_parent(nullptr), m_index(-1)
-  , m_fps_enabled(false), m_fps(0)
+  , m_fps_enabled(false), m_ptr_fps(new FPS(this))
   , m_coordiates_enabled(false)
 {
 }
@@ -27,7 +25,7 @@ GLView::GLView()
 GLView::GLView(const p2f& lt, const p2f& rb)
   : GLEvent(), GLPrimitive(), m_ptr_parent(nullptr), m_index(-1)
   , m_lt(lt), m_rb(rb)
-  , m_fps_enabled(false), m_fps(0)
+  , m_fps_enabled(false), m_ptr_fps(new FPS(this))
   , m_coordiates_enabled(false)
 {
   m_lt = lt;
@@ -36,6 +34,7 @@ GLView::GLView(const p2f& lt, const p2f& rb)
 
 GLView::~GLView()
 {
+  delete m_ptr_fps;
 }
 
 GLView::GLView(const GLView& right)
@@ -146,26 +145,7 @@ void GLView::enable_coordiates(bool state)
 
 void GLView::display_fps()
 {
-  static int fps = 0;
-  fps += 1;
-
-  static auto beg_time = std::chrono::high_resolution_clock::now();
-  auto end_time = std::chrono::high_resolution_clock::now();
-  std::chrono::duration<double, std::milli> delta_time = end_time - beg_time;
-
-  if (delta_time.count() > 1000.0) // 1000ms
-  {
-    m_fps = fps;
-    fps = 0;
-    beg_time = std::chrono::high_resolution_clock::now();
-  }
-
-  static char fps_text[MAXBYTE] = { 0 };
-  sprintf_s(fps_text, "FPS : %d\0", m_fps);
-
-  const int padding = 10;
-  const auto& win = m_viewport.coordinate().win;
-  this->text().render_text(fps_text, p2i(padding, win.top() - 35 + padding));
+  m_ptr_fps->render();
 }
 
 }; // glwnd

@@ -18,6 +18,8 @@
 namespace glwnd
 {
 
+class FPS;
+
 class GLView : public GLEvent, public GLPrimitive
 {
 	friend GLWindow;
@@ -55,9 +57,8 @@ protected:
 	GLWindow*  m_ptr_parent;
 	GLViewPort m_viewport;
 	size_t m_index;
-	p2f m_lt;
-	p2f m_rb;
-	int m_fps;
+	p2f m_lt, m_rb;
+	FPS* m_ptr_fps;
 
   bool m_fps_enabled;
   bool m_coordiates_enabled;

@@ -129,8 +129,8 @@
     <ClInclude Include="include\glwnd\event.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="include\glwnd\base.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\fps.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -206,7 +206,7 @@
     <ClCompile Include="src\event.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\base.cpp">
+    <ClCompile Include="src\fps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
