@@ -148,6 +148,9 @@ void GLWindow::Impl::on_mouse_move(int x, int y)
     auto& win = view.viewport().coordinate().win;
     if (utils::is_point_inside_rect(p2i(x, y), win))
     {
+      auto v = view.viewport().win_to_vpc(p2i(x, y));
+      x = v.x();
+      y = v.y();
       view.on_mouse_move(x, y);
     }
   });
@@ -160,6 +163,9 @@ void GLWindow::Impl::on_mouse_enter_leave(bool entered, int x, int y)
     auto& win = view.viewport().coordinate().win;
     if (utils::is_point_inside_rect(p2i(x, y), win))
     {
+      auto v = view.viewport().win_to_vpc(p2i(x, y));
+      x = v.x();
+      y = v.y();
       view.on_mouse_enter_leave(entered, x, y);
     }
   });
@@ -172,6 +178,9 @@ void GLWindow::Impl::on_mouse_click(int button, int action, int mods, int x, int
     auto& win = view.viewport().coordinate().win;
     if (utils::is_point_inside_rect(p2i(x, y), win))
     {
+      auto v = view.viewport().win_to_vpc(p2i(x, y));
+      x = v.x();
+      y = v.y();
       view.on_mouse_click(button, action, mods, x, y);
     }
   });

@@ -4,10 +4,6 @@
 
 #include <glwnd/mesh.h>
 #include <glwnd/shader.h>
-#include <glwnd/viewport.h>
-#include <glwnd/geometry.h>
-#include <glwnd/view.h>
-#include <glwnd/layout.h>
 
 class GLViewExampleMesh : public GLView
 {
@@ -17,8 +13,6 @@ public:
 
   virtual void initial()
   {
-    // this->set_layout(GLLayout::_2x2(*this));
-
     // // demo 1
     // m_model.n = "assets\\monkey.obj";
     // m_model.t = glm::vec3(0.F);

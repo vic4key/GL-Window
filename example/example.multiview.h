@@ -2,14 +2,17 @@
 
 #include "example.h"
 
-#include <glwnd/view.h>
-#include <glwnd/layout.h>
-
 class GLViewExampleMultiView : public GLView
 {
 public:
   GLViewExampleMultiView() : GLView() {};
   virtual ~GLViewExampleMultiView() {};
+
+  virtual void initial()
+  {
+    this->enable_fps();
+    this->enable_coordiates();
+  }
 
   virtual void on_display()
   {

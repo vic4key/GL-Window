@@ -40,11 +40,10 @@ void FPS::render()
   static char fps_text[MAXBYTE] = { 0 };
   sprintf_s(fps_text, "FPS : %d\0", m_fps);
 
-  // const int text_padding = 10;
-  // const int text_height  = 15;
-  // const auto& win = m_view.viewport().coordinate().win;
-  // const p2i point(text_padding, win.top() - text_height - text_padding);
-  const p2d point(-0.9, +0.8);
+  const int text_padding = 10;
+  const int text_height  = 15;
+  const auto& win = m_view.viewport().coordinate().win;
+  const p2i point(text_padding, win.height() - text_height - text_padding);
   m_view.text().render_text(fps_text, point);
 }
 

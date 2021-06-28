@@ -5,6 +5,7 @@
 #include <gl/glew.h>
 #include <glwnd/glwnd>
 #include <glwnd/view.h>
+#include <glwnd/layout.h>
 using namespace glwnd;
 
 class GLViewExample : public GLView

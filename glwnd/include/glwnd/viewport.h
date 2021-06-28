@@ -13,9 +13,13 @@ namespace glwnd
 
 class GLView;
 class GLWindow;
+class TextRender2D;
 
 class GLViewPort
 {
+  friend GLWindow;
+  friend TextRender2D;
+
 public:
   struct coordinate_t
   {
@@ -34,16 +38,26 @@ public:
 
   coordinate_t& coordinate();
 
-  p2d win_to_ndc(const p2i& point);
-  p3d win_to_ndc(const p3i& point);
-
-  p3i ndc_to_win(const p3d& point);
-  p2i ndc_to_win(const p2d& point);
-
   void display_coordiates();
 
   void set_ptr_view(GLView* ptr_view);
   GLView* get_ptr_view();
+
+  p3i ndc_to_vpc(const p3d& point);
+  p2i ndc_to_vpc(const p2d& point);
+  p2d vpc_to_ndc(const p2i& point);
+  p3d vpc_to_ndc(const p3i& point);
+
+private:
+  p2i vpc_to_win(const p2i& point);
+  p3i vpc_to_win(const p3i& point);
+  p2i win_to_vpc(const p2i& point);
+  p3i win_to_vpc(const p3i& point);
+
+  p2d win_to_ndc(const p2i& point);
+  p3d win_to_ndc(const p3i& point);
+  p3i ndc_to_win(const p3d& point);
+  p2i ndc_to_win(const p2d& point);
 
 private:
   GLView* m_ptr_view;

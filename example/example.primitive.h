@@ -2,9 +2,6 @@
 
 #include "example.h"
 
-#include <glwnd/primitive.h>
-#include <glwnd/viewport.h>
-
 class GLViewExamplePrimitive : public GLView
 {
 public:
@@ -29,7 +26,7 @@ public:
     const auto& win = viewport().coordinate().win;
 
     glColor3d(1., 1., 0.);
-    this->circle(win.center(), win.low() / 3, GLPrimitive::circle_t::stipple);
+    this->circle(p2d(0., 0.), .7, GLPrimitive::circle_t::stipple);
 
     // line
 

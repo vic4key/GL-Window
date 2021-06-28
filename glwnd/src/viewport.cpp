@@ -100,6 +100,36 @@ void GLViewPort::setup(const r4i& rect)
   glLoadIdentity();
 }
 
+// vpc <-> win
+
+p2i GLViewPort::vpc_to_win(const p2i& point)
+{
+  p3i p(point.x(), point.y(), 0);
+  auto v = this->vpc_to_win(p);
+  return p2i(v.x(), v.y());
+}
+
+p3i GLViewPort::vpc_to_win(const p3i& point)
+{
+  auto& win = m_coordinate.win;
+  return p3i(win.left() + point.x(), win.bottom() + point.y(), 0);
+}
+
+p2i GLViewPort::win_to_vpc(const p2i& point)
+{
+  p3i p(point.x(), point.y(), 0);
+  auto v = this->win_to_vpc(p);
+  return p2i(v.x(), v.y());
+}
+
+p3i GLViewPort::win_to_vpc(const p3i& point)
+{
+  auto& win = m_coordinate.win;
+  return p3i(point.x() - win.left(), point.y() - win.bottom(), 0);
+}
+
+// win <-> ndc
+
 p3d GLViewPort::win_to_ndc(const p3i& point)
 {
   auto& ndc = m_coordinate.ndc;
@@ -136,6 +166,34 @@ p2i GLViewPort::ndc_to_win(const p2d& point)
   p3d p(point.x(), point.y(), 0);
   auto v = this->ndc_to_win(p);
   return p2i(v.x(), v.y());
+}
+
+// ndc <-> vpc
+
+p2i GLViewPort::ndc_to_vpc(const p2d& point)
+{
+  p3d p(point.x(), point.y(), 0);
+  auto v = this->ndc_to_vpc(p);
+  return p2i(v.x(), v.y());
+}
+
+p3i GLViewPort::ndc_to_vpc(const p3d& point)
+{
+  auto v = this->ndc_to_win(point);
+  return this->win_to_vpc(v);
+}
+
+p2d GLViewPort::vpc_to_ndc(const p2i& point)
+{
+  p3i p(point.x(), point.y(), 0);
+  auto v = this->vpc_to_ndc(p);
+  return p2d(v.x(), v.y());
+}
+
+p3d GLViewPort::vpc_to_ndc(const p3i& point)
+{
+  auto v = this->vpc_to_win(point);
+  return this->win_to_ndc(v);
 }
 
 void GLViewPort::display_coordiates()
