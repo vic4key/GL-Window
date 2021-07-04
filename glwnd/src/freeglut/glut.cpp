@@ -1,5 +1,3 @@
-#pragma once
-
 /**
  * @file   glut.cpp
  * @author Vic P.

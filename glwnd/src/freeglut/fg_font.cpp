@@ -105,7 +105,6 @@ static SFG_StrokeFont* fghStrokeByID( void* font )
     return 0;
 }
 
-
 /* -- INTERFACE FUNCTIONS -------------------------------------------------- */
 
 /*
