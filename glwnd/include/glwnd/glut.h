@@ -20,6 +20,12 @@ class GLView;
 namespace glut
 {
 
+enum class stroke_fonts
+{
+  GLUT_STROKE_ROMAN          = 0x0000,
+  GLUT_STROKE_MONO_ROMAN     = 0x0001,
+};
+
 enum class bitmap_fonts
 {
 	GLUT_BITMAP_9_BY_15        = 0x0002,
@@ -29,12 +35,6 @@ enum class bitmap_fonts
 	GLUT_BITMAP_HELVETICA_10   = 0x0006,
 	GLUT_BITMAP_HELVETICA_12   = 0x0007,
 	GLUT_BITMAP_HELVETICA_18   = 0x0008,
-};
-
-enum class stroke_fonts
-{
-  GLUT_STROKE_ROMAN = 0x0000,
-  GLUT_STROKE_MONO_ROMAN = 0x0001,
 };
 
 void render_string(
