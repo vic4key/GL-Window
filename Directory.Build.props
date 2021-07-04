@@ -1,12 +1,13 @@
 <Project>
   <PropertyGroup>
     <Deterministic>true</Deterministic>
+    <CFGSuffix Condition="'$(Configuration)'=='Debug'">D</CFGSuffix>
   </PropertyGroup>
   <PropertyGroup>
     <GL3RDInclude>$(GL_3RDPARTY_DIR)gl\include;$(GL_3RDPARTY_DIR)glew\include;$(GL_3RDPARTY_DIR)glfw\include;$(GL_3RDPARTY_DIR)freeglut\include;$(GL_3RDPARTY_DIR)glm\include;$(GL_3RDPARTY_DIR)soil2\include;$(GL_3RDPARTY_DIR)freetype\include;$(GL_3RDPARTY_DIR)freetype-gl\include;$(GL_3RDPARTY_DIR)imgui-1.82;$(GL_3RDPARTY_DIR)tinyobjloader</GL3RDInclude>
-    <GL3RDLibrary>$(GL_3RDPARTY_DIR)glew\lib\$(Platform);$(GL_3RDPARTY_DIR)glfw\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)freeglut\lib\$(Platform);$(GL_3RDPARTY_DIR)glm\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)soil2\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)freetype\lib\$(Platform);$(GL_3RDPARTY_DIR)freetype-gl\lib\$(Platform)\$(Configuration)</GL3RDLibrary>
-    <GL3RDLinking>opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;SOIL2.lib</GL3RDLinking>
-    <LocalDebuggerEnvironment>PATH=%PATH%;$(GL_3RDPARTY_DIR)glew\bin\$(Platform);$(GL_3RDPARTY_DIR)freeglut\bin\$(Platform);$(GL_3RDPARTY_DIR)glm\bin\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)freetype\bin\$(Platform);$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
+    <GL3RDLibrary>$(GL_3RDPARTY_DIR)glew\lib\$(Platform);$(GL_3RDPARTY_DIR)glfw\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)freeglut\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)glm\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)soil2\lib\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)freetype\lib\$(Platform);$(GL_3RDPARTY_DIR)freetype-gl\lib\$(Platform)\$(Configuration)</GL3RDLibrary>
+    <GL3RDLinking>opengl32.lib;glu32.lib;glew32.lib;glfw3.lib;freeglut$(CFGSuffix).lib;SOIL2.lib</GL3RDLinking>
+    <LocalDebuggerEnvironment>PATH=%PATH%;$(GL_3RDPARTY_DIR)glew\bin\$(Platform);$(GL_3RDPARTY_DIR)freeglut\bin\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)glm\bin\$(Platform)\$(Configuration);$(GL_3RDPARTY_DIR)freetype\bin\$(Platform);$(LocalDebuggerEnvironment)</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
