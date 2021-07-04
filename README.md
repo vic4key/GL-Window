@@ -18,7 +18,7 @@
  * Texture Manipulation
  * Integrated Dear ImGUI
  * Shader (GLSL)
- * Text Renderer
+ * FT/GLUT Text Renderer
  * Primitive Renderer
  * Mesh Loader/Renderer
  * Multi Views
@@ -50,7 +50,7 @@ Released under the [MIT](LICENSE.md) license
 >![](screenshots/example.simple.png?)
 
 >[example/example.imgui.h](example/example.imgui.h)
-
+>
 >![](screenshots/example.imgui.png?)
 
 >[example/example.vds.h](example/example.vds.h)
@@ -80,6 +80,10 @@ Released under the [MIT](LICENSE.md) license
 >[example/example.text.h](example/example.text.h)
 >
 >![](screenshots/example.text.png?)
+
+>[example/example.textglut.h](example/example.textglut.h)
+>
+>![](screenshots/example.textglut.png?)
 
 >[example/example.primitive.h](example/example.primitive.h)
 >
