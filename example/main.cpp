@@ -12,6 +12,7 @@
 #include "example.shader.h"
 #include "example.simple.h"
 #include "example.events.h"
+#include "example.textglut.h"
 #include "example.primitive.h"
 #include "example.interactive.h"
 #include "example.multiview.h"
@@ -39,6 +40,7 @@ int APIENTRY wWinMain(
   // app.layout().replace_view(new GLViewExampleVDS4A, 0);
   // app.layout().replace_view(new GLWindowDearImGUI, 0);
   // app.layout().replace_view(new GLViewExampleText2D, 0);
+  // app.layout().replace_view(new GLViewExampleTextGLUT, 0);
   // app.layout().replace_view(new GLViewExamplePrimitive, 0);
   // app.layout().replace_view(new GLViewExampleInteractive, 0)
   // app.set_layout(GLLayout::_2x2(app).release());

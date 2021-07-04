@@ -46,6 +46,18 @@
     <Filter Include="3rdparty\tinyobjloader\src">
       <UniqueIdentifier>{c686d918-6203-4845-8671-3c937f1a8c8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="3rdparty\freeglut">
+      <UniqueIdentifier>{354528c8-c8a6-4351-8417-333aab3dc59a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\freeglut\include">
+      <UniqueIdentifier>{685c0152-5e96-4a61-ad98-22ad3c4bc648}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\freeglut\src">
+      <UniqueIdentifier>{501be667-bb8f-467a-a3e1-9c4b677b6c2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="3rdparty\freeglut\src\GL">
+      <UniqueIdentifier>{2e29818c-376d-4af3-84f2-5007f2792696}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -132,6 +144,24 @@
     <ClInclude Include="src\fps.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\freeglut\fg_internal.h">
+      <Filter>3rdparty\freeglut\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\freeglut\GL\freeglut.h">
+      <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\freeglut\GL\freeglut_std.h">
+      <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\glwnd\glut.h">
+      <Filter>3rdparty\freeglut\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\freeglut\GL\freeglut_ext.h">
+      <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\freeglut\freeglut_defs.h">
+      <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -208,6 +238,18 @@
     </ClCompile>
     <ClCompile Include="src\fps.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\freeglut\fg_font.cpp">
+      <Filter>3rdparty\freeglut\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\freeglut\fg_font_data.cpp">
+      <Filter>3rdparty\freeglut\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\freeglut\glut.cpp">
+      <Filter>3rdparty\freeglut\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\freeglut\fg_stroke_roman.cpp">
+      <Filter>3rdparty\freeglut\src</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

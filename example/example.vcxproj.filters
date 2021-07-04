@@ -66,6 +66,9 @@
     <ClInclude Include="example.multiview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="example.textglut.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="example.rc">

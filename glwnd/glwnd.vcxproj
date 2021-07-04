@@ -173,6 +173,7 @@
     <ClInclude Include="include\glwnd\defs.h" />
     <ClInclude Include="include\glwnd\event.h" />
     <ClInclude Include="include\glwnd\geometry.h" />
+    <ClInclude Include="include\glwnd\glut.h" />
     <ClInclude Include="include\glwnd\glwnd.h" />
     <ClInclude Include="include\glwnd\layout.h" />
     <ClInclude Include="include\glwnd\linmath.h" />
@@ -189,6 +190,11 @@
     <ClInclude Include="include\glwnd\viewport.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="src\fps.h" />
+    <ClInclude Include="src\freeglut\fg_internal.h" />
+    <ClInclude Include="src\freeglut\freeglut_defs.h" />
+    <ClInclude Include="src\freeglut\GL\freeglut.h" />
+    <ClInclude Include="src\freeglut\GL\freeglut_ext.h" />
+    <ClInclude Include="src\freeglut\GL\freeglut_std.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="3rdparty\glfreetype\TextRenderer.cpp" />
@@ -209,6 +215,10 @@
     <ClCompile Include="src\debug.inl" />
     <ClCompile Include="src\event.cpp" />
     <ClCompile Include="src\fps.cpp" />
+    <ClCompile Include="src\freeglut\fg_font.cpp" />
+    <ClCompile Include="src\freeglut\fg_font_data.cpp" />
+    <ClCompile Include="src\freeglut\fg_stroke_roman.cpp" />
+    <ClCompile Include="src\freeglut\glut.cpp" />
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\layout.cpp" />
     <ClCompile Include="src\mesh.cpp" />

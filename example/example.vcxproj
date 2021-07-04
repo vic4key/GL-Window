@@ -165,6 +165,7 @@
     <ClInclude Include="example.shader.h" />
     <ClInclude Include="example.simple.h" />
     <ClInclude Include="example.text.h" />
+    <ClInclude Include="example.textglut.h" />
     <ClInclude Include="example.vbo.h" />
     <ClInclude Include="example.vds.h" />
     <ClInclude Include="framework.h" />

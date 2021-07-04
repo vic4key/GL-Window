@@ -1,5 +1,3 @@
-#pragma once
-
 /**
  * @file   utils.cpp
  * @author Vic P.
