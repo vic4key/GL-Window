@@ -1,13 +1,8 @@
 #pragma once
 
-#include "resource.h"
+#include "example.h"
 
-#include <gl/glew.h>
-#include <glwnd/glwnd>
-#include <glwnd/view.h>
-#include <glwnd/layout.h>
 #include <glwnd/glut.h>
-using namespace glwnd;
 
 class GLViewExampleTextGLUT : public GLView
 {
