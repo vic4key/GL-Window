@@ -20,7 +20,7 @@ void render_string(
   GLView* ptr_parent,
   const p2i& position,
   const std::string& text,
-  const enum eFontBitmap font)
+  const enum bitmap_fonts font)
 {
   assert(ptr_parent != nullptr);
   auto p = ptr_parent->viewport().vpc_to_ndc(position);
@@ -31,7 +31,7 @@ void render_string(
   GLView* ptr_parent,
   const p2d& position,
   const std::string& text,
-  const enum eFontBitmap font)
+  const enum bitmap_fonts font)
 {
   assert(ptr_parent != nullptr);
 
@@ -46,7 +46,7 @@ void render_string(
   GLView* ptr_parent,
   const p3i& position,
   const std::string& text,
-  const enum eFontStroke font,
+  const enum stroke_fonts font,
   const GLdouble scale)
 {
   assert(ptr_parent != nullptr);
@@ -58,7 +58,7 @@ void render_string(
   GLView* ptr_parent,
   const p3d& position,
   const std::string& text,
-  const enum eFontStroke font,
+  const enum stroke_fonts font,
   const GLdouble scale)
 {
   assert(ptr_parent != nullptr);

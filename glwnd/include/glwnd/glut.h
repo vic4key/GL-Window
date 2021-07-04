@@ -20,7 +20,7 @@ class GLView;
 namespace glut
 {
 
-enum class eFontBitmap
+enum class bitmap_fonts
 {
 	GLUT_BITMAP_9_BY_15        = 0x0002,
 	GLUT_BITMAP_8_BY_13        = 0x0003,
@@ -31,7 +31,7 @@ enum class eFontBitmap
 	GLUT_BITMAP_HELVETICA_18   = 0x0008,
 };
 
-enum class eFontStroke
+enum class stroke_fonts
 {
   GLUT_STROKE_ROMAN = 0x0000,
   GLUT_STROKE_MONO_ROMAN = 0x0001,
@@ -41,26 +41,26 @@ void render_string(
 	GLView* ptr_parent,
 	const p2i& position,
 	const std::string& text,
-	const enum eFontBitmap font = eFontBitmap::GLUT_BITMAP_9_BY_15);
+	const enum bitmap_fonts font = bitmap_fonts::GLUT_BITMAP_9_BY_15);
 
 void render_string(
 	GLView* ptr_parent,
 	const p2d& position,
 	const std::string& text,
-  const enum eFontBitmap font = eFontBitmap::GLUT_BITMAP_9_BY_15);
+  const enum bitmap_fonts font = bitmap_fonts::GLUT_BITMAP_9_BY_15);
 
 void render_string(
   GLView* ptr_parent,
   const p3i& position,
   const std::string& text,
-  const enum eFontStroke font = eFontStroke::GLUT_STROKE_ROMAN,
+  const enum stroke_fonts font = stroke_fonts::GLUT_STROKE_ROMAN,
 	const GLdouble scale = 0.0005);
 
 void render_string(
   GLView* ptr_parent,
   const p3d& position,
   const std::string& text,
-  const enum eFontStroke font = eFontStroke::GLUT_STROKE_ROMAN,
+  const enum stroke_fonts font = stroke_fonts::GLUT_STROKE_ROMAN,
   const GLdouble scale = 0.0005);
 
 // void calculate_bitmap_string_width(
