@@ -34,17 +34,17 @@ Released under the [MIT](LICENSE.md) license
 
 >$ git clone https://github.com/vic4key/GL-Window.git
 >
->$ cd [GL-Window](.)
+>$ cd [GL-Window](https://github.com/vic4key/GL-Window)
 >
 >$ git submodule update --init --recursive
 >
 >$ git submodule foreach --recursive git checkout master
 >
 >$ git submodule foreach --recursive git pull
+
+>$ setx `GL_3RDPARTY_DIR` [%CD%\\glwnd\\3rdparty\\](https://github.com/vic4key/gl-3rdparty)
 >
->$ setx `GL_3RDPARTY_DIR` [%CD%\\glwnd\\3rdparty\\](glwnd/3rdparty)
->
-> *load [GL-Window.sln](GL-Window.sln) into VS then build them all*
+> *load [GL-Window.sln](https://github.com/vic4key/GL-Window/blob/master/GL-Window.sln) into VS then build them all*
 
 * Usage
 	* Take a look at the [examples](example)
