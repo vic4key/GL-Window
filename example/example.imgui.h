@@ -2,7 +2,7 @@
 
 #include "example.h"
 
-#include glwnd_3rd_include(imgui-1.82/imgui.h)
+#include <imgui.h>
 
 class GLWindowDearImGUI : public GLView
 {

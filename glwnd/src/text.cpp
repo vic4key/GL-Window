@@ -8,7 +8,7 @@
 #include "glwnd/view.h"
 #include "glwnd/viewport.h"
 
-#include "glfreetype/TextRenderer.hpp"
+#include "3rdparty/glfreetype/TextRenderer.hpp"
 
 namespace glwnd
 {

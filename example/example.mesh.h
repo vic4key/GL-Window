@@ -7,7 +7,7 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
-#include glwnd_3rd_include(imgui-1.82/imgui.h)
+#include <imgui.h>
 
 static Mesh m_mesh; // for sharing between views
 

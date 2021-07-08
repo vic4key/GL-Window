@@ -18,8 +18,8 @@
 #include <gl/wglew.h>
 #include <glfw/glfw3.h>
 
-#include "imgui-1.82/backends/imgui_impl_glfw.h"
-#include "imgui-1.82/backends/imgui_impl_opengl3.h"
+#include "3rdparty/imgui-1.82/backends/imgui_impl_glfw.h"
+#include "3rdparty/imgui-1.82/backends/imgui_impl_opengl3.h"
 
 #include <Windows.h>
 #include <cassert>
