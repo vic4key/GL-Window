@@ -41,7 +41,7 @@ Released under the [MIT](LICENSE.md) license
 >$ git submodule foreach --recursive git checkout master
 >
 >$ git submodule foreach --recursive git pull
-
+>
 >$ setx `GL_3RDPARTY_DIR` [%CD%\\glwnd\\3rdparty\\](https://github.com/vic4key/gl-3rdparty)
 >
 > *load [GL-Window.sln](https://github.com/vic4key/GL-Window/blob/master/GL-Window.sln) into VS then build them all*
