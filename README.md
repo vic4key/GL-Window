@@ -45,10 +45,10 @@ Released under the [MIT](LICENSE.md) license
 >$ setx `GL_3RDPARTY_DIR` [%CD%\\glwnd\\3rdparty\\](https://github.com/vic4key/gl-3rdparty)
 >
 > *Load [GL-Window.sln](https://github.com/vic4key/GL-Window/blob/master/GL-Window.sln) into VS then build them all*
->
-> *Take a look at [examples](example)*
 
 ## Examples
+
+> *Take a look at [examples](example)*
 
 >[example/example.simple.h](example/example.simple.h)
 >
