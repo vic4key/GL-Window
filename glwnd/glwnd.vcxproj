@@ -161,14 +161,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="3rdparty\glfreetype\TextRenderer.hpp" />
-    <ClInclude Include="3rdparty\imgui-1.82\imconfig.h" />
-    <ClInclude Include="3rdparty\imgui-1.82\imgui.h" />
-    <ClInclude Include="3rdparty\imgui-1.82\imgui_internal.h" />
-    <ClInclude Include="3rdparty\imgui-1.82\imstb_rectpack.h" />
-    <ClInclude Include="3rdparty\imgui-1.82\imstb_textedit.h" />
-    <ClInclude Include="3rdparty\imgui-1.82\imstb_truetype.h" />
-    <ClInclude Include="3rdparty\tinyobjloader\TinyObjLoader.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="include\glwnd\defs.h" />
     <ClInclude Include="include\glwnd\event.h" />
@@ -189,36 +181,47 @@
     <ClInclude Include="include\glwnd\view.h" />
     <ClInclude Include="include\glwnd\viewport.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="src\3rdparty\freeglut\fg_internal.h" />
+    <ClInclude Include="src\3rdparty\freeglut\freeglut_defs.h" />
+    <ClInclude Include="src\3rdparty\freeglut\GL\freeglut.h" />
+    <ClInclude Include="src\3rdparty\freeglut\GL\freeglut_ext.h" />
+    <ClInclude Include="src\3rdparty\freeglut\GL\freeglut_std.h" />
+    <ClInclude Include="src\3rdparty\freeglut\GL\glut.h" />
+    <ClInclude Include="src\3rdparty\glfreetype\TextRenderer.hpp" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\backends\imgui_impl_glfw.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\backends\imgui_impl_opengl3.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\imconfig.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\imgui.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\imgui_internal.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\imstb_rectpack.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\imstb_textedit.h" />
+    <ClInclude Include="src\3rdparty\imgui-1.82\imstb_truetype.h" />
+    <ClInclude Include="src\3rdparty\tinyobjloader\TinyObjLoader.h" />
     <ClInclude Include="src\fps.h" />
-    <ClInclude Include="src\freeglut\fg_internal.h" />
-    <ClInclude Include="src\freeglut\freeglut_defs.h" />
-    <ClInclude Include="src\freeglut\GL\freeglut.h" />
-    <ClInclude Include="src\freeglut\GL\freeglut_ext.h" />
-    <ClInclude Include="src\freeglut\GL\freeglut_std.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="3rdparty\glfreetype\TextRenderer.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_glfw.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_opengl3.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\imgui.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_demo.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_draw.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_tables.cpp" />
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_widgets.cpp" />
-    <ClCompile Include="3rdparty\tinyobjloader\TinyObjLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\3rdparty\freeglut\fg_font.cpp" />
+    <ClCompile Include="src\3rdparty\freeglut\fg_font_data.cpp" />
+    <ClCompile Include="src\3rdparty\freeglut\fg_stroke_roman.cpp" />
+    <ClCompile Include="src\3rdparty\freeglut\glut.cpp" />
+    <ClCompile Include="src\3rdparty\glfreetype\TextRenderer.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\backends\imgui_impl_glfw.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\backends\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_demo.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_draw.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_tables.cpp" />
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_widgets.cpp" />
+    <ClCompile Include="src\3rdparty\tinyobjloader\TinyObjLoader.cpp" />
     <ClCompile Include="src\debug.inl" />
     <ClCompile Include="src\event.cpp" />
     <ClCompile Include="src\fps.cpp" />
-    <ClCompile Include="src\freeglut\fg_font.cpp" />
-    <ClCompile Include="src\freeglut\fg_font_data.cpp" />
-    <ClCompile Include="src\freeglut\fg_stroke_roman.cpp" />
-    <ClCompile Include="src\freeglut\glut.cpp" />
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\layout.cpp" />
     <ClCompile Include="src\mesh.cpp" />

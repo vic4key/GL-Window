@@ -84,24 +84,6 @@
     <ClInclude Include="include\glwnd\pbo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="3rdparty\imgui-1.82\imstb_truetype.h">
-      <Filter>3rdparty\imgui-1.82\include</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\imgui-1.82\imstb_rectpack.h">
-      <Filter>3rdparty\imgui-1.82\include</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\imgui-1.82\imstb_textedit.h">
-      <Filter>3rdparty\imgui-1.82\include</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\imgui-1.82\imgui_internal.h">
-      <Filter>3rdparty\imgui-1.82\include</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\imgui-1.82\imgui.h">
-      <Filter>3rdparty\imgui-1.82\include</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\imgui-1.82\imconfig.h">
-      <Filter>3rdparty\imgui-1.82\include</Filter>
-    </ClInclude>
     <ClInclude Include="include\glwnd\text.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -110,9 +92,6 @@
     </ClInclude>
     <ClInclude Include="include\glwnd\viewport.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\glfreetype\TextRenderer.hpp">
-      <Filter>3rdparty\glfreetype\include</Filter>
     </ClInclude>
     <ClInclude Include="include\glwnd\primitive.h">
       <Filter>Header Files</Filter>
@@ -125,9 +104,6 @@
     </ClInclude>
     <ClInclude Include="include\glwnd\mesh.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="3rdparty\tinyobjloader\TinyObjLoader.h">
-      <Filter>3rdparty\tinyobjloader\include</Filter>
     </ClInclude>
     <ClInclude Include="include\glwnd\shader.h">
       <Filter>Header Files</Filter>
@@ -144,23 +120,56 @@
     <ClInclude Include="src\fps.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\freeglut\fg_internal.h">
-      <Filter>3rdparty\freeglut\src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\freeglut\GL\freeglut.h">
-      <Filter>3rdparty\freeglut\src\GL</Filter>
-    </ClInclude>
-    <ClInclude Include="src\freeglut\GL\freeglut_std.h">
-      <Filter>3rdparty\freeglut\src\GL</Filter>
-    </ClInclude>
     <ClInclude Include="include\glwnd\glut.h">
       <Filter>3rdparty\freeglut\include</Filter>
     </ClInclude>
-    <ClInclude Include="src\freeglut\GL\freeglut_ext.h">
+    <ClInclude Include="src\3rdparty\imgui-1.82\imstb_rectpack.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\imstb_textedit.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\imstb_truetype.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\imconfig.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\imgui.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\imgui_internal.h">
+      <Filter>3rdparty\imgui-1.82\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\backends\imgui_impl_glfw.h">
+      <Filter>3rdparty\imgui-1.82\backends</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\freeglut\freeglut_defs.h">
+      <Filter>3rdparty\freeglut\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\freeglut\fg_internal.h">
+      <Filter>3rdparty\freeglut\src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\freeglut\GL\freeglut_std.h">
       <Filter>3rdparty\freeglut\src\GL</Filter>
     </ClInclude>
-    <ClInclude Include="src\freeglut\freeglut_defs.h">
+    <ClInclude Include="src\3rdparty\freeglut\GL\glut.h">
       <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\freeglut\GL\freeglut.h">
+      <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\freeglut\GL\freeglut_ext.h">
+      <Filter>3rdparty\freeglut\src\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\glfreetype\TextRenderer.hpp">
+      <Filter>3rdparty\glfreetype\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\tinyobjloader\TinyObjLoader.h">
+      <Filter>3rdparty\tinyobjloader\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\3rdparty\imgui-1.82\backends\imgui_impl_opengl3.h">
+      <Filter>3rdparty\imgui-1.82\backends</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -179,27 +188,6 @@
     <ClCompile Include="src\pbo.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_opengl3.cpp">
-      <Filter>3rdparty\imgui-1.82\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\backends\imgui_impl_glfw.cpp">
-      <Filter>3rdparty\imgui-1.82\backends</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\imgui.cpp">
-      <Filter>3rdparty\imgui-1.82\src</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_demo.cpp">
-      <Filter>3rdparty\imgui-1.82\src</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_draw.cpp">
-      <Filter>3rdparty\imgui-1.82\src</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_tables.cpp">
-      <Filter>3rdparty\imgui-1.82\src</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\imgui-1.82\imgui_widgets.cpp">
-      <Filter>3rdparty\imgui-1.82\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\debug.inl">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -209,17 +197,11 @@
     <ClCompile Include="src\viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="3rdparty\glfreetype\TextRenderer.cpp">
-      <Filter>3rdparty\glfreetype\src</Filter>
-    </ClCompile>
     <ClCompile Include="src\primitive.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\tex2d.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="3rdparty\tinyobjloader\TinyObjLoader.cpp">
-      <Filter>3rdparty\tinyobjloader\src</Filter>
     </ClCompile>
     <ClCompile Include="src\mesh.cpp">
       <Filter>Source Files</Filter>
@@ -239,17 +221,44 @@
     <ClCompile Include="src\fps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\freeglut\fg_font.cpp">
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_draw.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_tables.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_widgets.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\imgui-1.82\imgui_demo.cpp">
+      <Filter>3rdparty\imgui-1.82\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\imgui-1.82\backends\imgui_impl_glfw.cpp">
+      <Filter>3rdparty\imgui-1.82\backends</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\freeglut\fg_stroke_roman.cpp">
       <Filter>3rdparty\freeglut\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\freeglut\fg_font_data.cpp">
+    <ClCompile Include="src\3rdparty\freeglut\glut.cpp">
       <Filter>3rdparty\freeglut\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\freeglut\glut.cpp">
+    <ClCompile Include="src\3rdparty\freeglut\fg_font.cpp">
       <Filter>3rdparty\freeglut\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\freeglut\fg_stroke_roman.cpp">
+    <ClCompile Include="src\3rdparty\freeglut\fg_font_data.cpp">
       <Filter>3rdparty\freeglut\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\glfreetype\TextRenderer.cpp">
+      <Filter>3rdparty\glfreetype\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\tinyobjloader\TinyObjLoader.cpp">
+      <Filter>3rdparty\tinyobjloader\src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\3rdparty\imgui-1.82\backends\imgui_impl_opengl3.cpp">
+      <Filter>3rdparty\imgui-1.82\backends</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
