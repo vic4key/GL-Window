@@ -177,7 +177,7 @@ void Mesh::load(const std::string& file_path)
 
   glEnableVertexAttribArray(3);
   glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_indices);
-  glVertexAttribPointer(3, 3, GL_UNSIGNED_INT, GL_FALSE, 0, 0);
+  glVertexAttribPointer(3, 1, GL_UNSIGNED_SHORT, GL_FALSE, 0, 0);
 
   glBindVertexArray(0);
 

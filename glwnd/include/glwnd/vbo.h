@@ -40,8 +40,18 @@ public:
 
   GLWND_DELETE_UNUSED_OPERATORS(VBO)
 
-  bool initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
-  bool initialize(const std::initializer_list<block_t>& data_list, GLsizei vds_size, GLenum usage = GL_STATIC_DRAW);
+  bool initialize(
+    const GLvoid* data_ptr,
+    GLsizei data_size,
+    GLsizei vds_size,
+    GLenum usage = GL_STATIC_DRAW,
+    GLenum target = GL_ARRAY_BUFFER);
+
+  bool initialize(
+    const std::initializer_list<block_t>& data_list,
+    GLsizei vds_size,
+    GLenum usage = GL_STATIC_DRAW,
+    GLenum target = GL_ARRAY_BUFFER);
 
   // Note parameters for AN ATTRIBUTE in VDS
   //  offset - the start offset
@@ -59,7 +69,7 @@ public:
   GLuint get_num_elements() const;
 
 private:
-  void initialize_buffer();
+  void initialize_buffer(GLenum target);
   void enable_client_state(GLenum state);
 
 private:
