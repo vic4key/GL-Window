@@ -88,39 +88,39 @@ void Shader::use(bool state) const
   glUseProgram(state ? m_id : 0);
 }
 
-GLint Shader::location(const std::string& name) const
+GLint Shader::get_variable_location(const std::string& name) const
 {
   return glGetUniformLocation(m_id, name.c_str());
 }
 
-void Shader::uniform(const std::string& name, const bool value) const
+void Shader::set_variable(const std::string& name, const bool value) const
 {
-  glUniform1i(this->location(name), value);
+  glUniform1i(this->get_variable_location(name), value);
 }
 
-void Shader::uniform(const std::string& name, const int value) const
+void Shader::set_variable(const std::string& name, const int value) const
 {
-  glUniform1i(this->location(name), value);
+  glUniform1i(this->get_variable_location(name), value);
 }
 
-void Shader::uniform(const std::string& name, const float value) const
+void Shader::set_variable(const std::string& name, const float value) const
 {
-  glUniform1f(this->location(name), value);
+  glUniform1f(this->get_variable_location(name), value);
 }
 
-void Shader::uniform(const std::string& name, const glm::vec2& value) const
+void Shader::set_variable(const std::string& name, const glm::vec2& value) const
 {
-  glUniform2f(this->location(name), value.x, value.y);
+  glUniform2f(this->get_variable_location(name), value.x, value.y);
 }
 
-void Shader::uniform(const std::string& name, const glm::vec3& value) const
+void Shader::set_variable(const std::string& name, const glm::vec3& value) const
 {
-  glUniform3f(this->location(name), value.x, value.y, value.z);
+  glUniform3f(this->get_variable_location(name), value.x, value.y, value.z);
 }
 
-void Shader::uniform(const std::string& name, const glm::mat4& value) const
+void Shader::set_variable(const std::string& name, const glm::mat4& value) const
 {
-  glUniformMatrix4fv(this->location(name), 1, GL_FALSE, glm::value_ptr(value));
+  glUniformMatrix4fv(this->get_variable_location(name), 1, GL_FALSE, glm::value_ptr(value));
 }
 
 }; // glwnd

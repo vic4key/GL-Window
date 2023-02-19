@@ -27,16 +27,16 @@ public:
 
   void use(bool state = true) const;
 
-  GLint location(const std::string& name) const;
-  void  uniform(const std::string& name, const bool  value) const;
-  void  uniform(const std::string& name, const int   value) const;
-  void  uniform(const std::string& name, const float value) const;
-  void  uniform(const std::string& name, const glm::vec2& value) const;
-  void  uniform(const std::string& name, const glm::vec3& value) const;
-  void  uniform(const std::string& name, const glm::mat4& value) const;
+  void set_variable(const std::string& name, const int   value) const;
+  void set_variable(const std::string& name, const bool  value) const;
+  void set_variable(const std::string& name, const float value) const;
+  void set_variable(const std::string& name, const glm::vec2& value) const;
+  void set_variable(const std::string& name, const glm::vec3& value) const;
+  void set_variable(const std::string& name, const glm::mat4& value) const;
 
 private:
   GLuint compile(const GLchar* source, GLuint shaderType);
+  GLint get_variable_location(const std::string& name) const;
 
 private:
   GLuint m_id;

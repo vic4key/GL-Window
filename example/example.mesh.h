@@ -102,29 +102,29 @@ public:
     if (m_model.a && m_model.r.y++ > 360.F) m_model.r.y = 0.F;
     glm::mat4 mtx_model = this->transform_matrix(m_model.t, m_model.r, m_model.s);
 
-    // enable lighting shader
+    // enable shader
     m_shader.use(true);
 
     // setup mesh
-    m_shader.uniform("color", m_model.c);
-    m_shader.uniform("target", m_model.p);
+    m_shader.set_variable("color", m_model.c);
+    m_shader.set_variable("target", m_model.p);
 
     // setup camera and mvp matrix
-    m_shader.uniform("model", mtx_model);
-    m_shader.uniform("view", mtx_view);
-    m_shader.uniform("projection", mtx_projection);
+    m_shader.set_variable("model", mtx_model);
+    m_shader.set_variable("view", mtx_view);
+    m_shader.set_variable("projection", mtx_projection);
 
     // setup lighting
     glm::vec3 light_position(-3.F, 6.F, -3.F);
-    m_shader.uniform("light.direction", light_position);
-    m_shader.uniform("light.ambient",  glm::vec3(0.2f, 0.23f, 0.25f));
-    m_shader.uniform("light.diffuse",  glm::vec3(0.6f, 0.63f, 0.65f));
-    m_shader.uniform("light.specular", glm::vec3(0.0f));
+    m_shader.set_variable("light.direction", light_position);
+    m_shader.set_variable("light.ambient",  glm::vec3(0.2f, 0.23f, 0.25f));
+    m_shader.set_variable("light.diffuse",  glm::vec3(0.6f, 0.63f, 0.65f));
+    m_shader.set_variable("light.specular", glm::vec3(0.0f));
 
     // render mesh
     m_mesh.render();
 
-    // disable lighting shader
+    // disable shader
     m_shader.use(false);
   }
 
