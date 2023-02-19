@@ -42,7 +42,7 @@ int APIENTRY wWinMain(
   //app.layout().replace_view(new GLViewExampleText2D, 0);
   //app.layout().replace_view(new GLViewExampleTextGLUT, 0);
   //app.layout().replace_view(new GLViewExamplePrimitive, 0);
-  //app.layout().replace_view(new GLViewExampleInteractive, 0)
+  //app.layout().replace_view(new GLViewExampleInteractive, 0);
   //app.set_layout(GLLayout::_2x2(app).release());
   //  app.layout().replace_view(new GLViewExampleMultiView, 0);
   //  app.layout().replace_view(new GLViewExampleMultiView, 1);
