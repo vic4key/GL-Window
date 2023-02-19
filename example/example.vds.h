@@ -145,16 +145,16 @@ public:
     GLuint attr_offset, attr_size;
 
     attr_offset = 0;
-    attr_size = m_vbo.declare_position_format(attr_offset, 3, GL_FLOAT, 0);
+    attr_size = m_vbo.declare_position_format(attr_offset, 3, GL_FLOAT);
 
     attr_offset += attr_size * m_vbo.get_num_elements();
-    attr_size = m_vbo.declare_normal_format(attr_offset, 3, GL_FLOAT, 0);
+    attr_size = m_vbo.declare_normal_format(attr_offset, 3, GL_FLOAT);
 
     attr_offset += attr_size * m_vbo.get_num_elements();
     m_vbo.declare_color_format(attr_offset, 3, GL_FLOAT, 0);
 
     attr_offset += attr_size * m_vbo.get_num_elements();
-    attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT, 0);
+    attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT);
   }
 
   virtual void on_display()

@@ -49,10 +49,10 @@ public:
   //  type   - the data type of an element (eg. 2f, 2d, 3f, 3d, etc)
   //  stride - the distance in bytes between the offset of current and next element (eg. p[0]->p[1], c[0]->c[1], etc)
 
-  GLuint declare_position_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
-  GLuint declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
-  GLuint declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
-  GLuint declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride);
+  GLuint declare_position_format(GLuint offset, GLuint num, GLenum type, GLuint stride = 0);
+  GLuint declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride = 0);
+  GLuint declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride = 0);
+  GLuint declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride = 0);
 
   void render(GLenum mode);
 

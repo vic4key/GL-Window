@@ -57,10 +57,10 @@ public:
     //vbo.initialize({{positions, sizeof(positions)}, {colors, sizeof(colors)}}, vds_size);
 
     //GLuint offset = 0;
-    //vbo.declare_position_format(offset, 2, GL_FLOAT, 0);
+    //vbo.declare_position_format(offset, 2, GL_FLOAT);
 
     //offset = sizeof(positions);
-    //vbo.declare_color_format(offset, 3, GL_FLOAT, 0);
+    //vbo.declare_color_format(offset, 3, GL_FLOAT);
 
     //vbo.render(GL_TRIANGLES);
 
