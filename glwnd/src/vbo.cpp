@@ -46,6 +46,8 @@ VBO::~VBO()
 
 bool VBO::initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
 {
+  assert(!m_ready && "VBO was initialized");
+
   this->initialize_buffer();
 
   // allocate memory in GPU then send data from app to store into GPU
@@ -58,11 +60,15 @@ bool VBO::initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size
   GLsizei stored_data_size = 0;
   glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
 
+  m_ready = true;
+
   return data_size == stored_data_size;
 }
 
 bool VBO::initialize(const std::initializer_list<block_t>& data_list, GLsizei vds_size, GLenum usage)
 {
+  assert(!m_ready && "VBO was initialized");
+
   this->initialize_buffer();
 
   // calculate total data size in the data list
@@ -90,16 +96,13 @@ bool VBO::initialize(const std::initializer_list<block_t>& data_list, GLsizei vd
   GLsizei stored_data_size = 0;
   glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
 
+  m_ready = true;
+
   return data_size == stored_data_size;
 }
 
 void VBO::initialize_buffer()
 {
-  if (m_ready)
-  {
-    return;
-  }
-
   // declare a buffer memory in GPU
   if (m_id == GL_INVALID_ID)
   {
@@ -108,13 +111,11 @@ void VBO::initialize_buffer()
 
   // bind the allocated GPU buffer
   glBindBuffer(GL_ARRAY_BUFFER, m_id);
-
-  m_ready = true;
 }
 
 void VBO::enable_client_state(GLenum state)
 {
-  assert(m_ready && "VBO is not ready");
+  assert(m_ready && "VBO was not initialized");
 
   glEnableClientState(state);
 
@@ -123,7 +124,7 @@ void VBO::enable_client_state(GLenum state)
 
 void VBO::render(const GLenum mode)
 {
-  assert(m_ready && "VBO is not ready");
+  assert(m_ready && "VBO was not initialized");
 
   glDrawArrays(mode, 0, m_num_elements);
 }
