@@ -53,7 +53,7 @@ public:
     };
 
     //VBO vbo;
-    //GLuint vds_size = 5 * sizeof(GLfloat); // this vds has 2 attributes (position 2f + color 3f = 5f)
+    //GLuint vds_size = (3 + 2) * sizeof(GLfloat); // this vds has 2 attributes (position 2f + color 3f = 5f)
     //vbo.initialize({{positions, sizeof(positions)}, {colors, sizeof(colors)}}, vds_size);
 
     //GLuint offset = 0;
@@ -107,7 +107,7 @@ public:
 
     //VBO vbo;
 
-    //GLuint vds_size = (3 + 2) * sizeof(GLfloat);
+    //GLuint vds_size = (3 + 2) * sizeof(GLfloat); // this vds has 2 attributes (position 2f + color 3f = 5f)
     //vbo.initialize(&data, sizeof(data), vds_size);
 
     //GLuint offset = 0;
