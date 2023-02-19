@@ -27,7 +27,6 @@ namespace glwnd
 class VBO
 {
 public:
-
   // Note parameters for VDS data block
   //  data_ptr - the pointer of VDS data block
   //  data_ptr - the size of VDS data block
@@ -43,18 +42,20 @@ public:
   GLuint id() const;
   bool ready() const;
 
-  bool initialize(
+  bool setup_begin(
     const GLvoid* data_ptr,
     GLsizei data_size,
     GLsizei vds_size,
-    GLenum usage = GL_STATIC_DRAW,
+    GLenum usage  = GL_STATIC_DRAW,
     GLenum target = GL_ARRAY_BUFFER);
 
-  bool initialize(
+  bool setup_begin(
     const std::initializer_list<block_t>& data_list,
     GLsizei vds_size,
-    GLenum usage = GL_STATIC_DRAW,
+    GLenum usage  = GL_STATIC_DRAW,
     GLenum target = GL_ARRAY_BUFFER);
+
+  void setup_end();
 
   // Note parameters for AN ATTRIBUTE in VDS
   //  offset - the start offset

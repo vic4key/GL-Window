@@ -29,9 +29,12 @@ public:
 
     GLuint offset = 0;
     GLuint vds_size = 6 * sizeof(GLfloat); // this vds has 2 attributes (position 3f + color 3f = 6f)
-    m_vbo.initialize(&data, sizeof(data), vds_size);
-    offset += m_vbo.declare_position_format(offset, 3, GL_FLOAT, vds_size);
-    offset += m_vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
+    m_vbo.setup_begin(&data, sizeof(data), vds_size);
+    {
+      offset += m_vbo.declare_position_format(offset, 3, GL_FLOAT, vds_size);
+      offset += m_vbo.declare_color_format(offset, 3, GL_FLOAT, vds_size);
+    }
+    m_vbo.setup_end();
   }
 
   virtual void on_display()
@@ -140,21 +143,23 @@ public:
     };
 
     GLuint vds_size = (3 + 3 + 3 + 2) * sizeof(GLfloat);
-    m_vbo.initialize(&data, sizeof(data), vds_size);
+    m_vbo.setup_begin(&data, sizeof(data), vds_size);
+    {
+      GLuint attr_offset, attr_size;
 
-    GLuint attr_offset, attr_size;
+      attr_offset = 0;
+      attr_size = m_vbo.declare_position_format(attr_offset, 3, GL_FLOAT);
 
-    attr_offset = 0;
-    attr_size = m_vbo.declare_position_format(attr_offset, 3, GL_FLOAT);
+      attr_offset += attr_size * m_vbo.get_num_elements();
+      attr_size = m_vbo.declare_normal_format(attr_offset, 3, GL_FLOAT);
 
-    attr_offset += attr_size * m_vbo.get_num_elements();
-    attr_size = m_vbo.declare_normal_format(attr_offset, 3, GL_FLOAT);
+      attr_offset += attr_size * m_vbo.get_num_elements();
+      m_vbo.declare_color_format(attr_offset, 3, GL_FLOAT, 0);
 
-    attr_offset += attr_size * m_vbo.get_num_elements();
-    m_vbo.declare_color_format(attr_offset, 3, GL_FLOAT, 0);
-
-    attr_offset += attr_size * m_vbo.get_num_elements();
-    attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT);
+      attr_offset += attr_size * m_vbo.get_num_elements();
+      attr_size = m_vbo.declare_texture_format(attr_offset, 2, GL_FLOAT);
+    }
+    m_vbo.setup_end();
   }
 
   virtual void on_display()
@@ -181,7 +186,7 @@ public:
   }
 
 protected:
-  VBO m_vbo;
+  VBO   m_vbo;
   Tex2D m_tex2d;
 
 //public:

@@ -22,7 +22,7 @@ VBO::VBO() : m_id(GL_INVALID_ID), m_num_elements(0), m_vds_size(0), m_ready(fals
 VBO::VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
   : m_id(GL_INVALID_ID), m_vds_size(vds_size), m_ready(false)
 {
-  this->initialize(data_ptr, data_size, vds_size, usage);
+  this->setup_begin(data_ptr, data_size, vds_size, usage);
 }
 
 VBO::~VBO()
@@ -54,7 +54,7 @@ bool VBO::ready() const
   return m_ready;
 }
 
-bool VBO::initialize(
+bool VBO::setup_begin(
   const GLvoid* data_ptr,
   GLsizei data_size,
   GLsizei vds_size,
@@ -80,7 +80,7 @@ bool VBO::initialize(
   return data_size == stored_data_size;
 }
 
-bool VBO::initialize(
+bool VBO::setup_begin(
   const std::initializer_list<block_t>& data_list,
   GLsizei vds_size,
   GLenum usage,
@@ -118,6 +118,11 @@ bool VBO::initialize(
   m_ready = true;
 
   return data_size == stored_data_size;
+}
+
+void VBO::setup_end()
+{
+  // do nothing
 }
 
 void VBO::initialize_buffer(GLenum target)
