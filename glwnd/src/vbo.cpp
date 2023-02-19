@@ -15,7 +15,7 @@
 namespace glwnd
 {
 
-VBO::VBO() : m_id(GL_INVALID_ID), m_num_elements(0), m_vds_size(0), m_ready(false)
+VBO::VBO() : m_ready(false), m_id(GL_INVALID_ID), m_num_elements(0), m_vds_size(0)
 {
 }
 
@@ -61,7 +61,7 @@ bool VBO::setup_begin(
   GLenum usage,
   GLenum target)
 {
-  assert(!m_ready && "VBO was initialized");
+  assert(!m_ready && "VBO - already setup");
 
   this->initialize_buffer(target);
 
@@ -86,7 +86,7 @@ bool VBO::setup_begin(
   GLenum usage,
   GLenum target)
 {
-  assert(!m_ready && "VBO was initialized");
+  assert(!m_ready && "VBO - already setup");
 
   this->initialize_buffer(target);
 
@@ -139,7 +139,7 @@ void VBO::initialize_buffer(GLenum target)
 
 void VBO::enable_client_state(GLenum state)
 {
-  assert(m_ready && "VBO was not initialized");
+  assert(m_ready && "VBO - not yet setup");
 
   glEnableClientState(state);
 
@@ -148,7 +148,7 @@ void VBO::enable_client_state(GLenum state)
 
 void VBO::render(const GLenum mode)
 {
-  assert(m_ready && "VBO was not initialized");
+  assert(m_ready && "VBO - not yet setup");
 
   glDrawArrays(mode, 0, m_num_elements);
 }
