@@ -75,7 +75,7 @@ bool VAO::declare_position_format(const block_t& data, GLuint num, GLenum type)
 
   m_vbo_list.push_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
-  assert(ptr_vbo != nullptr && "VAO created vbo for position format failed");
+  assert(ptr_vbo != nullptr && "VAO - create vbo for position format failed");
 
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
@@ -96,7 +96,7 @@ bool VAO::declare_texcoord_format(const block_t& data, GLuint num, GLenum type)
 
   m_vbo_list.push_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
-  assert(ptr_vbo != nullptr && "VAO created vbo for texcoord format failed");
+  assert(ptr_vbo != nullptr && "VAO - create vbo for texcoord format failed");
 
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
@@ -117,7 +117,7 @@ bool VAO::declare_normal_format(const block_t& data, GLuint num, GLenum type)
 
   m_vbo_list.push_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
-  assert(ptr_vbo != nullptr && "VAO created vbo for normal format failed");
+  assert(ptr_vbo != nullptr && "VAO - create vbo for normal format failed");
 
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
@@ -138,7 +138,7 @@ bool VAO::declare_index_format(const block_t& data, GLuint num, GLenum type)
 
   m_vbo_list.push_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
-  assert(ptr_vbo != nullptr && "VAO created vbo for index format failed");
+  assert(ptr_vbo != nullptr && "VAO - create vbo for index format failed");
 
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
