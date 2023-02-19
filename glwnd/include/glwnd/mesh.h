@@ -16,6 +16,8 @@
 namespace glwnd
 {
 
+class VAO;
+
 class Mesh
 {
 public:
@@ -34,16 +36,11 @@ public:
   void render();
 
 private:
-  bool m_ready;
-  GLuint m_vao;
-  GLuint m_vbo_positions;
-  GLuint m_vbo_texcoords;
-  GLuint m_vbo_normals;
-  GLuint m_vbo_indices;
   std::vector<glm::vec3> m_positions;
   std::vector<glm::vec2> m_texcoords;
   std::vector<glm::vec3> m_normals;
   std::vector<uint16>    m_indices;
+  VAO* m_ptr_vao;
 };
 
 }; // glwnd

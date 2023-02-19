@@ -39,3 +39,9 @@ static GLuint GL_INVALID_ID = -1;
   bool operator<=(const T&) = delete;\
   bool operator>=(const T&) = delete;\
   // auto operator<=>(const T&) const = delete;
+
+template<class Container>
+inline int size_of(const Container& container)
+{
+  return container.empty() ? 0 : int(container.size()) * sizeof(container[0]);
+}

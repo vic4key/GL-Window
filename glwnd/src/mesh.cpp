@@ -7,53 +7,28 @@
 #include "glwnd/mesh.h"
 #include "glwnd/utils.h"
 #include "glwnd/defs.h"
+#include "glwnd/vao.h"
 
 #include "TinyObjLoader.h"
 
 namespace glwnd
 {
 
-Mesh::Mesh()
-  : m_ready(false)
-  , m_vao(GL_INVALID_ID)
-  , m_vbo_positions(GL_INVALID_ID)
-  , m_vbo_texcoords(GL_INVALID_ID)
-  , m_vbo_normals(GL_INVALID_ID)
-  , m_vbo_indices(GL_INVALID_ID)
+Mesh::Mesh() : m_ptr_vao(new VAO)
 {
 }
 
 Mesh::~Mesh()
 {
-  if (m_vbo_positions != GL_INVALID_ID)
+  if (m_ptr_vao != nullptr)
   {
-    glDeleteBuffers(1, &m_vbo_positions);
-  }
-
-  if (m_vbo_positions != GL_INVALID_ID)
-  {
-    glDeleteBuffers(1, &m_vbo_texcoords);
-  }
-
-  if (m_vbo_positions != GL_INVALID_ID)
-  {
-    glDeleteBuffers(1, &m_vbo_normals);
-  }
-
-  if (m_vbo_positions != GL_INVALID_ID)
-  {
-    glDeleteBuffers(1, &m_vbo_indices);
-  }
-
-  if (m_vbo_positions != GL_INVALID_ID)
-  {
-    glDeleteVertexArrays(1, &m_vao);
+    delete m_ptr_vao;
   }
 }
 
 bool Mesh::ready() const
 {
-  return m_ready;
+  return m_ptr_vao->ready();
 }
 
 void Mesh::load(const std::string& file_path)
@@ -144,51 +119,19 @@ void Mesh::load(const std::string& file_path)
     assert(0 && "no data in mesh from file");
   }
 
-  glGenVertexArrays(1, &m_vao);
-  glBindVertexArray(m_vao);
-
-  glGenBuffers(1, &m_vbo_positions);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_positions);
-  glBufferData(GL_ARRAY_BUFFER, m_positions.size() * sizeof(glm::vec3), &m_positions[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &m_vbo_texcoords);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_texcoords);
-  glBufferData(GL_ARRAY_BUFFER, m_texcoords.size() * sizeof(glm::vec2), &m_texcoords[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &m_vbo_normals);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normals);
-  glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(glm::vec3), &m_normals[0], GL_STATIC_DRAW);
-
-  glGenBuffers(1, &m_vbo_indices);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_indices);
-  glBufferData(GL_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned short int), &m_indices[0], GL_STATIC_DRAW);
-
-  glEnableVertexAttribArray(0);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_positions);
-  glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-  glEnableVertexAttribArray(1);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_texcoords);
-  glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-
-  glEnableVertexAttribArray(2);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normals);
-  glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
-
-  glEnableVertexAttribArray(3);
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_indices);
-  glVertexAttribPointer(3, 1, GL_UNSIGNED_SHORT, GL_FALSE, 0, 0);
-
-  glBindVertexArray(0);
-
-  m_ready = true;
+  m_ptr_vao->setup_begin();
+  {
+    m_ptr_vao->declare_position_format({ &m_positions[0], size_of(m_positions) }, 3, GL_FLOAT);
+    m_ptr_vao->declare_texcoord_format({ &m_texcoords[0], size_of(m_texcoords) }, 2, GL_FLOAT);
+    m_ptr_vao->declare_normal_format({ &m_normals[0], size_of(m_normals) }, 3, GL_FLOAT);
+    m_ptr_vao->declare_index_format({ &m_indices[0], size_of(m_indices) }, 1, GL_UNSIGNED_SHORT);
+  }
+  m_ptr_vao->setup_end();
 }
 
 void Mesh::render()
 {
-  glBindVertexArray(m_vao);
-  glDrawElements(GL_TRIANGLES, GLsizei(m_indices.size()), GL_UNSIGNED_SHORT, 0);
-  glBindVertexArray(0);
+  m_ptr_vao->render(GL_TRIANGLES);
 }
 
 }; // glwnd
