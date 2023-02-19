@@ -44,6 +44,11 @@ VBO::~VBO()
   }
 }
 
+GLuint VBO::id() const
+{
+  return m_id;
+}
+
 bool VBO::initialize(
   const GLvoid* data_ptr,
   GLsizei data_size,
@@ -56,14 +61,14 @@ bool VBO::initialize(
   this->initialize_buffer(target);
 
   // allocate memory in GPU then send data from app to store into GPU
-  glBufferData(GL_ARRAY_BUFFER, data_size, data_ptr, usage);
+  glBufferData(target, data_size, data_ptr, usage);
 
   // calculate number of elements in the data block
   m_num_elements = data_size / vds_size;
 
   // verify the stored data size is the sane as the sent data size
   GLsizei stored_data_size = 0;
-  glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
+  glGetBufferParameteriv(target, GL_BUFFER_SIZE, &stored_data_size);
 
   m_ready = true;
 
@@ -88,13 +93,13 @@ bool VBO::initialize(
   }
 
   // allocate memory in GPU
-  glBufferData(GL_ARRAY_BUFFER, data_size, nullptr, usage);
+  glBufferData(target, data_size, nullptr, usage);
 
   // send data list from app to store into GPU
   GLsizei data_offset = 0;
   for (auto& e : data_list)
   {
-    glBufferSubData(GL_ARRAY_BUFFER, data_offset, e.size, e.ptr);
+    glBufferSubData(target, data_offset, e.size, e.ptr);
     data_offset += e.size;
   }
 
@@ -103,7 +108,7 @@ bool VBO::initialize(
 
   // verify the stored data size is the sane as the sent data size
   GLsizei stored_data_size = 0;
-  glGetBufferParameteriv(GL_ARRAY_BUFFER, GL_BUFFER_SIZE, &stored_data_size);
+  glGetBufferParameteriv(target, GL_BUFFER_SIZE, &stored_data_size);
 
   m_ready = true;
 
