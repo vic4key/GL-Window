@@ -14,7 +14,7 @@
 namespace glwnd
 {
 
-Mesh::Mesh() : m_ptr_vao(new VAO)
+Mesh::Mesh() : m_ptr_vao(new VAO), m_ready(false)
 {
 }
 
@@ -28,7 +28,7 @@ Mesh::~Mesh()
 
 bool Mesh::ready() const
 {
-  return m_ptr_vao->ready();
+  return m_ready && m_ptr_vao->ready();
 }
 
 void Mesh::load(const std::string& file_path)
@@ -127,6 +127,8 @@ void Mesh::load(const std::string& file_path)
     m_ptr_vao->declare_index_format({ &m_indices[0], size_of(m_indices) }, 1, GL_UNSIGNED_SHORT);
   }
   m_ptr_vao->setup_end();
+
+  m_ready = true;
 }
 
 void Mesh::render()

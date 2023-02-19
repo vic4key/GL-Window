@@ -41,6 +41,7 @@ private:
   std::vector<glm::vec3> m_normals;
   std::vector<uint16>    m_indices;
   VAO* m_ptr_vao;
+  bool m_ready;
 };
 
 }; // glwnd
