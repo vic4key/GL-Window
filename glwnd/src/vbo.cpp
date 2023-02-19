@@ -15,25 +15,25 @@
 namespace glwnd
 {
 
-VBO::VBO()
-  : m_id(GL_INVALID_ID), m_num_elements(0), m_vds_size(0), m_binded(false)
+VBO::VBO() : m_id(GL_INVALID_ID), m_num_elements(0), m_vds_size(0), m_ready(false)
 {
 }
 
 VBO::VBO(GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
-  : m_id(GL_INVALID_ID), m_vds_size(vds_size), m_binded(false)
+  : m_id(GL_INVALID_ID), m_vds_size(vds_size), m_ready(false)
 {
   this->initialize(data_ptr, data_size, vds_size, usage);
 }
 
 VBO::~VBO()
 {
-  // disable used states
+  // disable all used states
   for (auto& state : m_used_client_states)
   {
     glDisableClientState(state);
   }
 
+  // release the allocated GPU buffer
   if (m_id != GL_INVALID_ID)
   {
     // release memory after used
@@ -46,13 +46,7 @@ VBO::~VBO()
 
 bool VBO::initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum usage)
 {
-  // declare a buffer memory in GPU
-  if (m_id == GL_INVALID_ID)
-  {
-    glGenBuffers(1, &m_id);
-  }
-
-  this->bind();
+  this->initialize_buffer();
 
   // allocate memory in GPU then send data from app to store into GPU
   glBufferData(GL_ARRAY_BUFFER, data_size, data_ptr, usage);
@@ -69,13 +63,7 @@ bool VBO::initialize(const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size
 
 bool VBO::initialize(const std::initializer_list<block_t>& data_list, GLsizei vds_size, GLenum usage)
 {
-  // declare a buffer memory in GPU
-  if (m_id == GL_INVALID_ID)
-  {
-    glGenBuffers(1, &m_id);
-  }
-
-  this->bind();
+  this->initialize_buffer();
 
   // calculate total data size in the data list
   GLsizei data_size = 0;
@@ -105,29 +93,38 @@ bool VBO::initialize(const std::initializer_list<block_t>& data_list, GLsizei vd
   return data_size == stored_data_size;
 }
 
-void VBO::bind()
+void VBO::initialize_buffer()
 {
-  if (m_id == GL_INVALID_ID)
+  if (m_ready)
   {
-    assert(0 && "invalid buffer id");
+    return;
   }
 
-  if (!m_binded)
+  // declare a buffer memory in GPU
+  if (m_id == GL_INVALID_ID)
   {
-    glBindBuffer(GL_ARRAY_BUFFER, m_id);
-    m_binded = true;
+    glGenBuffers(1, &m_id);
   }
+
+  // bind the allocated GPU buffer
+  glBindBuffer(GL_ARRAY_BUFFER, m_id);
+
+  m_ready = true;
 }
 
 void VBO::enable_client_state(GLenum state)
 {
+  assert(m_ready && "VBO is not ready");
+
   glEnableClientState(state);
+
   m_used_client_states.push_back(state);
 }
 
 void VBO::render(const GLenum mode)
 {
-  this->bind();
+  assert(m_ready && "VBO is not ready");
+
   glDrawArrays(mode, 0, m_num_elements);
 }
 
@@ -138,7 +135,6 @@ GLuint VBO::get_num_elements() const
 
 GLuint VBO::declare_position_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
-  this->bind();
   this->enable_client_state(GL_VERTEX_ARRAY);
 
   glVertexPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
@@ -148,7 +144,6 @@ GLuint VBO::declare_position_format(GLuint offset, GLuint num, GLenum type, GLui
 
 GLuint VBO::declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
-  this->bind();
   this->enable_client_state(GL_COLOR_ARRAY);
 
   glColorPointer(num, type, stride, reinterpret_cast<GLvoid*>(offset));
@@ -158,7 +153,6 @@ GLuint VBO::declare_color_format(GLuint offset, GLuint num, GLenum type, GLuint 
 
 GLuint VBO::declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
-  this->bind();
   this->enable_client_state(GL_TEXTURE_COORD_ARRAY);
 
   glClientActiveTexture(GL_TEXTURE0);
@@ -170,7 +164,6 @@ GLuint VBO::declare_texture_format(GLuint offset, GLuint num, GLenum type, GLuin
 
 GLuint VBO::declare_normal_format(GLuint offset, GLuint num, GLenum type, GLuint stride)
 {
-  this->bind();
   this->enable_client_state(GL_NORMAL_ARRAY);
 
   glNormalPointer(type, stride, reinterpret_cast<GLvoid*>(offset));

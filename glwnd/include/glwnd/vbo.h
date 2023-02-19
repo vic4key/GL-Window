@@ -59,11 +59,11 @@ public:
   GLuint get_num_elements() const;
 
 private:
-  void bind();
+  void initialize_buffer();
   void enable_client_state(GLenum state);
 
 private:
-  bool    m_binded;
+  bool    m_ready;
   GLuint  m_id;
   GLsizei m_vds_size;
   GLuint  m_num_elements;
