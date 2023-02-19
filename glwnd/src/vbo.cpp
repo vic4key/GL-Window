@@ -49,6 +49,11 @@ GLuint VBO::id() const
   return m_id;
 }
 
+bool VBO::ready() const
+{
+  return m_ready;
+}
+
 bool VBO::initialize(
   const GLvoid* data_ptr,
   GLsizei data_size,

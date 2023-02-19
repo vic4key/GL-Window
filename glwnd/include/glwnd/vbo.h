@@ -41,6 +41,7 @@ public:
   GLWND_DELETE_UNUSED_OPERATORS(VBO)
 
   GLuint id() const;
+  bool ready() const;
 
   bool initialize(
     const GLvoid* data_ptr,
