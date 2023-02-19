@@ -19,7 +19,7 @@ Mesh::Mesh()
   , m_vbo_positions(GL_INVALID_ID)
   , m_vbo_texcoords(GL_INVALID_ID)
   , m_vbo_normals(GL_INVALID_ID)
-  , m_vbo_elements(GL_INVALID_ID)
+  , m_vbo_indices(GL_INVALID_ID)
 {
 }
 
@@ -42,7 +42,7 @@ Mesh::~Mesh()
 
   if (m_vbo_positions != GL_INVALID_ID)
   {
-    glDeleteBuffers(1, &m_vbo_elements);
+    glDeleteBuffers(1, &m_vbo_indices);
   }
 
   if (m_vbo_positions != GL_INVALID_ID)
@@ -159,8 +159,8 @@ void Mesh::load(const std::string& file_path)
   glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normals);
   glBufferData(GL_ARRAY_BUFFER, m_normals.size() * sizeof(glm::vec3), &m_normals[0], GL_STATIC_DRAW);
 
-  glGenBuffers(1, &m_vbo_elements);
-  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_elements);
+  glGenBuffers(1, &m_vbo_indices);
+  glBindBuffer(GL_ARRAY_BUFFER, m_vbo_indices);
   glBufferData(GL_ARRAY_BUFFER, m_indices.size() * sizeof(unsigned short int), &m_indices[0], GL_STATIC_DRAW);
 
   glEnableVertexAttribArray(0);
@@ -175,7 +175,9 @@ void Mesh::load(const std::string& file_path)
   glBindBuffer(GL_ARRAY_BUFFER, m_vbo_normals);
   glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, 0);
 
-  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_elements);
+  glEnableVertexAttribArray(3);
+  glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_vbo_indices);
+  glVertexAttribPointer(3, 3, GL_UNSIGNED_INT, GL_FALSE, 0, 0);
 
   glBindVertexArray(0);
 

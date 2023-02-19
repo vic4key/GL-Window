@@ -39,7 +39,7 @@ private:
   GLuint m_vbo_positions;
   GLuint m_vbo_texcoords;
   GLuint m_vbo_normals;
-  GLuint m_vbo_elements;
+  GLuint m_vbo_indices;
   std::vector<glm::vec3> m_positions;
   std::vector<glm::vec2> m_texcoords;
   std::vector<glm::vec3> m_normals;
