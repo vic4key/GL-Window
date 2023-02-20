@@ -26,7 +26,7 @@ public:
     cfg.font_size = 16.F;
     this->parent().enable_dear_imgui(true, &cfg);
 
-    // demo model 1
+    // model monkey
     static model_t monkey;
     monkey.n = "assets\\monkey.obj";
     monkey.t = glm::vec3(0.F);
@@ -37,7 +37,7 @@ public:
     monkey.d = glm::vec3(0.F, 1.F, 0.F);
     monkey.a = false;
 
-    // demo model 2
+    // model scene
     static model_t scene;
     scene.n = "assets\\scene.obj";
     scene.t = glm::vec3(0.5F, -0.5F, 0.F);
@@ -48,7 +48,7 @@ public:
     scene.d = glm::vec3(0.F, 1.F, 0.F);
     scene.a = true;
 
-    // demo model 3
+    // model chest
     static model_t chest;
     chest.n = "assets\\Chest\\Chest.obj";
     chest.t = glm::vec3(0.F, -0.5F, 0.F);
@@ -59,6 +59,17 @@ public:
     chest.d = glm::vec3(0.F, 1.F, 0.F);
     chest.a = true;
 
+    // model raptor
+    static model_t raptor;
+    raptor.n = "assets\\Raptor\\Raptor.obj";
+    raptor.t = glm::vec3(0.0F);
+    raptor.r = glm::vec3(0.0F, 0.F, 0.0F);
+    raptor.s = glm::vec3(0.5F);
+    raptor.c = glm::vec3(0.0F, 1.F, 0.0F);
+    raptor.p = glm::vec3(0.0F, 0.F, 0.0F);
+    raptor.d = glm::vec3(0.0F, 1.F, 0.0F);
+    raptor.a = true;
+
     // select a demo model for loading & rendering
     m_model = chest;
 
@@ -67,7 +78,7 @@ public:
       m_mesh.load(m_model.n);
     }
 
-    m_shader.build_file("assets\\lighting.vert", "assets\\lighting.frag");
+    m_shader.build_file("assets\\shader\\lighting.vs", "assets\\shader\\lighting.fs");
   }
 
   virtual void on_display()
