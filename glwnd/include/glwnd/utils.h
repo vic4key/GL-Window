@@ -77,6 +77,8 @@ T align_up(T v, T a = T(4)) // default alignent = 4
   return ((v + (a - 1)) & ~(a - 1));
 }
 
+bool is_file_exist(const std::string& file_path);
+
 void load_file(const std::string& file_path, std::vector<unsigned char>& data);
 
 std::string load_text_file(const std::string& file_path);

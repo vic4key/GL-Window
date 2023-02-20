@@ -16,6 +16,12 @@ namespace glwnd
 namespace utils
 {
 
+bool is_file_exist(const std::string& file_path)
+{
+  std::ifstream f(file_path);
+  return !f.bad() && f.is_open();
+}
+
 void load_file(const std::string& file_path, std::vector<unsigned char>& data)
 {
 	FILE* f = nullptr;

@@ -17,6 +17,8 @@ namespace glwnd
 {
 
 class VAO;
+class Tex2D;
+struct Material;
 
 class Mesh
 {
@@ -40,6 +42,7 @@ private:
   std::vector<glm::vec2> m_texcoords;
   std::vector<glm::vec3> m_normals;
   std::vector<uint16>    m_indices;
+  std::vector<Material*> m_materials;
   VAO* m_ptr_vao;
   bool m_ready;
 };

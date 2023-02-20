@@ -8,11 +8,21 @@
 #include "glwnd/utils.h"
 #include "glwnd/defs.h"
 #include "glwnd/vao.h"
+#include "glwnd/tex2d.h"
 
 #include "TinyObjLoader.h"
 
 namespace glwnd
 {
+
+struct Material
+{
+  tinyobj::material_t    material;
+  std::unique_ptr<Tex2D> tex2d_ambient;
+  std::unique_ptr<Tex2D> tex2d_diffuse;
+  std::unique_ptr<Tex2D> tex2d_specular;
+  std::unique_ptr<Tex2D> tex2d_normal;
+};
 
 Mesh::Mesh() : m_ptr_vao(new VAO), m_ready(false)
 {
@@ -20,6 +30,14 @@ Mesh::Mesh() : m_ptr_vao(new VAO), m_ready(false)
 
 Mesh::~Mesh()
 {
+  for (auto ptr : m_materials)
+  {
+    if (ptr != nullptr)
+    {
+      delete ptr;
+    }
+  }
+
   if (m_ptr_vao != nullptr)
   {
     delete m_ptr_vao;
@@ -84,6 +102,43 @@ void Mesh::load(const std::string& obj_file_path)
   for (uint32 i = 0; i < shapes[0].mesh.indices.size(); i++)
   {
     m_indices.emplace_back(shapes[0].mesh.indices[i]);
+  }
+
+  // m_materials
+
+  auto fn_load_material_texture = [&](const std::string& file_name) -> std::unique_ptr<Tex2D>
+  {
+    auto image_file_path = file_dir + file_name;
+    if (utils::is_file_exist(image_file_path))
+    {
+      std::unique_ptr<Tex2D> tex2d(new Tex2D);
+      if (tex2d->initialize_from_image_file(image_file_path))
+      {
+        return tex2d;
+      }
+    }
+
+    return nullptr;
+  };
+
+  for (auto& material : materials)
+  {
+    m_materials.emplace_back(new Material);
+    auto m = m_materials.back();
+
+    m->material = material;
+
+    try
+    {
+      m->tex2d_ambient  = fn_load_material_texture(material.ambient_texname);
+      m->tex2d_diffuse  = fn_load_material_texture(material.diffuse_texname);
+      m->tex2d_specular = fn_load_material_texture(material.specular_texname);
+      m->tex2d_normal   = fn_load_material_texture(material.normal_texname);
+    }
+    catch (...)
+    {
+      // do nothing
+    }
   }
 
   // Fatal error - one of the vectors is empty and it will cause problems with OpenGL buffers.
