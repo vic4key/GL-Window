@@ -73,7 +73,7 @@ bool VAO::declare_position_format(const block_t& data, GLuint num, GLenum type)
 {
   assert(m_ready && "VAO - not yet setup");
 
-  m_vbo_list.push_back(new VBO);
+  m_vbo_list.emplace_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for position format failed");
 
@@ -94,7 +94,7 @@ bool VAO::declare_texcoord_format(const block_t& data, GLuint num, GLenum type)
 {
   assert(m_ready && "VAO - not yet setup");
 
-  m_vbo_list.push_back(new VBO);
+  m_vbo_list.emplace_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for texcoord format failed");
 
@@ -115,7 +115,7 @@ bool VAO::declare_normal_format(const block_t& data, GLuint num, GLenum type)
 {
   assert(m_ready && "VAO - not yet setup");
 
-  m_vbo_list.push_back(new VBO);
+  m_vbo_list.emplace_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for normal format failed");
 
@@ -136,7 +136,7 @@ bool VAO::declare_index_format(const block_t& data, GLuint num, GLenum type)
 {
   assert(m_ready && "VAO - not yet setup");
 
-  m_vbo_list.push_back(new VBO);
+  m_vbo_list.emplace_back(new VBO);
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for index format failed");
 

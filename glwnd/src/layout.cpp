@@ -47,7 +47,7 @@ GLLayout& GLLayout::add_view(GLView* ptr_view)
   ptr_view->set_parent(*m_ptr_parent);
   ptr_view->set_index(m_ptr_views.size());
 
-  m_ptr_views.push_back(ptr_view);
+  m_ptr_views.emplace_back(ptr_view);
 
   return *this;
 }

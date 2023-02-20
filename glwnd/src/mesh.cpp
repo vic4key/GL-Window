@@ -48,7 +48,7 @@ void Mesh::load(const std::string& obj_file_path)
 
   for (uint32 i = 0; i < shapes[0].mesh.positions.size(); i += 3)
   {
-    m_positions.push_back(glm::vec3(
+    m_positions.emplace_back(glm::vec3(
       shapes[0].mesh.positions[i],
       shapes[0].mesh.positions[i + 1],
       shapes[0].mesh.positions[i + 2]));
@@ -60,7 +60,7 @@ void Mesh::load(const std::string& obj_file_path)
 
   for (uint32 i = 0; i < shapes[0].mesh.texcoords.size(); i += 2)
   {
-    m_texcoords.push_back(glm::vec2(
+    m_texcoords.emplace_back(glm::vec2(
       shapes[0].mesh.texcoords[i],
       shapes[0].mesh.texcoords[i + 1]));
   }
@@ -71,7 +71,7 @@ void Mesh::load(const std::string& obj_file_path)
 
   for (uint32 i = 0; i < shapes[0].mesh.normals.size(); i += 3)
   {
-    m_normals.push_back(glm::vec3(
+    m_normals.emplace_back(glm::vec3(
       shapes[0].mesh.normals[i],
       shapes[0].mesh.normals[i + 1],
       shapes[0].mesh.normals[i + 2]));
@@ -83,7 +83,7 @@ void Mesh::load(const std::string& obj_file_path)
 
   for (uint32 i = 0; i < shapes[0].mesh.indices.size(); i++)
   {
-    m_indices.push_back(shapes[0].mesh.indices[i]);
+    m_indices.emplace_back(shapes[0].mesh.indices[i]);
   }
 
   // Fatal error - one of the vectors is empty and it will cause problems with OpenGL buffers.

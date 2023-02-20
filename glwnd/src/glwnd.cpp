@@ -294,7 +294,7 @@ void GLWindow::Impl::drag_drop(GLFWwindow* ptr_window, int count, const char** p
 
   for (int i = 0; i < count; i++)
   {
-    paths.push_back(pptr_paths[i]);
+    paths.emplace_back(pptr_paths[i]);
   }
 
   ptr_parent_impl->on_drag_drop(paths);
@@ -434,7 +434,7 @@ int GLWindow::Impl::create()
   for (int i = 0; i < n; ++i)
   {
     auto s = (char*)glGetStringi(GL_EXTENSIONS, i);
-    m_extensions.push_back(s);
+    m_extensions.emplace_back(s);
   }
 
   const auto s = wglGetExtensionsStringARB(wglGetCurrentDC());

@@ -143,7 +143,7 @@ void VBO::enable_client_state(GLenum state)
 
   glEnableClientState(state);
 
-  m_used_client_states.push_back(state);
+  m_used_client_states.emplace_back(state);
 }
 
 void VBO::render(const GLenum mode)
