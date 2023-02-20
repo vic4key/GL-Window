@@ -31,14 +31,16 @@ bool Mesh::ready() const
   return m_ready && m_ptr_vao->ready();
 }
 
-void Mesh::load(const std::string& file_path)
+void Mesh::load(const std::string& obj_file_path)
 {
-  assert(!file_path.empty());
+  assert(!obj_file_path.empty());
 
   std::vector<tinyobj::shape_t> shapes;
   std::vector<tinyobj::material_t> materials;
 
-  tinyobj::LoadObj(shapes, materials, file_path.c_str());
+  const auto file_dir = utils::extract_file_directory_t<std::string>(obj_file_path);
+
+  tinyobj::LoadObj(shapes, materials, obj_file_path.c_str(), file_dir.c_str());
 
   // positions
 

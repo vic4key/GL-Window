@@ -49,7 +49,7 @@ public:
     scene.a = true;
 
     // select a demo model for loading & rendering
-    m_model = scene; // m_model = monkey;
+    m_model = scene;
 
     if (!m_mesh.ready())
     {

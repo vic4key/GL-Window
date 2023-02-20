@@ -32,7 +32,7 @@ public:
   virtual ~Mesh();
 
   bool ready() const;
-  void load(const std::string& file_path);
+  void load(const std::string& obj_file_path);
   void render();
 
 private:

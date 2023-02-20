@@ -20,6 +20,21 @@ namespace utils
 {
 
 template <class std_string_t>
+std_string_t extract_file_directory_t(const std_string_t& file_path, bool last_slash = true)
+{
+  std_string_t result;
+  result.clear();
+
+  size_t pos_slash = file_path.rfind('\\');
+  if (pos_slash != std_string_t::npos)
+  {
+    result = file_path.substr(0, pos_slash + (last_slash ? 1 : 0));
+  }
+
+  return result;
+}
+
+template <class std_string_t>
 std::vector<std_string_t> split_string_t(const std_string_t& str, const std_string_t& sep)
 {
   std::vector<std_string_t> l;
