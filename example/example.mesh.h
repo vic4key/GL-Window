@@ -9,7 +9,7 @@
 
 #include <imgui.h>
 
-static Mesh m_mesh; // for sharing between views
+static Mesh m_mesh; // static for sharing between views
 
 class GLViewExampleMesh : public GLView
 {
@@ -48,30 +48,8 @@ public:
     scene.d = glm::vec3(0.F, 1.F, 0.F);
     scene.a = true;
 
-    // model chest
-    static model_t chest;
-    chest.n = "assets\\Chest\\Chest.obj";
-    chest.t = glm::vec3(0.F, -0.5F, 0.F);
-    chest.r = glm::vec3(-10.F, 120.F, 0.F);
-    chest.s = glm::vec3(1.F);
-    chest.c = glm::vec3(1.F, 1.F, 1.F);
-    chest.p = glm::vec3(0.F, 0.F, 0.F);
-    chest.d = glm::vec3(0.F, 1.F, 0.F);
-    chest.a = true;
-
-    // model raptor
-    static model_t raptor;
-    raptor.n = "assets\\Raptor\\Raptor.obj";
-    raptor.t = glm::vec3(0.0F);
-    raptor.r = glm::vec3(0.0F, 0.F, 0.0F);
-    raptor.s = glm::vec3(0.5F);
-    raptor.c = glm::vec3(0.0F, 1.F, 0.0F);
-    raptor.p = glm::vec3(0.0F, 0.F, 0.0F);
-    raptor.d = glm::vec3(0.0F, 1.F, 0.0F);
-    raptor.a = true;
-
     // select a demo model for loading & rendering
-    m_model = chest;
+    m_model = scene;
 
     if (!m_mesh.ready())
     {
@@ -151,7 +129,6 @@ public:
   }
 
 private:
-  // Mesh m_mesh;
   Shader m_shader;
 
   struct model_t
