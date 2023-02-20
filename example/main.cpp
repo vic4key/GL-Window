@@ -7,6 +7,7 @@
 #include "example.vds.h"
 #include "example.text.h"
 #include "example.mesh.h"
+#include "example.model.h"
 #include "example.image.h"
 #include "example.imgui.h"
 #include "example.shader.h"
@@ -34,6 +35,7 @@ int APIENTRY wWinMain(
   //app.layout().replace_view(new GLViewExampleShader, 0);
   //app.layout().replace_view(new GLViewExampleImage, 0);
   //app.layout().replace_view(new GLViewExampleMesh, 0);
+  app.layout().replace_view(new GLViewExampleModel, 0);
   //app.layout().replace_view(new GLViewExampleVBO, 0);
   //app.layout().replace_view(new GLViewExamplePBO, 0);
   //app.layout().replace_view(new GLViewExampleVDS2A, 0);

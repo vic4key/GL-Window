@@ -108,6 +108,9 @@
     <ClInclude Include="include\glwnd\mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\glwnd\model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="include\glwnd\shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -210,6 +213,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\shader.cpp">

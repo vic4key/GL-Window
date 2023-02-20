@@ -170,6 +170,7 @@
     <ClInclude Include="include\glwnd\layout.h" />
     <ClInclude Include="include\glwnd\linmath.h" />
     <ClInclude Include="include\glwnd\mesh.h" />
+    <ClInclude Include="include\glwnd\model.h" />
     <ClInclude Include="include\glwnd\pbo.h" />
     <ClInclude Include="include\glwnd\primitive.h" />
     <ClInclude Include="include\glwnd\shader.h" />
@@ -226,6 +227,7 @@
     <ClCompile Include="src\glwnd.cpp" />
     <ClCompile Include="src\layout.cpp" />
     <ClCompile Include="src\mesh.cpp" />
+    <ClCompile Include="src\model.cpp" />
     <ClCompile Include="src\pbo.cpp" />
     <ClCompile Include="src\primitive.cpp" />
     <ClCompile Include="src\shader.cpp" />
