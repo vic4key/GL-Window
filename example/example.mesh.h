@@ -48,8 +48,19 @@ public:
     scene.d = glm::vec3(0.F, 1.F, 0.F);
     scene.a = true;
 
+    // demo model 3
+    static model_t chest;
+    chest.n = "assets\\Chest\\Chest.obj";
+    chest.t = glm::vec3(0.F, -0.5F, 0.F);
+    chest.r = glm::vec3(-10.F, 120.F, 0.F);
+    chest.s = glm::vec3(1.F);
+    chest.c = glm::vec3(1.F, 1.F, 1.F);
+    chest.p = glm::vec3(0.F, 0.F, 0.F);
+    chest.d = glm::vec3(0.F, 1.F, 0.F);
+    chest.a = true;
+
     // select a demo model for loading & rendering
-    m_model = scene;
+    m_model = chest;
 
     if (!m_mesh.ready())
     {
