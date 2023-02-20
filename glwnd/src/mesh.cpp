@@ -191,7 +191,25 @@ void Mesh::load(const std::string& obj_file_path)
 
 void Mesh::render()
 {
+  if (!m_materials.empty())
+  {
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+    for (auto m : m_materials)
+    {
+      if (m->tex2d_diffuse)
+      {
+        m->tex2d_diffuse->use(true);
+      }
+    }
+  }
+
   m_ptr_vao->render(GL_TRIANGLES);
+
+  if (!m_materials.empty())
+  {
+    glBindTexture(GL_TEXTURE_2D, 0);
+  }
 }
 
 }; // glwnd

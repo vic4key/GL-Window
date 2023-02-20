@@ -159,6 +159,7 @@
     <ClInclude Include="example.imgui.h" />
     <ClInclude Include="example.interactive.h" />
     <ClInclude Include="example.mesh.h" />
+    <ClInclude Include="example.model.h" />
     <ClInclude Include="example.multiview.h" />
     <ClInclude Include="example.pbo.h" />
     <ClInclude Include="example.primitive.h" />

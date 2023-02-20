@@ -63,6 +63,9 @@
     <ClInclude Include="example.mesh.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="example.model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="example.multiview.h">
       <Filter>Header Files</Filter>
     </ClInclude>
