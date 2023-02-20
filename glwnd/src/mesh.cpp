@@ -144,36 +144,50 @@ void Mesh::load(const std::string& obj_file_path)
   // Fatal error - one of the vectors is empty and it will cause problems with OpenGL buffers.
   // Program must be closed.
 
-  if (m_positions.empty() || m_texcoords.empty() || m_normals.empty())
+  if (m_positions.empty() || m_texcoords.empty() || m_normals.empty() || m_indices.empty())
   {
-    std::string info = "";
+    std::string error = "";
 
     if (m_positions.empty())
     {
-      info.append("vertices");
+      error.append("vertices");
     }
 
     if (m_texcoords.empty())
     {
-      if (info.length() != 0)
+      if (error.length() != 0)
       {
-        info.append(", ");
+        error.append(", ");
       }
 
-      info.append("uvs");
+      error.append("texcoords");
     }
 
     if (m_normals.empty())
     {
-      if (info.length() != 0)
+      if (error.length() != 0)
       {
-        info.append(", ");
+        error.append(", ");
       }
 
-      info.append("normals");
+      error.append("normals");
     }
 
-    assert(0 && "no data in mesh from file");
+    if (m_indices.empty())
+    {
+      if (error.length() != 0)
+      {
+        error.append(", ");
+      }
+
+      error.append("indices");
+    }
+
+    if (error.length() != 0)
+    {
+      error = "model is missing: " + error;
+      throw std::runtime_error(error);
+    }
   }
 
   m_ptr_vao->setup_begin();
