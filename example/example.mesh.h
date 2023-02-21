@@ -56,7 +56,7 @@ public:
       m_model_no_material.load(m_model.n);
     }
 
-    m_shader.build_file("assets\\shader\\lighting.vs", "assets\\shader\\lighting.fs");
+    m_shader.build_file("assets\\shader\\model.vs", "assets\\shader\\model.fs");
   }
 
   virtual void on_display()
