@@ -94,9 +94,9 @@ bool Tex2D::initialize(GLsizei width, GLsizei height, GLvoid* ptr_pixels, GLint 
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_filter);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_wrap);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_wrap);
-    glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE); // automatic mipmap generation included in OpenGL v1.4
 
     glTexImage2D(GL_TEXTURE_2D, 0, iformat, width, height, 0, format, GL_UNSIGNED_BYTE, ptr_pixels);
+    glGenerateMipmap(GL_TEXTURE_2D); // automatic mipmap generation included in OpenGL v1.4
   }
   this->use(false);
 
