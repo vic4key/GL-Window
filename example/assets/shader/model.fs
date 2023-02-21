@@ -6,7 +6,7 @@ in vec2 g_texcoord;
 
 out vec4 g_color;
 
-uniform sampler2D diffuse;
+uniform sampler2D texture_diffuse;
 
 struct Light
 {
@@ -20,13 +20,13 @@ uniform Light light;
 uniform vec3  target;
 uniform vec3  color;
 
-uniform bool  texture_material;
+uniform bool  is_texture_material;
 
 void main()
 {
-  if (texture_material)
+  if (is_texture_material)
   {
-    g_color = texture(diffuse, g_texcoord);
+    g_color = texture(texture_diffuse, g_texcoord);
   }
   else
   {

@@ -138,19 +138,19 @@ void Model::render(Shader& shader)
       return ptr_mesh->material_id() == ptr_material->id;
     });
 
-    bool texture_material = false;
+    bool is_texture_material = false;
 
     if (it != m_materials.cend())
     {
       auto ptr_material = *it;
 
-      texture_material = ptr_material->tex2d_diffuse != nullptr;
-      shader.set_variable("texture_material", texture_material);
+      is_texture_material = ptr_material->tex2d_diffuse != nullptr;
+      shader.set_variable("is_texture_material", is_texture_material);
 
-      if (texture_material)
+      if (is_texture_material)
       {
         glBindTexture(GL_TEXTURE_2D, 0);
-        shader.set_variable("diffuse", 0);
+        shader.set_variable("texture_diffuse", 0);
         ptr_material->tex2d_diffuse->use(true);
       }
       else
@@ -165,7 +165,7 @@ void Model::render(Shader& shader)
 
     ptr_mesh->render();
 
-    if (texture_material)
+    if (is_texture_material)
     {
       glBindTexture(GL_TEXTURE_2D, 0);
     }
