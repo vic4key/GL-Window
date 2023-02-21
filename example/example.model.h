@@ -2,14 +2,14 @@
 
 #include "example.h"
 
-#include <glwnd/mesh.h>
+#include <glwnd/model.h>
 #include <glwnd/shader.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
 #include <imgui.h>
 
-static Mesh m_model_; // static for sharing between views
+static Model m_model_material; // static for sharing between views
 
 class GLViewExampleModel : public GLView
 {
@@ -41,12 +41,34 @@ public:
     raptor.d = glm::vec3(0.0F, 1.F, 0.0F);
     raptor.a = true;
 
+    // model bench
+    static model_t bench;
+    bench.n = "assets\\Bench\\rainbowBench.obj";
+    bench.t = glm::vec3(0.0F, -0.5F, 0.F);
+    bench.r = glm::vec3(0.0F, 0.F, 0.0F);
+    bench.s = glm::vec3(0.2F);
+    bench.c = glm::vec3(0.0F, 1.F, 0.0F);
+    bench.p = glm::vec3(0.0F, 0.F, 0.0F);
+    bench.d = glm::vec3(0.0F, 1.F, 0.0F);
+    bench.a = true;
+
+    // model teapot
+    static model_t teapot;
+    teapot.n = "assets\\Teapot\\teapot.obj";
+    teapot.t = glm::vec3(0.0F, -0.5F, 0.F);
+    teapot.r = glm::vec3(0.0F, 0.F, 0.0F);
+    teapot.s = glm::vec3(0.2F);
+    teapot.c = glm::vec3(0.0F, 1.F, 0.0F);
+    teapot.p = glm::vec3(0.0F, 0.F, 0.0F);
+    teapot.d = glm::vec3(0.0F, 1.F, 0.0F);
+    teapot.a = true;
+
     // select a demo model for loading & rendering
     m_model = chest;
 
-    if (!m_model_.ready())
+    if (!m_model_material.ready())
     {
-      m_model_.load(m_model.n);
+      m_model_material.load(m_model.n);
     }
 
     m_shader.build_file("assets\\shader\\model.vs", "assets\\shader\\model.fs");
@@ -88,7 +110,6 @@ public:
       m_model.r.y += 0.3F;
       if (m_model.r.y > 360.F) m_model.r.y = 0.F;
     }
-
     glm::mat4 mtx_model = this->transform_matrix(m_model.t, m_model.r, m_model.s);
 
     // enable shader
@@ -103,11 +124,8 @@ public:
     m_shader.set_variable("view", mtx_view);
     m_shader.set_variable("projection", mtx_projection);
 
-    // setup lighting
-    m_shader.set_variable("diffuse", 0);
-
-    // render mesh
-    m_model_.render();
+    // render model
+    m_model_material.render(m_shader);
 
     // disable shader
     m_shader.use(false);
@@ -122,6 +140,6 @@ private:
     glm::vec3 t, r, s, c, p, d; // translate, rotate, scale, color, position, direction (pitch, yaw, roll)
     bool a = false; // animate
   };
-  
+
   model_t m_model;
 };

@@ -2,14 +2,14 @@
 
 #include "example.h"
 
-#include <glwnd/mesh.h>
+#include <glwnd/model.h>
 #include <glwnd/shader.h>
 
 #include <glm/gtc/type_ptr.hpp>
 
 #include <imgui.h>
 
-static Mesh m_mesh; // static for sharing between views
+static Model m_model_no_material; // static for sharing between views
 
 class GLViewExampleMesh : public GLView
 {
@@ -51,9 +51,9 @@ public:
     // select a demo model for loading & rendering
     m_model = scene;
 
-    if (!m_mesh.ready())
+    if (!m_model_no_material.ready())
     {
-      m_mesh.load(m_model.n);
+      m_model_no_material.load(m_model.n);
     }
 
     m_shader.build_file("assets\\shader\\lighting.vs", "assets\\shader\\lighting.fs");
@@ -99,7 +99,11 @@ public:
     glm::mat4 mtx_projection = glm::perspective(15.F, win.aspect(), 0.1F, 20.F);
 
     // model matrix
-    if (m_model.a && m_model.r.y++ > 360.F) m_model.r.y = 0.F;
+    if (m_model.a)
+    {
+      m_model.r.y += 0.3F;
+      if (m_model.r.y > 360.F) m_model.r.y = 0.F;
+    }
     glm::mat4 mtx_model = this->transform_matrix(m_model.t, m_model.r, m_model.s);
 
     // enable shader
@@ -115,17 +119,15 @@ public:
     m_shader.set_variable("projection", mtx_projection);
 
     // setup lighting
-    glm::vec3 light_position(-3.F, 6.F, -3.F);
-    m_shader.set_variable("light.direction", light_position);
-    m_shader.set_variable("light.ambient",  glm::vec3(0.2f, 0.23f, 0.25f));
-    m_shader.set_variable("light.diffuse",  glm::vec3(0.6f, 0.63f, 0.65f));
+    m_shader.set_variable("light.direction", glm::vec3(-3.F, 6.F, -3.F));
+    m_shader.set_variable("light.ambient", glm::vec3(0.2f, 0.23f, 0.25f));
+    m_shader.set_variable("light.diffuse", glm::vec3(0.6f, 0.63f, 0.65f));
     m_shader.set_variable("light.specular", glm::vec3(0.0f));
 
-    // render mesh
-    m_mesh.render();
+    // render model
+    m_model_no_material.render(m_shader);
 
-    // disable shader
-    m_shader.use(false);
+    m_shader.use(false); // disable shader
   }
 
 private:
