@@ -109,20 +109,18 @@ public:
     // enable shader
     m_shader.use(true);
 
-    // setup mesh
-    m_shader.set_variable("color", m_model.c);
-    m_shader.set_variable("target", m_model.p);
-
     // setup camera and mvp matrix
     m_shader.set_variable("model", mtx_model);
     m_shader.set_variable("view", mtx_view);
     m_shader.set_variable("projection", mtx_projection);
 
-    // setup lighting
+    // setup lighting (manual setup - because of no material)
     m_shader.set_variable("light.direction", glm::vec3(-3.F, 6.F, -3.F));
-    m_shader.set_variable("light.ambient", glm::vec3(0.2f, 0.23f, 0.25f));
-    m_shader.set_variable("light.diffuse", glm::vec3(0.6f, 0.63f, 0.65f));
-    m_shader.set_variable("light.specular", glm::vec3(0.0f));
+    m_shader.set_variable("light.ambient",   glm::vec3(0.2f, 0.23f, 0.25f));
+    m_shader.set_variable("light.diffuse",   glm::vec3(0.6f, 0.63f, 0.65f));
+    m_shader.set_variable("light.specular",  glm::vec3(0.0f));
+    m_shader.set_variable("target", m_model.p);
+    m_shader.set_variable("color",  m_model.c);
 
     // render model
     m_model_no_material.render(m_shader);

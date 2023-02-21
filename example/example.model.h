@@ -115,14 +115,14 @@ public:
     // enable shader
     m_shader.use(true);
 
-    // setup mesh
-    m_shader.set_variable("color", m_model.c);
-    m_shader.set_variable("target", m_model.p);
-
     // setup camera and mvp matrix
     m_shader.set_variable("model", mtx_model);
-    m_shader.set_variable("view", mtx_view);
+    m_shader.set_variable("view",  mtx_view);
     m_shader.set_variable("projection", mtx_projection);
+
+    // setup model
+    m_shader.set_variable("target", m_model.p);
+    // m_shader.set_variable("color",  m_model.c);
 
     // render model
     m_model_material.render(m_shader);

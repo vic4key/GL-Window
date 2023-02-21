@@ -30,21 +30,20 @@ void main()
   }
   else
   {
-    /*
     // calculate ambient
     vec3 ambient = light.ambient;
 
     // calculate diffuse
-    vec3  dir  = normalize(light.direction);
+    vec3  light_dir = normalize(light.direction - g_position);
     vec3  norm = normalize(g_normal);
-    float diff = max(dot(norm, dir), 0.F);
+    float diff = max(dot(norm, light_dir), 0.F);
     vec3  diffuse = light.diffuse * diff * vec3(1.F);
 
     // calculate specular
-    vec3 viewDir = normalize(target - g_position);
-    vec3 reflectDir = reflect(-dir, norm);
-    float spec = pow(max(dot(viewDir, reflectDir), 0.F), 16.F);
-    vec3 specular = light.specular * spec * vec3(1.F);
+    vec3 view_dir = normalize(target - g_position);
+    vec3 reflect_dir = reflect(-light_dir, norm);
+    float spec = pow(max(dot(view_dir, reflect_dir), 0.F), 16.F);
+    vec3  specular = light.specular * spec * vec3(1.F);
 
     // calculate lighting
     float visibility = 1.F;
@@ -52,8 +51,5 @@ void main()
 
     // calculate output color
     g_color = vec4(pow(lighting, vec3(1.F / 2.2F)), 1.F);
-    */
-
-    g_color = vec4(light.diffuse, 1.0);
   }
 }

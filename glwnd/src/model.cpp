@@ -159,6 +159,7 @@ void Model::render(Shader& shader)
         shader.set_variable("light.ambient",   glm::make_vec3(ptr_material->material.ambient));
         shader.set_variable("light.diffuse",   glm::make_vec3(ptr_material->material.diffuse));
         shader.set_variable("light.specular",  glm::make_vec3(ptr_material->material.specular));
+        shader.set_variable("color", glm::make_vec3(ptr_material->material.diffuse)); // TODO: Vic. Recheck. In mtl file, diffuse is color ?
       }
     }
 
