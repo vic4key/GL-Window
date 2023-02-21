@@ -43,5 +43,5 @@ static GLuint GL_INVALID_ID = -1;
 template<class Container>
 inline int size_of(const Container& container)
 {
-  return container.empty() ? 0 : int(container.size()) * sizeof(container[0]);
+  return int(container.size()) * sizeof(Container::value_type);
 }

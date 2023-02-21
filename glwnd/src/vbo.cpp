@@ -63,6 +63,11 @@ bool VBO::setup_begin(
 {
   assert(!m_ready && "VBO - already setup");
 
+  if (data_ptr == nullptr || data_size == 0)
+  {
+    return false;
+  }
+
   this->initialize_buffer(target);
 
   // allocate memory in GPU then send data from app to store into GPU
@@ -87,6 +92,11 @@ bool VBO::setup_begin(
   GLenum target)
 {
   assert(!m_ready && "VBO - already setup");
+
+  if (data_list.size() == 0)
+  {
+    return false;
+  }
 
   this->initialize_buffer(target);
 

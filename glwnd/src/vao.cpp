@@ -77,10 +77,13 @@ bool VAO::declare_position_format(const block_t& data, GLuint num, GLenum type)
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for position format failed");
 
+  GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
+  glDisableVertexAttribArray(attrib_index);
+
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
+  if (succeed)
   {
-    GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
     glEnableVertexAttribArray(attrib_index);
     glBindBuffer(GL_ARRAY_BUFFER, ptr_vbo->id());
     glVertexAttribPointer(attrib_index, num, type, GL_FALSE, 0, 0);
@@ -98,10 +101,13 @@ bool VAO::declare_texcoord_format(const block_t& data, GLuint num, GLenum type)
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for texcoord format failed");
 
+  GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
+  glDisableVertexAttribArray(attrib_index);
+
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
+  if (succeed)
   {
-    GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
     glEnableVertexAttribArray(attrib_index);
     glBindBuffer(GL_ARRAY_BUFFER, ptr_vbo->id());
     glVertexAttribPointer(attrib_index, num, type, GL_FALSE, 0, 0);
@@ -119,10 +125,13 @@ bool VAO::declare_normal_format(const block_t& data, GLuint num, GLenum type)
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for normal format failed");
 
+  GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
+  glDisableVertexAttribArray(attrib_index);
+
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
+  if (succeed)
   {
-    GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
     glEnableVertexAttribArray(attrib_index);
     glBindBuffer(GL_ARRAY_BUFFER, ptr_vbo->id());
     glVertexAttribPointer(attrib_index, num, type, GL_FALSE, 0, 0);
@@ -140,10 +149,13 @@ bool VAO::declare_index_format(const block_t& data, GLuint num, GLenum type)
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for index format failed");
 
+  GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
+  glDisableVertexAttribArray(attrib_index);
+
   GLuint vds_size = num * utils::gl_sizeof_type(type);
   bool succeed = ptr_vbo->setup_begin(data.ptr, data.size, vds_size);
+  if (succeed)
   {
-    GLuint attrib_index = GLuint(m_vbo_list.size() - 1);
     glEnableVertexAttribArray(attrib_index);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ptr_vbo->id());
     glVertexAttribPointer(attrib_index, num, type, GL_FALSE, 0, 0);

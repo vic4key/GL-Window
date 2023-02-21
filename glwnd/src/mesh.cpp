@@ -90,59 +90,55 @@ void Mesh::load(const tinyobj::shape_t& shape)
   // Fatal error - one of the vectors is empty and it will cause problems with OpenGL buffers.
   // Program must be closed.
 
-  if (m_positions.empty() || m_texcoords.empty() || m_normals.empty() || m_indices.empty())
+  std::string warning = "";
+
+  if (m_positions.empty())
   {
-    std::string error = "";
+    warning.append("vertices");
+  }
 
-    if (m_positions.empty())
+  if (m_texcoords.empty())
+  {
+    if (warning.length() != 0)
     {
-      error.append("vertices");
+      warning.append(", ");
     }
 
-    if (m_texcoords.empty())
-    {
-      if (error.length() != 0)
-      {
-        error.append(", ");
-      }
+    warning.append("texcoords");
+  }
 
-      error.append("texcoords");
+  if (m_normals.empty())
+  {
+    if (warning.length() != 0)
+    {
+      warning.append(", ");
     }
 
-    if (m_normals.empty())
-    {
-      if (error.length() != 0)
-      {
-        error.append(", ");
-      }
+    warning.append("normals");
+  }
 
-      error.append("normals");
+  if (m_indices.empty())
+  {
+    if (warning.length() != 0)
+    {
+      warning.append(", ");
     }
 
-    if (m_indices.empty())
-    {
-      if (error.length() != 0)
-      {
-        error.append(", ");
-      }
+    warning.append("indices");
+  }
 
-      error.append("indices");
-    }
-
-    if (error.length() != 0)
-    {
-      error = "model is missing: " + error;
-      throw std::runtime_error(error);
-    }
+  if (warning.length() != 0)
+  {
+    utils::log("model is missing: %s", warning.c_str());
   }
 
   m_ptr_vao->setup_begin();
   {
     // Note: The order depends on the shader files
-    m_ptr_vao->declare_position_format({ &m_positions[0], size_of(m_positions) }, 3, GL_FLOAT);
-    m_ptr_vao->declare_normal_format({ &m_normals[0], size_of(m_normals) }, 3, GL_FLOAT);
-    m_ptr_vao->declare_texcoord_format({ &m_texcoords[0], size_of(m_texcoords) }, 2, GL_FLOAT);
-    m_ptr_vao->declare_index_format({ &m_indices[0], size_of(m_indices) }, 1, GL_UNSIGNED_SHORT);
+    m_ptr_vao->declare_position_format({ m_positions.data(), size_of(m_positions) }, 3, GL_FLOAT);
+    m_ptr_vao->declare_normal_format({ m_normals.data(), size_of(m_normals) }, 3, GL_FLOAT);
+    m_ptr_vao->declare_texcoord_format({ m_texcoords.data(), size_of(m_texcoords) }, 2, GL_FLOAT);
+    m_ptr_vao->declare_index_format({ m_indices.data(), size_of(m_indices) }, 1, GL_UNSIGNED_SHORT);
   }
   m_ptr_vao->setup_end();
 

@@ -57,7 +57,7 @@ public:
     teapot.n = "assets\\Teapot\\teapot.obj";
     teapot.t = glm::vec3(0.0F, -0.5F, 0.F);
     teapot.r = glm::vec3(0.0F, 0.F, 0.0F);
-    teapot.s = glm::vec3(0.2F);
+    teapot.s = glm::vec3(0.02F);
     teapot.c = glm::vec3(0.0F, 1.F, 0.0F);
     teapot.p = glm::vec3(0.0F, 0.F, 0.0F);
     teapot.d = glm::vec3(0.0F, 1.F, 0.0F);
