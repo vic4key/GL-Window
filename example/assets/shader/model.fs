@@ -30,6 +30,7 @@ void main()
   }
   else
   {
+    /*
     // calculate ambient
     vec3 ambient = light.ambient;
 
@@ -51,5 +52,8 @@ void main()
 
     // calculate output color
     g_color = vec4(pow(lighting, vec3(1.F / 2.2F)), 1.F);
+    */
+
+    g_color = vec4(light.diffuse, 1.0);
   }
 }

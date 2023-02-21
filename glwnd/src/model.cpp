@@ -16,6 +16,7 @@
 
 #include <gl/glew.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 namespace glwnd
 {
@@ -152,12 +153,12 @@ void Model::render(Shader& shader)
         shader.set_variable("diffuse", 0);
         ptr_material->tex2d_diffuse->use(true);
       }
-      else // TODO: Vic. Recheck. How to apply material that get from model file.
+      else
       {
         shader.set_variable("light.direction", glm::vec3(-3.F, 6.F, -3.F));
-        shader.set_variable("light.ambient", ptr_material->material.ambient);
-        shader.set_variable("light.diffuse", ptr_material->material.diffuse);
-        shader.set_variable("light.specular", ptr_material->material.specular);
+        shader.set_variable("light.ambient",   glm::make_vec3(ptr_material->material.ambient));
+        shader.set_variable("light.diffuse",   glm::make_vec3(ptr_material->material.diffuse));
+        shader.set_variable("light.specular",  glm::make_vec3(ptr_material->material.specular));
       }
     }
 
