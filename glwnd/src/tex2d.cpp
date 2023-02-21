@@ -51,17 +51,17 @@ bool Tex2D::initialize_from_image_file(const std::string& file_path)
     switch (channel)
     {
     case 1: // gray
-      format = GL_LUMINANCE;
+      format  = GL_LUMINANCE;
       iformat = GL_LUMINANCE8;
       break;
 
     case 3: // rgb
-      format = GL_RGB;
+      format  = GL_RGB;
       iformat = GL_RGB8;
       break;
 
     case 4: // rgba
-      format = GL_RGBA;
+      format  = GL_RGBA;
       iformat = GL_RGBA8;
       break;
 
