@@ -13,6 +13,7 @@
 #include "glwnd/shader.h"
 
 #include "TinyObjLoader.h"
+//#include "tinyobj_2.0.0_test.cpp"
 
 #include <gl/glew.h>
 #include <glm/glm.hpp>
@@ -72,6 +73,11 @@ void Model::load(const std::string& obj_file_path)
 
   // parsing meshes & materials
 
+  #ifdef TINYOBJLOADER_200_TEST
+  float bmin[3], bmax[3];
+  auto succeed = LoadObjAndConvert(bmin, bmax, &gDrawObjects, materials, textures, obj_file_path.c_str());
+  assert(succeed);
+  #else
   std::vector<tinyobj::shape_t> shapes;
   std::vector<tinyobj::material_t> materials;
   auto succeed = tinyobj::LoadObj(shapes, materials, obj_file_path.c_str(), dir.c_str());
@@ -79,6 +85,7 @@ void Model::load(const std::string& obj_file_path)
   {
     throw std::runtime_error("load model failed");
   }
+  #endif // TINYOBJLOADER_200_TEST
 
   auto fn_load_material_texture = [&](const std::string& file_name) -> std::unique_ptr<Tex2D>
   {
@@ -130,6 +137,11 @@ void Model::render(Shader& shader)
   {
     throw std::runtime_error("model is not ready to render");
   }
+
+  #ifdef TINYOBJLOADER_200_TEST
+  Draw(gDrawObjects, materials, textures);
+  return;
+  #endif // TINYOBJLOADER_200_TEST
 
   for (auto ptr_mesh : m_meshes)
   {
