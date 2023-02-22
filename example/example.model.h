@@ -63,8 +63,30 @@ public:
     teapot.d = glm::vec3(0.0F, 1.F, 0.0F);
     teapot.a = true;
 
+    // model wolf
+    static model_t wolf;
+    wolf.n = "assets\\Wolf\\Wolf.obj";
+    wolf.t = glm::vec3(0.0F, -1.0F, 0.F);
+    wolf.r = glm::vec3(0.0F, 0.F, 0.0F);
+    wolf.s = glm::vec3(0.7F);
+    wolf.c = glm::vec3(0.0F, 1.F, 0.0F);
+    wolf.p = glm::vec3(0.0F, 0.F, 0.0F);
+    wolf.d = glm::vec3(0.0F, 1.F, 0.0F);
+    wolf.a = true;
+
+    // model house
+    static model_t house;
+    house.n = "assets\\House\\house.obj";
+    house.t = glm::vec3(0.0F, -1.0F, 0.F);
+    house.r = glm::vec3(0.0F, 0.F, 0.0F);
+    house.s = glm::vec3(0.5F);
+    house.c = glm::vec3(0.0F, 1.F, 0.0F);
+    house.p = glm::vec3(0.0F, 0.F, 0.0F);
+    house.d = glm::vec3(0.0F, 1.F, 0.0F);
+    house.a = true;
+
     // select a demo model for loading & rendering
-    m_model = chest;
+    m_model = wolf;
 
     if (!m_model_material.ready())
     {
