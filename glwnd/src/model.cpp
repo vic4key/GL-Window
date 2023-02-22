@@ -103,7 +103,7 @@ void Model::load(const std::string& obj_file_path)
 
     if (!shape.mesh.material_ids.empty())
     {
-      auto material_id = shape.mesh.material_ids.front();
+      auto material_id = shape.mesh.material_ids.front(); // TODO: Vic. Recheck. Currently, treat them are the same material id. It's right?
       if (material_id >= 0 && material_id < int(materials.size()))
       {
         m_materials.emplace_back(new Material);
