@@ -85,8 +85,19 @@ public:
     house.d = glm::vec3(0.0F, 1.F, 0.0F);
     house.a = true;
 
+    // model suzanne
+    static model_t suzanne;
+    suzanne.n = "assets\\Suzanne\\Suzanne.obj";
+    suzanne.t = glm::vec3(0.0F, 0.0F, 0.F);
+    suzanne.r = glm::vec3(0.0F, 180.F, 0.0F);
+    suzanne.s = glm::vec3(1.0F);
+    suzanne.c = glm::vec3(0.0F, 1.F, 0.0F);
+    suzanne.p = glm::vec3(0.0F, 0.F, 0.0F);
+    suzanne.d = glm::vec3(0.0F, 1.F, 0.0F);
+    suzanne.a = true;
+
     // select a demo model for loading & rendering
-    m_model = wolf;
+    m_model = suzanne;
 
     if (!m_model_material.ready())
     {
