@@ -326,6 +326,15 @@ size_t Model::assimp_parse_materials(const aiScene& scene)
       continue;
     }
 
+    auto it = std::find_if(m_materials.begin(), m_materials.end(), [&](Material* ptr_material) -> bool
+    {
+      return ptr_material->id == material_id;
+    });
+    if (it != m_materials.end())
+    {
+      continue;
+    }
+
     if (auto ptr = scene.mMaterials[material_id])
     {
       m_materials.emplace_back(new Material);
