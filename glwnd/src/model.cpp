@@ -173,9 +173,9 @@ void Model::render(Shader& shader)
       else
       {
         shader.set_variable("light.direction", glm::vec3(-3.F, 6.F, -3.F));
-        shader.set_variable("light.ambient",   glm::make_vec3(ptr_material->material.ambient));
         shader.set_variable("light.diffuse",   glm::make_vec3(ptr_material->material.diffuse));
         shader.set_variable("light.specular",  glm::make_vec3(ptr_material->material.specular));
+        shader.set_variable("light.ambient",   glm::make_vec3(ptr_material->material.ambient));
         shader.set_variable("color", glm::make_vec3(ptr_material->material.diffuse)); // TODO: Vic. Recheck. In mtl file, diffuse is color ?
       }
     }
@@ -294,7 +294,7 @@ void Model::assimp_parse_mesh(const aiMesh& mesh, std::vector<vertex_t>& vertice
 
 size_t Model::assimp_parse_materials(const aiScene& scene)
 {
-  auto fn_assimp_parse_material = [&](aiMaterial& material, aiTextureType type) -> std::unique_ptr<Tex2D>
+  auto fn_assimp_parse_material_texture = [&](aiMaterial& material, aiTextureType type) -> std::unique_ptr<Tex2D>
   {
     if (material.GetTextureCount(type) == 0)
     {
@@ -316,6 +316,22 @@ size_t Model::assimp_parse_materials(const aiScene& scene)
     }
 
     return nullptr;
+  };
+
+  auto fn_assimp_parse_material_rgb_color = [](
+    aiMaterial* ptr, const char* key, unsigned int type, unsigned int index, float rgb[3]) -> void
+  {
+    aiColor4D color;
+    aiGetMaterialColor(ptr, key, type, index, &color);
+    rgb[0] = color.r;
+    rgb[1] = color.g;
+    rgb[2] = color.g;
+  };
+
+  auto fn_assimp_parse_material_float = [](
+    aiMaterial* ptr, const char* key, unsigned int type, unsigned int index, float& value) -> void
+  {
+    aiGetMaterialFloat(ptr, key, type, index, &value);
   };
 
   for (auto ptr_mesh : m_meshes)
@@ -340,11 +356,19 @@ size_t Model::assimp_parse_materials(const aiScene& scene)
       m_materials.emplace_back(new Material);
       auto ptr_material = m_materials.back();
       ptr_material->id = material_id;
-      //ptr_material->material = materials[material_id];
-      ptr_material->tex2d_diffuse  = fn_assimp_parse_material(*ptr, aiTextureType_DIFFUSE);
-      ptr_material->tex2d_specular = fn_assimp_parse_material(*ptr, aiTextureType_SPECULAR);
-      ptr_material->tex2d_normal   = fn_assimp_parse_material(*ptr, aiTextureType_NORMALS);
-      ptr_material->tex2d_ambient  = fn_assimp_parse_material(*ptr, aiTextureType_AMBIENT);
+      // texture
+      ptr_material->tex2d_diffuse  = fn_assimp_parse_material_texture(*ptr, aiTextureType_DIFFUSE);
+      ptr_material->tex2d_specular = fn_assimp_parse_material_texture(*ptr, aiTextureType_SPECULAR);
+      ptr_material->tex2d_normal   = fn_assimp_parse_material_texture(*ptr, aiTextureType_NORMALS);
+      ptr_material->tex2d_ambient  = fn_assimp_parse_material_texture(*ptr, aiTextureType_AMBIENT);
+      // rgb color
+      fn_assimp_parse_material_rgb_color(ptr, AI_MATKEY_COLOR_DIFFUSE, ptr_material->material.diffuse);
+      fn_assimp_parse_material_rgb_color(ptr, AI_MATKEY_COLOR_SPECULAR, ptr_material->material.specular);
+      fn_assimp_parse_material_rgb_color(ptr, AI_MATKEY_COLOR_AMBIENT, ptr_material->material.ambient);
+      // others
+      //fn_assimp_parse_material_float(ptr, AI_MATKEY_SHININESS, ptr_material->material.shininess);
+      //fn_assimp_parse_material_rgb_color(ptr, AI_MATKEY_COLOR_EMISSIVE, ptr_material->material.emission);
+      //fn_assimp_parse_material_rgb_color(ptr, AI_MATKEY_COLOR_TRANSPARENT, ptr_material->material.transmittance);
     }
   }
 

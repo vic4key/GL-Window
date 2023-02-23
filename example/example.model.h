@@ -43,7 +43,7 @@ public:
 
     // model bench
     static model_t bench;
-    bench.n = "assets\\Bench\\rainbowBench.obj";
+    bench.n = "assets\\Bench\\bench.obj";
     bench.t = glm::vec3(0.0F, -0.5F, 0.F);
     bench.r = glm::vec3(0.0F, 0.F, 0.0F);
     bench.s = glm::vec3(0.2F);
