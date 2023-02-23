@@ -69,7 +69,7 @@ void VAO::setup_end()
   glBindVertexArray(0);
 }
 
-bool VAO::declare_mesh_format(const std::vector<Vertex>& vertices, const std::vector<uint16>& indices)
+bool VAO::declare_mesh_format(const std::vector<vertex_t>& vertices, const std::vector<uint16>& indices)
 {
   assert(m_ready && "VAO - not yet setup");
 
@@ -86,7 +86,7 @@ bool VAO::declare_mesh_format(const std::vector<Vertex>& vertices, const std::ve
   auto ptr_vbo = m_vbo_list.back();
   assert(ptr_vbo != nullptr && "VAO - create vbo for vertices format failed");
 
-  GLuint vds_size = sizeof(Vertex);
+  GLuint vds_size = sizeof(vertex_t);
   bool succeed = ptr_vbo->setup_begin(vertices.data(), size_of(vertices), vds_size);
   if (succeed)
   {
@@ -97,27 +97,27 @@ bool VAO::declare_mesh_format(const std::vector<Vertex>& vertices, const std::ve
     // positions
     attrib_index = 0;
     glEnableVertexAttribArray(attrib_index);
-    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(Vertex, position));
+    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(vertex_t, position));
 
     // normals
     attrib_index = 1;
     glEnableVertexAttribArray(attrib_index);
-    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(Vertex, normal));
+    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(vertex_t, normal));
 
     // texcoords
     attrib_index = 2;
     glEnableVertexAttribArray(attrib_index);
-    glVertexAttribPointer(attrib_index, 2, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(Vertex, texcoords));
+    glVertexAttribPointer(attrib_index, 2, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(vertex_t, texcoords));
 
     // tangent
     attrib_index = 3;
     glEnableVertexAttribArray(attrib_index);
-    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(Vertex, tangent));
+    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(vertex_t, tangent));
 
     // bitangent
     attrib_index = 4;
     glEnableVertexAttribArray(attrib_index);
-    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(Vertex, bitangent));
+    glVertexAttribPointer(attrib_index, 3, GL_FLOAT, GL_FALSE, vds_size, (void*)offsetof(vertex_t, bitangent));
   }
   ptr_vbo->setup_end();
 

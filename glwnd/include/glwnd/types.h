@@ -17,7 +17,7 @@ namespace glwnd
 using uint16 = std::uint16_t;
 using uint32 = std::uint32_t;
 
-struct Vertex
+struct vertex_t
 {
   glm::vec3 position;
   glm::vec3 normal;
