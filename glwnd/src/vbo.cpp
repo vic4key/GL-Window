@@ -55,11 +55,7 @@ bool VBO::ready() const
 }
 
 bool VBO::setup_begin(
-  const GLvoid* data_ptr,
-  GLsizei data_size,
-  GLsizei vds_size,
-  GLenum usage,
-  GLenum target)
+  const GLvoid* data_ptr, GLsizei data_size, GLsizei vds_size, GLenum target, GLenum usage)
 {
   assert(!m_ready && "VBO - already setup");
 
@@ -86,10 +82,7 @@ bool VBO::setup_begin(
 }
 
 bool VBO::setup_begin(
-  const std::initializer_list<block_t>& data_list,
-  GLsizei vds_size,
-  GLenum usage,
-  GLenum target)
+  const std::initializer_list<block_t>& data_list, GLsizei vds_size, GLenum target, GLenum usage)
 {
   assert(!m_ready && "VBO - already setup");
 

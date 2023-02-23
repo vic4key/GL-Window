@@ -31,6 +31,7 @@ public:
   //  data_ptr - the pointer of VDS data block
   //  data_ptr - the size of VDS data block
   //  vds_size - the size of an element or that is total size of all attributes in a VDS
+  //  target   - the type of buffer object
   //  usage    - define that how the buffer object is going to be used
 
   VBO();
@@ -46,14 +47,14 @@ public:
     const GLvoid* data_ptr,
     GLsizei data_size,
     GLsizei vds_size,
-    GLenum usage  = GL_STATIC_DRAW,
-    GLenum target = GL_ARRAY_BUFFER);
+    GLenum target = GL_ARRAY_BUFFER,
+    GLenum usage  = GL_STATIC_DRAW);
 
   bool setup_begin(
     const std::initializer_list<block_t>& data_list,
     GLsizei vds_size,
-    GLenum usage  = GL_STATIC_DRAW,
-    GLenum target = GL_ARRAY_BUFFER);
+    GLenum target = GL_ARRAY_BUFFER,
+    GLenum usage  = GL_STATIC_DRAW);
 
   void setup_end();
 
