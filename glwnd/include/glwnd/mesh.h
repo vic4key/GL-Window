@@ -9,11 +9,10 @@
 #include <string>
 #include <vector>
 
-#include <gl/glew.h>
-#include <glm/glm.hpp>
+#include "defs.h"
+#include "vao.h"
 
 #include "TinyObjLoader.h"
-//#include <tinyobjloader/tiny_obj_loader.h>
 
 namespace glwnd
 {
@@ -23,9 +22,6 @@ class VAO;
 class Mesh
 {
 public:
-  using uint16 = std::uint16_t;
-  using uint32 = std::uint32_t;
-
   Mesh(const std::string& name);
   Mesh(Mesh&&) = delete;
   Mesh(const Mesh&) = delete;
@@ -33,22 +29,24 @@ public:
   Mesh& operator=(const Mesh&) = delete;
   virtual ~Mesh();
 
-  int  material_id() const;
-  void material_id(int id);
+  GLuint material_id() const;
+  void material_id(GLuint id);
 
   bool ready() const;
   void load(const tinyobj::shape_t& shape);
+  void load(const std::vector<vertex_t>& vertices, const std::vector<uint16>& indices, const GLuint material_id);
   void render();
 
 private:
+  bool m_ready;
+  VAO  m_vao;
+  std::string m_name;
+  GLuint m_material_id;
+
   std::vector<glm::vec3> m_positions;
   std::vector<glm::vec2> m_texcoords;
   std::vector<glm::vec3> m_normals;
   std::vector<uint16>    m_indices;
-  int m_material_id;
-  std::string m_name;
-  VAO* m_ptr_vao;
-  bool m_ready;
 };
 
 }; // glwnd

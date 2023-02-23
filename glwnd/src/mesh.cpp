@@ -12,33 +12,28 @@
 namespace glwnd
 {
 
-Mesh::Mesh(const std::string& name) : m_ready(false), m_ptr_vao(new VAO), m_name(name), m_material_id(-1)
+Mesh::Mesh(const std::string& name) : m_ready(false), m_name(name), m_material_id(GL_INVALID_ID)
 {
 }
 
 Mesh::~Mesh()
 {
   m_ready = false;
-
-  if (m_ptr_vao != nullptr)
-  {
-    delete m_ptr_vao;
-  }
 }
 
-int Mesh::material_id() const
+GLuint Mesh::material_id() const
 {
   return m_material_id;
 }
 
-void Mesh::material_id(int id)
+void Mesh::material_id(GLuint id)
 {
   m_material_id = id;
 }
 
 bool Mesh::ready() const
 {
-  return m_ready && m_ptr_vao->ready();
+  return m_ready && m_vao.ready();
 }
 
 void Mesh::load(const tinyobj::shape_t& shape)
@@ -132,17 +127,29 @@ void Mesh::load(const tinyobj::shape_t& shape)
     utils::log("model is missing: %s", warning.c_str());
   }
 
-  m_ptr_vao->setup_begin();
+  m_vao.setup_begin();
   {
     // Note: The order depends on the shader files
-    m_ptr_vao->declare_position_format({ m_positions.data(), size_of(m_positions) }, 3, GL_FLOAT);
-    m_ptr_vao->declare_normal_format({ m_normals.data(), size_of(m_normals) }, 3, GL_FLOAT);
-    m_ptr_vao->declare_texcoord_format({ m_texcoords.data(), size_of(m_texcoords) }, 2, GL_FLOAT);
-    m_ptr_vao->declare_index_format({ m_indices.data(), size_of(m_indices) }, 1, GL_UNSIGNED_SHORT);
+    m_vao.declare_position_format({ m_positions.data(), size_of(m_positions) }, 3, GL_FLOAT);
+    m_vao.declare_normal_format({ m_normals.data(), size_of(m_normals) }, 3, GL_FLOAT);
+    m_vao.declare_texcoord_format({ m_texcoords.data(), size_of(m_texcoords) }, 2, GL_FLOAT);
+    m_vao.declare_index_format({ m_indices.data(), size_of(m_indices) }, 1, GL_UNSIGNED_SHORT);
   }
-  m_ptr_vao->setup_end();
+  m_vao.setup_end();
 
   m_ready = true;
+}
+
+void Mesh::load(
+  const std::vector<vertex_t>& vertices, const std::vector<uint16>& indices, const GLuint material_id)
+{
+  m_material_id = material_id;
+
+  m_vao.setup_begin();
+  {
+    m_ready = m_vao.declare_mesh_format(vertices, indices);
+  }
+  m_vao.setup_end();
 }
 
 void Mesh::render()
@@ -152,7 +159,7 @@ void Mesh::render()
     throw std::runtime_error("mesh is not ready to render");
   }
 
-  m_ptr_vao->render(GL_TRIANGLES);
+  m_vao.render(GL_TRIANGLES);
 }
 
 }; // glwnd
