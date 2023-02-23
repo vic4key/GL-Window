@@ -38,6 +38,8 @@ public:
   void setup_begin();
   void setup_end();
 
+  bool declare_mesh_format(const std::vector<Vertex>& vertices, const std::vector<uint16>& indices);
+
   bool declare_position_format(const block_t& data, GLuint num, GLenum type);
   bool declare_texcoord_format(const block_t& data, GLuint num, GLenum type);
   bool declare_normal_format(const block_t& data, GLuint num, GLenum type);

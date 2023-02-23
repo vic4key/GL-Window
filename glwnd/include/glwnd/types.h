@@ -9,8 +9,22 @@
 #include <string>
 #include <vector>
 
+#include <glm/glm.hpp>
+
 namespace glwnd
 {
+
+using uint16 = std::uint16_t;
+using uint32 = std::uint32_t;
+
+struct Vertex
+{
+  glm::vec3 position;
+  glm::vec3 normal;
+  glm::vec2 texcoords;
+  glm::vec3 tangent;
+  glm::vec3 bitangent;
+};
 
 typedef unsigned char  byte_t;
 typedef unsigned short word_t;
