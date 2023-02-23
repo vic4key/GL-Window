@@ -29,10 +29,10 @@ struct Material
 {
   GLuint                 id = GL_INVALID_ID;
   tinyobj::material_t    material;
-  std::unique_ptr<Tex2D> tex2d_ambient;
   std::unique_ptr<Tex2D> tex2d_diffuse;
   std::unique_ptr<Tex2D> tex2d_specular;
   std::unique_ptr<Tex2D> tex2d_normal;
+  std::unique_ptr<Tex2D> tex2d_ambient;
 };
 
 Model::Model() : m_ready(false)
@@ -121,10 +121,10 @@ void Model::load(const std::string& obj_file_path, bool use_assimp)
 
         ptr_material->id = material_id;
         ptr_material->material = materials[material_id];
-        ptr_material->tex2d_ambient  = fn_load_material_texture(ptr_material->material.ambient_texname);
         ptr_material->tex2d_diffuse  = fn_load_material_texture(ptr_material->material.diffuse_texname);
         ptr_material->tex2d_specular = fn_load_material_texture(ptr_material->material.specular_texname);
         ptr_material->tex2d_normal   = fn_load_material_texture(ptr_material->material.normal_texname);
+        ptr_material->tex2d_ambient  = fn_load_material_texture(ptr_material->material.ambient_texname);
 
         ptr_mesh->material_id(material_id);
       }
