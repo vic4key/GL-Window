@@ -277,8 +277,5 @@
     <None Include="include\glwnd\glwnd">
       <Filter>Header Files</Filter>
     </None>
-    <None Include="src\tinyobj_2.0.0_test.cpp">
-      <Filter>Source Files</Filter>
-    </None>
   </ItemGroup>
 </Project>

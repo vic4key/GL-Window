@@ -241,7 +241,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="include\glwnd\glwnd" />
-    <None Include="src\tinyobj_2.0.0_test.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
