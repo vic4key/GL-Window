@@ -73,8 +73,8 @@ bool VAO::declare_mesh_format(const std::vector<vertex_t>& vertices, const std::
 {
   assert(m_ready && "VAO - not yet setup");
 
-  bool mesh_valid = vertices.size() == indices.size();
-  assert(mesh_valid && "VAO - vertices and indices are not matched");
+  //bool mesh_valid = vertices.size() == indices.size();
+  //assert(mesh_valid && "VAO - vertices and indices are not matched");
 
   // for indices (must be declare in the beginning to make itself use attribute index at 0)
 
