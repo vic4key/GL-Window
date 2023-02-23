@@ -35,7 +35,7 @@ public:
     monkey.c = glm::vec3(0.F, 1.F, 0.F);
     monkey.p = glm::vec3(0.F, 0.F, 0.F);
     monkey.d = glm::vec3(0.F, 1.F, 0.F);
-    monkey.a = false;
+    monkey.a = true;
 
     // model scene
     static model_t scene;
@@ -49,7 +49,7 @@ public:
     scene.a = true;
 
     // select a demo model for loading & rendering
-    m_model = scene;
+    m_model = monkey;
 
     if (!m_model_no_material.ready())
     {
