@@ -32,6 +32,8 @@ public:
   VAO();
   virtual ~VAO();
 
+  GLWND_DELETE_UNUSED_OPERATORS(VAO)
+
   GLuint id() const;
   bool ready() const;
 

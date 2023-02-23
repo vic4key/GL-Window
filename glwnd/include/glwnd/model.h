@@ -27,11 +27,9 @@ class Model
 {
 public:
   Model();
-  Model(Model&&) = delete;
-  Model(const Model&) = delete;
-  Model& operator=(Model&&) = delete;
-  Model& operator=(const Model&) = delete;
   virtual ~Model();
+
+  GLWND_DELETE_UNUSED_OPERATORS(Model)
 
   bool ready() const;
   void load(const std::string& obj_file_path, bool use_assimp = true);

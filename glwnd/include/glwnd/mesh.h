@@ -23,11 +23,9 @@ class Mesh
 {
 public:
   Mesh(const std::string& name);
-  Mesh(Mesh&&) = delete;
-  Mesh(const Mesh&) = delete;
-  Mesh& operator=(Mesh&&) = delete;
-  Mesh& operator=(const Mesh&) = delete;
   virtual ~Mesh();
+
+  GLWND_DELETE_UNUSED_OPERATORS(Mesh)
 
   GLuint material_id() const;
   void material_id(GLuint id);
