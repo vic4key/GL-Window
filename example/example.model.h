@@ -97,7 +97,7 @@ public:
     suzanne.a = true;
 
     // select a demo model for loading & rendering
-    m_model = suzanne;
+    m_model = raptor;
 
     if (!m_model_material.ready())
     {
