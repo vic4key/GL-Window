@@ -96,8 +96,19 @@ public:
     suzanne.d = glm::vec3(0.0F, 1.F, 0.0F);
     suzanne.a = true;
 
+    // model gun
+    static model_t gun;
+    gun.n = "assets\\GUNs\\guns2.obj";
+    gun.t = glm::vec3(0.0F, -1.0F, 0.F);
+    gun.r = glm::vec3(0.0F, 180.F, 0.0F);
+    gun.s = glm::vec3(0.3F);
+    gun.c = glm::vec3(0.0F, 1.F, 0.0F);
+    gun.p = glm::vec3(0.0F, 0.F, 0.0F);
+    gun.d = glm::vec3(0.0F, 1.F, 0.0F);
+    gun.a = true;
+
     // select a demo model for loading & rendering
-    m_model = raptor;
+    m_model = gun;
 
     if (!m_model_material.ready())
     {
