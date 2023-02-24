@@ -76,7 +76,7 @@ public:
 
     // model house
     static model_t house;
-    house.n = "assets\\House\\house.obj";
+    house.n = "assets\\House\\house.3ds";
     house.t = glm::vec3(0.0F, -1.0F, 0.F);
     house.r = glm::vec3(0.0F, 0.F, 0.0F);
     house.s = glm::vec3(0.5F);
@@ -95,6 +95,17 @@ public:
     suzanne.p = glm::vec3(0.0F, 0.F, 0.0F);
     suzanne.d = glm::vec3(0.0F, 1.F, 0.0F);
     suzanne.a = true;
+
+    // model cyborg
+    static model_t cyborg;
+    cyborg.n = "assets\\Cyborg\\cyborg.obj";
+    cyborg.t = glm::vec3(0.0F, -1.0F, 0.F);
+    cyborg.r = glm::vec3(0.0F, 180.F, 0.0F);
+    cyborg.s = glm::vec3(0.7F);
+    cyborg.c = glm::vec3(0.0F, 1.F, 0.0F);
+    cyborg.p = glm::vec3(0.0F, 0.F, 0.0F);
+    cyborg.d = glm::vec3(0.0F, 1.F, 0.0F);
+    cyborg.a = true;
 
     // model gun
     static model_t gun;
