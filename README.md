@@ -14,6 +14,7 @@
   * Keyboard Events
   * Mouse Events
   * Drag & Drop Events
+ * Vertex Array Object (VAO)
  * Vertex Buffer Object (VBO)
  * Pixel Buffer Object (PBO)
  * Texture Manipulation
@@ -21,7 +22,7 @@
  * Shader (GLSL)
  * FT/GLUT Text Renderer
  * Primitive Renderer
- * Mesh Loader/Renderer
+ * Model Loader/Renderer
  * Multi Views
  * Debugging Error
  * Etc
@@ -32,15 +33,9 @@ Released under the [MIT](LICENSE.md) license
 
 ## Installation
 
->$ git clone https://github.com/vic4key/GL-Window.git
+>$ git clone --recursive https://github.com/vic4key/GL-Window.git
 >
 >$ cd [GL-Window](https://github.com/vic4key/GL-Window)
->
->$ git submodule update --init --recursive
->
->$ git submodule foreach --recursive git checkout master
->
->$ git submodule foreach --recursive git pull
 >
 >$ setx `GL_3RDPARTY_DIR` [%CD%\\glwnd\\3rdparty\\](https://github.com/vic4key/gl-3rdparty)
 >
