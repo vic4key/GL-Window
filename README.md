@@ -93,6 +93,13 @@ Released under the [MIT](LICENSE.md) license
 >
 >![](screenshots/example.events.png?)
 
+>[example/example.model.h](example/example.model.h)
+>
+>![](screenshots/example.model-raptor.png?)
+>![](screenshots/example.model-chest.png?)
+>![](screenshots/example.model-gun.png?)
+>![](screenshots/example.model-gun-2.png?)
+
 >Etc
 
 ## Contact

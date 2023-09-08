@@ -118,8 +118,19 @@ public:
     gun.d = glm::vec3(0.0F, 1.F, 0.0F);
     gun.a = true;
 
+    // model gun 2
+    static model_t gun_2;
+    gun_2.n = "assets\\GUNs\\guns2.obj";
+    gun_2.t = glm::vec3(0.0F, -1.5F, 0.F);
+    gun_2.r = glm::vec3(0.0F, 180.F, 0.0F);
+    gun_2.s = glm::vec3(0.6F);
+    gun_2.c = glm::vec3(0.0F, 1.F, 0.0F);
+    gun_2.p = glm::vec3(0.0F, 0.F, 0.0F);
+    gun_2.d = glm::vec3(0.0F, 1.F, 0.0F);
+    gun_2.a = true;
+
     // select a demo model for loading & rendering
-    m_model = gun;
+    m_model = raptor;
 
     if (!m_model_material.ready())
     {
