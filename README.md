@@ -45,6 +45,13 @@ Released under the [MIT](LICENSE.md) license
 
 > *Take a look at [examples](example)*
 
+>[example/example.model.h](example/example.model.h)
+>
+>![](screenshots/example.model-raptor.png?)
+>![](screenshots/example.model-chest.png?)
+>![](screenshots/example.model-gun.png?)
+>![](screenshots/example.model-gun-2.png?)
+
 >[example/example.simple.h](example/example.simple.h)
 >
 >![](screenshots/example.simple.png?)
@@ -92,13 +99,6 @@ Released under the [MIT](LICENSE.md) license
 >[example/example.events.h](example/example.events.h)
 >
 >![](screenshots/example.events.png?)
-
->[example/example.model.h](example/example.model.h)
->
->![](screenshots/example.model-raptor.png?)
->![](screenshots/example.model-chest.png?)
->![](screenshots/example.model-gun.png?)
->![](screenshots/example.model-gun-2.png?)
 
 >Etc
 
